@@ -1,5 +1,5 @@
 import { CanActivateFn, Router } from '@angular/router';
-import { UserStoreService } from './services/stores/user-store.service';
+import { UserStoreService } from '../services/stores/user-store.service';
 import { inject } from '@angular/core';
 
 export const isConnected: CanActivateFn = (route, state) => {
@@ -40,6 +40,19 @@ export const isStudent: CanActivateFn = (route, state) => {
     return true;
   } else {
     router.navigate(['']);
+    return false;
+  }
+};
+
+export const isNotLogged: CanActivateFn = (route, state) => {
+  const router = inject(Router);
+  const store = inject(UserStoreService);
+
+  const user = store.getUserConnected$().value;
+
+  if (!user.role) {
+    return true;
+  } else {
     return false;
   }
 };

@@ -1,7 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutMentor } from './modules/mentor/pages/layout/layout-mentor-component';
-import { isConnected, isMentor, isStudent } from './shared/auth.guard';
+import {
+  isConnected,
+  isMentor,
+  isNotLogged,
+  isStudent,
+} from './shared/guards/auth.guard';
 import {
   mentorExperiencesResolver,
   mentorFormationsResolver,
@@ -23,7 +28,7 @@ export const routes: Routes = [
       import('./modules/auth/modules/login/login.module').then(
         (m) => m.LoginModule
       ),
-    // canActivate: [isMentor, isStudent],
+    canActivate: [isNotLogged],
   },
   {
     path: 'student',
@@ -60,9 +65,7 @@ export const routes: Routes = [
       import('./modules/auth/modules/register/register.module').then(
         (m) => m.RegisterModule
       ),
-    // canActivate: [isMentor, isStudent],
   },
-  { path: 'layout', component: LayoutMentor },
 ];
 
 @NgModule({

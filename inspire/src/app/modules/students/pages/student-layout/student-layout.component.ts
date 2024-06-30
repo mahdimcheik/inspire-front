@@ -1,5 +1,4 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { UserService } from '../../../../user.service';
 import { WindowWatcherService } from '../../../../shared/services/window-watcher.service';
 import { StudentService } from '../../../../shared/services/student.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,6 +7,8 @@ import { BehaviorSubject } from 'rxjs';
 import { MentorDTO, StudentDTO } from '../../../../shared/models/user';
 import { MentorService } from '../../../../shared/services/mentor.service';
 import { DashboardLink } from '../../../../shared/models/dashboardLink';
+import { UserService } from '../../../../shared/services/user.service';
+import { LoginService } from '../../../../shared/services/login.service';
 
 @Component({
   selector: 'app-student-layout',
@@ -24,6 +25,7 @@ export class StudentLayoutComponent implements OnInit {
   router = inject(Router);
   studentProfil$: BehaviorSubject<StudentDTO> =
     inject(StudentService).activeStudentProfil$;
+  loginService = inject(LoginService);
 
   displayMobileNav = false;
 
@@ -65,7 +67,7 @@ export class StudentLayoutComponent implements OnInit {
   }
 
   logout() {
-    this.userService.logout();
+    this.loginService.logout();
     this.modalVisible = false;
   }
 
