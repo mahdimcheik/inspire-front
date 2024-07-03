@@ -412,10 +412,15 @@ export class CalendarComponent implements OnInit {
       title: slot.visio ? 'Visio' : 'Présentiel',
       start: slot.dateBegin,
       end: slot.dateEnd,
-      color: slot.visio ? '#FCBE77' : '#F8156B',
+      color:
+        slot.reservationId !== null
+          ? '#447597'
+          : slot.visio
+          ? '#FCBE77'
+          : '#F8156B',
       extendedProps: {
         visio: slot.visio,
-        booked: slot.booked,
+        booked: !!slot.reservationId,
         imgUrl: slot.imgUrl,
         firstname: slot.firstname,
         subject: slot.subject,
