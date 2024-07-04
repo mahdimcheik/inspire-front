@@ -1,7 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
-import { Reservation, reservationForMentorDTO } from '../models/reservation';
+import {
+  Reservation,
+  reservationForMentorDTO,
+  SlotDTO,
+} from '../models/reservation';
 import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
 import { ReservationForStudentDTO } from '../models/reservation';
 import { MentorService } from './mentor.service';
@@ -71,11 +75,11 @@ export class ReservationService {
     );
   }
 
-  getSlotsforStudentByMentorId(mentorId: number): Observable<any> {
+  getSlotsforStudentByMentorId(mentorId: number): Observable<SlotDTO[]> {
     const studentId = this.studentService.activeStudentProfil$.value.id;
     let end = new Date();
     end.setDate(end.getDate() + 50);
-    return this.httpClient.post(
+    return this.httpClient.post<SlotDTO[]>(
       `${environment.BASE_URL_API}/user/slot/slots/${mentorId}/${studentId}`,
       { start: new Date(), end: end }
     );
@@ -87,11 +91,11 @@ export class ReservationService {
     );
   }
 
-  deleteReservationAndSlot(id: number): Observable<any> {
-    return this.httpClient.delete(
-      `${environment.BASE_URL_API}/reservation/delete/mentor/${id}`
-    );
-  }
+  // deleteReservationAndSlot(id: number): Observable<any> {
+  //   return this.httpClient.delete(
+  //     `${environment.BASE_URL_API}/reservation/delete/mentor/${id}`
+  //   );
+  // }
 
   deleteReservationOnly(id: number): Observable<any> {
     return this.httpClient.delete(

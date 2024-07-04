@@ -148,6 +148,7 @@ export class MentorReservationPageByStudentComponent implements OnInit {
         );
       });
   }
+
   formatSlotsToEvents(slots: SlotDTO[]): EventInput[] {
     return slots.map((slot) => ({
       id: '' + slot.id,

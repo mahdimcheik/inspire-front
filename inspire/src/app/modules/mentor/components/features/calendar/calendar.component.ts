@@ -19,6 +19,7 @@ import { MentorDTO } from '../../../../../shared/models/user';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DateTimeService } from '../../../../../shared/services/dateTime.service';
 import { MessageService } from 'primeng/api';
+import { Slot, SlotDTO } from '../../../../../shared/models/reservation';
 
 @Component({
   selector: 'app-calendar',
@@ -37,16 +38,13 @@ export class CalendarComponent implements OnInit {
   @Input() formattedSlotInfo!: any;
   events: EventInput[] = [];
   displayModal: boolean = false;
-  eventDetails: any = {};
+  eventDetails: Slot = {} as Slot;
   eventDetailsEdit: any = {};
 
   mode: string = '';
   isModfify: boolean = false;
   datetime24h: Date[] | undefined;
   time: Date[] | undefined;
-  selectedTime: string = '';
-  selectedDate: string = '';
-  selectedEndTime: string = '';
 
   constructor(
     private reservationService: ReservationService,
@@ -132,8 +130,8 @@ export class CalendarComponent implements OnInit {
   editSlot() {
     this.eventDetailsEdit = {
       id: this.eventDetails.id,
-      start: this.eventDetails.start,
-      end: this.eventDetails.end,
+      start: this.eventDetails.dateBegin,
+      end: this.eventDetails.dateEnd,
       visio: this.eventDetails.visio,
     };
     this.isModfify = true;
@@ -161,10 +159,10 @@ export class CalendarComponent implements OnInit {
 
     const id = Number(this.eventDetails.id);
     const dateBegin = this.dateTimeService.convertToLocalDateTimeString(
-      this.eventDetails.start
+      this.eventDetails.dateBegin
     );
     const dateEnd = this.dateTimeService.convertToLocalDateTimeString(
-      this.eventDetails.end
+      this.eventDetails.dateEnd
     );
 
     const visio = this.editForm.value.visio === 'visio';
@@ -244,8 +242,8 @@ export class CalendarComponent implements OnInit {
   handleEventDrop(eventDropArg: any) {
     this.eventDetails = {
       id: eventDropArg.oldEvent.id,
-      start: eventDropArg.oldEvent.start,
-      end: eventDropArg.oldEvent.end,
+      dateBegin: eventDropArg.oldEvent.start,
+      dateEnd: eventDropArg.oldEvent.end,
       visio: eventDropArg.oldEvent.extendedProps.visio,
     };
 
@@ -347,12 +345,12 @@ export class CalendarComponent implements OnInit {
 
   handleEventClick(eventClickArg: EventClickArg) {
     this.eventDetails = {
-      id: eventClickArg.event.id,
-      title: eventClickArg.event.title,
-      start: eventClickArg.event.start,
-      end: eventClickArg.event.end,
+      id: +eventClickArg.event.id,
+      // title: eventClickArg.event.title,
+      dateBegin: eventClickArg.event.start || new Date(),
+      dateEnd: eventClickArg.event.end || new Date(),
       visio: eventClickArg.event.extendedProps['visio'],
-      booked: eventClickArg.event.extendedProps['booked'],
+      // booked: eventClickArg.event.extendedProps['booked'],
     };
 
     this.editForm.setValue({

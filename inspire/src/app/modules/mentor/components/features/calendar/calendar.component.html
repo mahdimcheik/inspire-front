@@ -128,7 +128,7 @@
       </p>
       <div
         class="content-resume old-slot"
-        [class]="{ 'is-editing': isModfify }"
+        [ngClass]="isModfify ? 'is-editing' : ''"
       >
         <div class="content-resume">
           <h2>Résumé de votre créneau</h2>
@@ -141,8 +141,9 @@
             alt=""
           />
           <h3>
-            Début du créneau le <span>{{ eventDetails?.start | date }}</span> à
-            <span>{{ eventDetails?.start | date : "HH:mm" }}</span>
+            Début du créneau le
+            <span>{{ eventDetails.dateBegin | date }}</span> à
+            <span>{{ eventDetails.dateBegin | date : "HH:mm" }}</span>
           </h3>
         </div>
         <div class="pop-up-date">
@@ -152,8 +153,8 @@
             alt=""
           />
           <h3>
-            Fin du créneau le <span>{{ eventDetails?.end | date }}</span> à
-            <span>{{ eventDetails?.end | date : "HH:mm" }}</span>
+            Fin du créneau le <span>{{ eventDetails.dateEnd | date }}</span> à
+            <span>{{ eventDetails.dateEnd | date : "HH:mm" }}</span>
           </h3>
         </div>
         <div class="pop-up-date">
