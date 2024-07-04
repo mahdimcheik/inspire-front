@@ -75,7 +75,6 @@ export default class SlotManager {
   }
 
   async updateSlot(id, slotInfo) {
-    console.log("id", id, slotInfo);
     try {
       const [slot] = await this.database.query(
         `SELECT * FROM slots where id = ?`,

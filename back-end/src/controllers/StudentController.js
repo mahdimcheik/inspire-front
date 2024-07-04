@@ -32,7 +32,6 @@ export default class StudentController {
         linkedinUrl,
         userId,
       } = req.body;
-      console.log("recived ", req.body);
       const result = await StudentManager.add(
         firstname,
         lastname,
@@ -45,7 +44,6 @@ export default class StudentController {
       );
       res.status(201).json({ affectedRows: result.affectedRows });
     } catch (error) {
-      // console.log(error);
       res.status(401).json({ message: `Demande refusée: ${error.message}` });
     }
   }

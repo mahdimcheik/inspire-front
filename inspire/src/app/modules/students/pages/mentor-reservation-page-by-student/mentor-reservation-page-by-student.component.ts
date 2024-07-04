@@ -98,7 +98,6 @@ export class MentorReservationPageByStudentComponent implements OnInit {
     unselectAuto: true,
     selectOverlap: false,
     editable: false,
-    // https://fullcalendar.io/docs/select-callback
     selectable: true,
     eventDurationEditable: false,
     defaultTimedEventDuration: '01:00:00',
@@ -113,8 +112,6 @@ export class MentorReservationPageByStudentComponent implements OnInit {
   };
 
   renderEventContent(arg: any) {
-    console.log('args', arg);
-
     let html = `<div class="custom-event">
                   <b>${arg.event.title}</b>
                   <div>${
@@ -131,7 +128,6 @@ export class MentorReservationPageByStudentComponent implements OnInit {
   }
 
   handleEventClick(eventClickArg: EventClickArg) {
-    console.log(eventClickArg.event.extendedProps);
     if (eventClickArg.event.extendedProps['isBooked']) return;
     this.eventDetails = {
       slotId: eventClickArg.event.extendedProps['slotId'],
@@ -150,9 +146,6 @@ export class MentorReservationPageByStudentComponent implements OnInit {
         this.events = this.formatSlotsToEvents(slots).filter(
           (ele) => !ele['booked']
         );
-        console.log('free slots', this.events);
-
-        console.log('slotss', slots);
       });
   }
   formatSlotsToEvents(slots: SlotDTO[]): EventInput[] {
@@ -169,7 +162,7 @@ export class MentorReservationPageByStudentComponent implements OnInit {
         slotId: slot.id,
         mentorId: slot.mentorId,
         reservationId: slot.reservationId,
-        isBooked: slot.booked,
+        isBooked: !!slot.reservationId,
       },
     }));
   }
@@ -194,10 +187,7 @@ export class MentorReservationPageByStudentComponent implements OnInit {
         this.events = this.formatSlotsToEvents(slots).filter(
           (ele) => !ele['booked']
         );
-        console.log('free slots', this.events);
-        (this.subject = 'Autre'),
-          (this.details = ''),
-          console.log('slots', slots);
+        (this.subject = 'Autre'), (this.details = '');
       });
     this.visible = false;
   }
@@ -214,19 +204,5 @@ export class MentorReservationPageByStudentComponent implements OnInit {
     );
   }
 
-  setSubject(event: Event) {
-    console.log(event);
-    console.log(this.subject);
-
-    // this.subject = event.;
-  }
+  setSubject(event: Event) {}
 }
-
-/*
- _______                           .__                                         .__   .__   __     __   .__              __________ .__   __           .__     
- \      \  _____     ______  ______|__|  _____    ____       _____   ___.__.   |  |  |__|_/  |_ _/  |_ |  |    ____     \______   \|__|_/  |_   ____  |  |__  
- /   |   \ \__  \   /  ___/ /  ___/|  | /     \ _/ __ \     /     \ <   |  |   |  |  |  |\   __\\   __\|  |  _/ __ \     |    |  _/|  |\   __\_/ ___\ |  |  \ 
-/    |    \ / __ \_ \___ \  \___ \ |  ||  Y Y  \\  ___/    |  Y Y  \ \___  |   |  |__|  | |  |   |  |  |  |__\  ___/     |    |   \|  | |  |  \  \___ |   Y  \
-\____|__  /(____  //____  >/____  >|__||__|_|  / \___  >   |__|_|  / / ____|   |____/|__| |__|   |__|  |____/ \___  >    |______  /|__| |__|   \___  >|___|  /
-        \/      \/      \/      \/           \/      \/          \/  \/                                           \/            \/                 \/      \/ 
-*/

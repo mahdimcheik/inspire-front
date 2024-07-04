@@ -66,7 +66,6 @@ export class ReservationService {
   }
 
   getSlotsForMentor(mentorId: number): Observable<any> {
-    console.log('getSlotsformentor', mentorId);
     return this.httpClient.get(
       `${environment.BASE_URL_API}/user/slot/get/${mentorId}`
     );
@@ -127,8 +126,6 @@ export class ReservationService {
       )
       .pipe(
         tap((res) => {
-          console.log(res);
-
           this.activeMentorReservations$.next(res);
         })
       );
@@ -169,7 +166,6 @@ export class ReservationService {
       )
       .pipe(
         tap((res) => {
-          console.log('new list ', res);
           this.activeMentorReservationsHistory$.next(res);
         })
       );
@@ -279,7 +275,6 @@ export class ReservationService {
       subject: subject,
       details: details,
     };
-    console.log('lolus');
 
     return this.httpClient.post<Reservation>(
       environment.BASE_URL_API + '/reservation/add',

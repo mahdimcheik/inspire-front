@@ -32,7 +32,6 @@ export class DashboardLinksComponent implements OnInit {
 
     this.router.events.subscribe((res) => {
       if (res instanceof NavigationStart) {
-        console.log('Navigation', res);
         this.listLink.forEach((link) => {
           link.active = res.url === '/' + link.path;
         });

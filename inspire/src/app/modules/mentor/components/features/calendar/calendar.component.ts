@@ -118,39 +118,15 @@ export class CalendarComponent implements OnInit {
   }
 
   deleteSlot() {
-    console.log('event details ', this.eventDetails);
-    if (this.eventDetails.booked) {
-      this.reservationService
-        .deleteReservationAndSlot(this.eventDetails.id)
-        .pipe(
-          switchMap((res) => {
-            return this.reservationService.getMentorReservationList(0, 5, 0);
-          })
-        )
-        .subscribe(() => {
-          this.displayModal = false;
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Super ! ',
-            detail: 'Votre créneau a bien été supprimé',
-          });
-          this.loadSlots();
-        });
-      return;
-    }
-    if (this.eventDetails.id) {
-      this.reservationService.deleteSlot(this.eventDetails.id).subscribe(() => {
-        this.displayModal = false;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Super ! ',
-          detail: 'Votre créneau a bien été supprimé',
-        });
-        this.loadSlots();
+    this.reservationService.deleteSlot(this.eventDetails.id).subscribe(() => {
+      this.displayModal = false;
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Super ! ',
+        detail: 'Votre créneau a bien été supprimé',
       });
-    } else {
-      console.error('Pas de slot à supprimer');
-    }
+      this.loadSlots();
+    });
   }
 
   editSlot() {
@@ -174,9 +150,6 @@ export class CalendarComponent implements OnInit {
     const date: Date = this.editForm.get(field)?.value;
     if (date) {
       const formattedDate = this.formatDate(date);
-      console.log(`Date and time selected for ${field}: ${formattedDate}`);
-    } else {
-      console.log(`No date selected for ${field}`);
     }
   }
 
@@ -288,8 +261,6 @@ export class CalendarComponent implements OnInit {
 
     this.displayModal = true;
     this.isModfify = true;
-    console.log('edit', this.eventDetailsEdit);
-    console.log('pasedit', this.eventDetails);
   }
 
   closeModal() {
@@ -357,7 +328,6 @@ export class CalendarComponent implements OnInit {
   };
 
   renderEventContent(arg: any) {
-    console.log('args', arg);
     let html = `<div class="custom-event">
                   <b>${arg.event.title}</b>
                   <div>${
@@ -376,8 +346,6 @@ export class CalendarComponent implements OnInit {
   }
 
   handleEventClick(eventClickArg: EventClickArg) {
-    console.log('event details ', eventClickArg.event);
-
     this.eventDetails = {
       id: eventClickArg.event.id,
       title: eventClickArg.event.title,

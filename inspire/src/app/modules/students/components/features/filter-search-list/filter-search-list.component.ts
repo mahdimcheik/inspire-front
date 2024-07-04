@@ -54,7 +54,6 @@ export class FilterSearchListComponent {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((skills) => {
         this.skills = skills;
-        console.log('skills:', this.skills);
       });
   }
 

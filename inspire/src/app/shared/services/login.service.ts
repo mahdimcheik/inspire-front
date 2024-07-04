@@ -33,8 +33,6 @@ export class LoginService {
       .pipe(
         tap((users) => {
           if (users) {
-            console.log('user authen', users);
-
             const user = users;
             this.userStore.setUserConnected(user);
             this.userStore.token$.next(user.token);
@@ -43,7 +41,6 @@ export class LoginService {
               type: 'login',
               payload: this.userStore.getUserConnected$().value,
             });
-            console.log('user', user);
 
             if (user.role === 'MENTOR') {
               this.router.navigate(['/mentor']);
@@ -69,7 +66,6 @@ export class LoginService {
 
   logout() {
     const user = this.userStore.getUserConnected$().value;
-    console.log(' user in service ', user);
 
     if (user && (user.email || user.token || user.id)) {
       localStorage.removeItem('token');
@@ -77,8 +73,6 @@ export class LoginService {
       this.userStore.token$.next('');
       this.router.navigate(['']);
       this.publish({ type: 'logout' } as BroadcastMessage);
-    } else {
-      console.log('No valid user data found, aborting logout');
     }
   }
 

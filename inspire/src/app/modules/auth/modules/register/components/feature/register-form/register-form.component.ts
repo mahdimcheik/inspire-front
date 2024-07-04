@@ -45,7 +45,6 @@ export class RegisterFormComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.subscribe((data) => {
       this.role = data['role'];
-      console.log(this.role);
     });
   }
 

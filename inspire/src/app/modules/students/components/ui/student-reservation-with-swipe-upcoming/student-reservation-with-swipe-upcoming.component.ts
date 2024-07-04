@@ -114,7 +114,6 @@ export class StudentReservationWithSwipeUpcomingComponent implements OnInit {
   }
 
   removeReservation() {
-    console.log(this.reservation.id, this.user.value.id);
     const first = this.isHistory
       ? this.paginationService.offsetReservationStudentHistory.value
       : this.paginationService.offsetReservationStudent.value;

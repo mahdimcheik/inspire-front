@@ -35,7 +35,6 @@ export class AppComponent implements OnInit {
         .pipe(takeUntilDestroyed(this.destropyRef))
         .subscribe((res) => {
           if (res.role) {
-            console.log('redirecting to menotr or student');
             this.userStoreService.setUserConnected(res);
 
             res.role === 'MENTOR'
@@ -43,7 +42,6 @@ export class AppComponent implements OnInit {
               : this.router.navigateByUrl('/student');
           }
         });
-      console.log('fail redirect');
     }
   }
 }

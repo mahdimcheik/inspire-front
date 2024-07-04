@@ -63,10 +63,6 @@ export class CardMentorComponent implements OnInit {
     event.stopPropagation();
     const studentId = this.userStoreService.getUserId();
     if (studentId) {
-      console.log(
-        'studentService.activeStudentProfil$.value.id:',
-        this.studentService.activeStudentProfil$.value.id
-      );
       if (this.isFavorite) {
         this.isFavorite = true;
         this.favoritesService

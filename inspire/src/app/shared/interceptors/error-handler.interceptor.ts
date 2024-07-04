@@ -11,8 +11,6 @@ export const errorHandlerInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     catchError((err: any) => {
       if (err instanceof HttpErrorResponse) {
-        console.log('response error ');
-
         if (err.status === 404) {
           console.error('Unauthorized request:', err);
           messageService.add({

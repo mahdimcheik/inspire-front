@@ -29,8 +29,6 @@ export class MentorService {
       )
       .pipe(
         tap((res) => {
-          console.log('recieved mentor ', res);
-
           this.activeMentorProfil$.next(res);
         })
       );
@@ -54,17 +52,15 @@ export class MentorService {
       )
       .pipe(
         tap((result) => {
-          console.log(' new profil ', result);
-
           this.activeMentorProfil$.next(profil);
         })
       );
   }
 
   getMentorsList() {
-    return this.httpClient
-      .get<MentorDTO[]>(environment.BASE_URL_API + '/mentor/get/all')
-      .pipe(tap((res) => console.log(res)));
+    return this.httpClient.get<MentorDTO[]>(
+      environment.BASE_URL_API + '/mentor/get/all'
+    );
   }
 
   getMentorsBySkills(skills: string[]): Observable<MentorDTO[]> {

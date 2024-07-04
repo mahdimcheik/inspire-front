@@ -138,7 +138,6 @@ export default class ReservationManager {
       let [reservations] = await this.database.query(query, values);
 
       const total = reservations[0]?.totalCount ?? 0;
-      console.log(reservations);
 
       if (reservations.length) {
         reservations = reservations.map((reservation) => {

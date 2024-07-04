@@ -39,7 +39,6 @@ export class StudentReservationComponent implements OnInit {
     // this.first = (event.page || 0) * (event.rows || 0);
     // this.first = event.first || 0;
     this.paginationService.offsetReservationStudent.next(event.first || 0);
-    console.log(event.first);
 
     this.reservationService
       .getStudentReservationList(
