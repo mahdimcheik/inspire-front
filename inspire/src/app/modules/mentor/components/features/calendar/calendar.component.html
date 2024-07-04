@@ -3,7 +3,6 @@
   <ng-container *ngIf="today?.length">
     <h3>La semaine de {{ calendar.getApi().view.title }}</h3>
   </ng-container>
-
   <full-calendar
     [events]="events"
     [options]="calendarOptions"

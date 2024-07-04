@@ -1,11 +1,17 @@
 import {
   AfterViewChecked,
+  AfterViewInit,
   Component,
   Input,
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { CalendarOptions, EventClickArg, EventInput } from '@fullcalendar/core';
+import {
+  CalendarOptions,
+  DatesSetArg,
+  EventClickArg,
+  EventInput,
+} from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
@@ -270,7 +276,7 @@ export class CalendarComponent implements OnInit {
   calendarOptions: CalendarOptions = {
     initialView: 'timeGridWeek',
     plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
-
+    datesSet: this.handleDatesSet.bind(this),
     locale: frLocale,
     headerToolbar: {
       right: 'today prev,next',
@@ -406,6 +412,21 @@ export class CalendarComponent implements OnInit {
       }
     );
     this.loadSlots();
+  }
+
+  handleDatesSet(arg: any) {
+    this.updateViewDates();
+  }
+
+  updateViewDates() {
+    const calendarApi = this.calendarComponent.getApi();
+    const start = calendarApi.view.currentStart;
+    const end = calendarApi.view.currentEnd;
+    const currentDate = calendarApi.getDate();
+
+    console.log('Start of current view:', start);
+    console.log('End of current view:', end);
+    console.log('Current date:', currentDate);
   }
 
   ngOnDestroy(): void {
