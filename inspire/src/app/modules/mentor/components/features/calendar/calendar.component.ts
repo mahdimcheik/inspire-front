@@ -32,7 +32,7 @@ import { Slot, SlotDTO } from '../../../../../shared/models/reservation';
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.scss',
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, AfterViewInit {
   @ViewChild('calendar')
   calendarComponent!: FullCalendarComponent;
 
@@ -46,11 +46,12 @@ export class CalendarComponent implements OnInit {
   displayModal: boolean = false;
   eventDetails: Slot = {} as Slot;
   eventDetailsEdit: any = {};
+  dateStart!: Date;
+  dateEnd!: Date;
+  currentDate!: Date;
 
   mode: string = '';
   isModfify: boolean = false;
-  datetime24h: Date[] | undefined;
-  time: Date[] | undefined;
 
   constructor(
     private reservationService: ReservationService,
@@ -109,7 +110,7 @@ export class CalendarComponent implements OnInit {
 
   validateSlot() {
     this.reservationService
-      .addSlotToMentor(this.formattedSlotInfo)
+      .addSlotToMentor(this.formattedSlotInfo, this.dateStart, this.dateEnd)
       .subscribe(() => {
         this.visible = false;
         this.messageService.add({
@@ -276,11 +277,13 @@ export class CalendarComponent implements OnInit {
   calendarOptions: CalendarOptions = {
     initialView: 'timeGridWeek',
     plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
-    datesSet: this.handleDatesSet.bind(this),
+    // datesSet: this.handleDatesSet.bind(this),
+
     locale: frLocale,
     headerToolbar: {
-      right: 'today prev,next',
-      left: 'title dayGridMonth timeGridWeek timeGridDay',
+      right: '',
+      left: '',
+      center: '',
     },
     views: {
       dayGridMonth: {
@@ -295,14 +298,14 @@ export class CalendarComponent implements OnInit {
         start: '2024-05-24',
       },
     },
-    buttonText: {
-      today: "Aujourd'hui",
-      month: 'Mois',
-      week: 'Semaine',
-      day: 'Jour',
-      list: 'list',
-      allDayText: 'tous',
-    },
+    // buttonText: {
+    //   // today: "Aujourd'hui",
+    //   // month: 'Mois',
+    //   // week: 'Semaine',
+    //   // day: 'Jour',
+    //   // list: 'list',
+    //   // allDayText: 'tous',
+    // },
     weekends: true,
     slotDuration: '00:15:00',
     slotMinTime: '09:00',
@@ -374,10 +377,13 @@ export class CalendarComponent implements OnInit {
 
   loadSlots(): void {
     const mentorId = this.mentorId;
-    this.reservationService.getSlotsForMentor(mentorId).subscribe((slots) => {
-      this.events = this.formatSlotsToEvents(slots);
-    });
+    this.reservationService
+      .getSlotsForMentor(mentorId, this.dateStart, this.dateEnd)
+      .subscribe((slots) => {
+        this.events = this.formatSlotsToEvents(slots);
+      });
   }
+
   formatSlotsToEvents(slots: any[]): EventInput[] {
     return slots.map((slot) => ({
       id: slot.id,
@@ -411,7 +417,11 @@ export class CalendarComponent implements OnInit {
         }
       }
     );
-    this.loadSlots();
+  }
+
+  ngAfterViewInit(): void {
+    this.updateViewDates();
+    // this.loadSlots();
   }
 
   handleDatesSet(arg: any) {
@@ -420,13 +430,34 @@ export class CalendarComponent implements OnInit {
 
   updateViewDates() {
     const calendarApi = this.calendarComponent.getApi();
-    const start = calendarApi.view.currentStart;
-    const end = calendarApi.view.currentEnd;
-    const currentDate = calendarApi.getDate();
-
-    console.log('Start of current view:', start);
-    console.log('End of current view:', end);
-    console.log('Current date:', currentDate);
+    this.dateStart = calendarApi.view.currentStart;
+    this.dateEnd = calendarApi.view.currentEnd;
+    this.currentDate = calendarApi.getDate();
+    this.loadSlots();
+  }
+  next(): void {
+    this.calendarComponent.getApi().next();
+    this.updateViewDates();
+  }
+  prev(): void {
+    this.calendarComponent.getApi().prev();
+    this.updateViewDates();
+  }
+  getToday(): void {
+    this.calendarComponent.getApi().today();
+    this.updateViewDates();
+  }
+  weekView() {
+    this.calendarComponent.getApi().changeView('timeGridWeek');
+    this.updateViewDates();
+  }
+  monthView() {
+    this.calendarComponent.getApi().changeView('dayGridMonth');
+    this.updateViewDates();
+  }
+  dayView() {
+    this.calendarComponent.getApi().changeView('timeGridDay');
+    this.updateViewDates();
   }
 
   ngOnDestroy(): void {

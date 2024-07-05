@@ -56,7 +56,11 @@ export class ReservationService {
 
   constructor() {}
 
-  addSlotToMentor(slotInfo: any): Observable<any> {
+  addSlotToMentor(
+    slotInfo: any,
+    dateBegin: Date,
+    dateEnd: Date
+  ): Observable<any> {
     const formattedSlotInfo = {
       dateBegin: slotInfo.dateBegin,
       dateEnd: slotInfo.dateEnd,
@@ -66,12 +70,26 @@ export class ReservationService {
 
     return this.httpClient
       .post(`${environment.BASE_URL_API}/user/slot/add`, formattedSlotInfo)
-      .pipe(switchMap(() => this.getSlotsForMentor(slotInfo.mentorId)));
+      .pipe(
+        switchMap(() =>
+          this.getSlotsForMentor(slotInfo.mentorId, dateBegin, dateEnd)
+        )
+      );
   }
 
-  getSlotsForMentor(mentorId: number): Observable<any> {
-    return this.httpClient.get(
-      `${environment.BASE_URL_API}/user/slot/get/${mentorId}`
+  getSlotsForMentor(
+    mentorId: number,
+    dateBegin: Date,
+    dateEnd: Date
+  ): Observable<SlotDTO[]> {
+    console.log('called to get slots ');
+
+    return this.httpClient.post<SlotDTO[]>(
+      `${environment.BASE_URL_API}/user/slot/get/${mentorId}`,
+      {
+        start: dateBegin,
+        end: dateEnd,
+      }
     );
   }
 

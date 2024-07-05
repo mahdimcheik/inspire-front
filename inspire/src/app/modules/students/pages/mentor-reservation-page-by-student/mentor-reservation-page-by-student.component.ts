@@ -59,8 +59,9 @@ export class MentorReservationPageByStudentComponent implements OnInit {
     events: [],
     locale: frLocale,
     headerToolbar: {
-      right: 'today prev,next',
-      left: 'dayGridMonth timeGridWeek timeGridDay',
+      right: '',
+      left: '',
+      center: '',
     },
     views: {
       dayGridMonth: {
