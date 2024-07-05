@@ -1,4 +1,11 @@
-<div class="control"></div>
+<div class="control">
+  <button (click)="next()">Suivant</button>
+  <button (click)="prev()">précédent</button>
+  <button (click)="getToday()">Aujourd'hui</button>
+  <button (click)="weekView()">week</button>
+  <button (click)="monthView()">month</button>
+  <button (click)="dayView()">day</button>
+</div>
 <div class="calendar-background">
   <h2 *ngIf="profil | async as profil">
     Réservez un créneau avec <span>{{ profil.firstname | titlecase }}</span>

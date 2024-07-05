@@ -93,13 +93,17 @@ export class ReservationService {
     );
   }
 
-  getSlotsforStudentByMentorId(mentorId: number): Observable<SlotDTO[]> {
+  getSlotsforStudentByMentorId(
+    mentorId: number,
+    dateBegin: Date,
+    dateEnd: Date
+  ): Observable<SlotDTO[]> {
     const studentId = this.studentService.activeStudentProfil$.value.id;
-    let end = new Date();
-    end.setDate(end.getDate() + 50);
+    // let end = new Date();
+    // end.setDate(end.getDate() + 50);
     return this.httpClient.post<SlotDTO[]>(
       `${environment.BASE_URL_API}/user/slot/slots/${mentorId}/${studentId}`,
-      { start: new Date(), end: end }
+      { start: dateBegin, end: dateEnd }
     );
   }
 

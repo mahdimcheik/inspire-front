@@ -1,10 +1,12 @@
 import {
   AfterViewChecked,
+  AfterViewInit,
   Component,
   DestroyRef,
   Inject,
   Input,
   OnInit,
+  ViewChild,
   inject,
 } from '@angular/core';
 import { CalendarOptions, EventClickArg, EventInput } from '@fullcalendar/core';
@@ -21,13 +23,18 @@ import { ActivatedRoute } from '@angular/router';
 import { Reservation, SlotDTO } from '../../../../shared/models/reservation';
 import { StudentService } from '../../../../shared/services/student.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FullCalendarComponent } from '@fullcalendar/angular';
 
 @Component({
   selector: 'app-mentor-reservation-by-student',
   templateUrl: './mentor-reservation-page-by-student.component.html',
   styleUrl: './mentor-reservation-page-by-student.component.scss',
 })
-export class MentorReservationPageByStudentComponent implements OnInit {
+export class MentorReservationPageByStudentComponent
+  implements OnInit, AfterViewInit
+{
+  @ViewChild('calendar')
+  calendarComponent!: FullCalendarComponent;
   today!: string;
   visible = false;
   mentorId!: number;
@@ -39,6 +46,10 @@ export class MentorReservationPageByStudentComponent implements OnInit {
   destroyRef = inject(DestroyRef);
   subject = 'Autre';
   details = '';
+
+  dateStart!: Date;
+  dateEnd!: Date;
+  currentDate!: Date;
 
   constructor(
     private reservationService: ReservationService,
@@ -142,7 +153,7 @@ export class MentorReservationPageByStudentComponent implements OnInit {
   loadSlots(): void {
     const mentorId = this.mentorId;
     this.reservationService
-      .getSlotsforStudentByMentorId(mentorId)
+      .getSlotsforStudentByMentorId(mentorId, this.dateStart, this.dateEnd)
       .subscribe((slots) => {
         this.events = this.formatSlotsToEvents(slots).filter(
           (ele) => !ele['booked']
@@ -177,11 +188,14 @@ export class MentorReservationPageByStudentComponent implements OnInit {
         this.subject,
         this.details
       )
-      .pipe(takeUntilDestroyed(this.destroyRef))
       .pipe(
         switchMap(() => {
           const mentorId = this.mentorId;
-          return this.reservationService.getSlotsforStudentByMentorId(mentorId);
+          return this.reservationService.getSlotsforStudentByMentorId(
+            mentorId,
+            this.dateStart,
+            this.dateEnd
+          );
         }),
         takeUntilDestroyed(this.destroyRef)
       )
@@ -201,9 +215,50 @@ export class MentorReservationPageByStudentComponent implements OnInit {
       map((data) => data['profil']),
       tap((res) => {
         this.mentorId = res.id;
-        this.loadSlots();
+        // this.loadSlots();
       })
     );
+  }
+
+  ngAfterViewInit(): void {
+    this.updateViewDates();
+    this.loadSlots();
+  }
+
+  handleDatesSet(arg: any) {
+    this.updateViewDates();
+  }
+
+  updateViewDates() {
+    const calendarApi = this.calendarComponent.getApi();
+    this.dateStart = calendarApi.view.currentStart;
+    this.dateEnd = calendarApi.view.currentEnd;
+    this.currentDate = calendarApi.getDate();
+    this.loadSlots();
+  }
+  next(): void {
+    this.calendarComponent.getApi().next();
+    this.updateViewDates();
+  }
+  prev(): void {
+    this.calendarComponent.getApi().prev();
+    this.updateViewDates();
+  }
+  getToday(): void {
+    this.calendarComponent.getApi().today();
+    this.updateViewDates();
+  }
+  weekView() {
+    this.calendarComponent.getApi().changeView('timeGridWeek');
+    this.updateViewDates();
+  }
+  monthView() {
+    this.calendarComponent.getApi().changeView('dayGridMonth');
+    this.updateViewDates();
+  }
+  dayView() {
+    this.calendarComponent.getApi().changeView('timeGridDay');
+    this.updateViewDates();
   }
 
   setSubject(event: Event) {}
