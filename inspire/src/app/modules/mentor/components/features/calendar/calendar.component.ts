@@ -5,6 +5,7 @@ import {
   Component,
   Input,
   OnInit,
+  signal,
   ViewChild,
 } from '@angular/core';
 import {
@@ -41,7 +42,7 @@ export class CalendarComponent
   @ViewChild('calendar')
   calendarComponent!: FullCalendarComponent;
 
-  today = '';
+  today = signal('');
   visible = false;
   mentorId!: number;
   userId!: number;
@@ -433,6 +434,9 @@ export class CalendarComponent
     this.dateEnd = calendarApi.view.currentEnd;
     this.currentDate = calendarApi.getDate();
     this.loadSlots();
+    setTimeout(() => {
+      this.today = signal('today');
+    }, 10);
   }
   next(): void {
     this.calendarComponent.getApi().next();
