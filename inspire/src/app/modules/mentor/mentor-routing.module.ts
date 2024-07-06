@@ -24,14 +24,18 @@ const routes: Routes = [
     path: '',
     component: LayoutMentor,
     resolve: {
-      reservationsData: mentorReservationsResolver,
-      reservationsHistoryData: mentorReservationsHistoryResolver,
+      // reservationsData: mentorReservationsResolver,
+      // reservationsHistoryData: mentorReservationsHistoryResolver,
       notifications: notificationResolver,
     },
     children: [
       {
         path: '',
         component: DashboardComponent,
+        resolve: {
+          reservationsData: mentorReservationsResolver,
+          reservationsHistoryData: mentorReservationsHistoryResolver,
+        },
       },
       {
         path: 'profil',
