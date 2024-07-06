@@ -7,6 +7,7 @@ import { WindowWatcherService } from '../../../../shared/services/window-watcher
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MessageService } from 'primeng/api';
 import { UserService } from '../../../../shared/services/user.service';
+import { environment } from '../../../../../environments/environment.development';
 
 @Component({
   selector: 'app-list-experience',
@@ -17,6 +18,7 @@ export class ListExperienceComponent {
   @Input() title: string = '';
   @Input() experiences!: ExperienceDTO[];
   @Input() editModeOn: boolean = true;
+  maxExperiencesNumber: number = environment.MAX_EXPERIENCES_NUMBER;
   isVisibleFormExperience = false;
 
   userService = inject(UserService);

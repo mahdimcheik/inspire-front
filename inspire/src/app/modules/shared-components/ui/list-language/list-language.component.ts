@@ -4,6 +4,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UserStoreService } from '../../../../shared/services/stores/user-store.service';
 import { MessageService } from 'primeng/api';
 import { UserService } from '../../../../shared/services/user.service';
+import { environment } from '../../../../../environments/environment.development';
 
 @Component({
   selector: 'app-list-language',
@@ -14,6 +15,7 @@ export class ListLanguageComponent {
   @Input() title: string = '';
   @Input() languages!: Language[];
   @Input() editModeOn: boolean = true;
+  maxLanguagesNumber: number = environment.MAX_LANGUAGES_NUMBER;
 
   isModalVisible = false;
 

@@ -3,7 +3,7 @@
   <button
     class="edit-button"
     (click)="showAddExperienceForm()"
-    *ngIf="editModeOn"
+    *ngIf="editModeOn && experiences.length < maxExperiencesNumber"
   >
     <img src="assets/svgs/plus.svg" alt="edit" width="25" height="25" />
   </button>

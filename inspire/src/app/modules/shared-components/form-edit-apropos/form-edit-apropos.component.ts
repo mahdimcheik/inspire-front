@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MentorDTO, StudentDTO } from '../../../shared/models/user';
 import { UserService } from '../../../shared/services/user.service';
+import { environment } from '../../../../environments/environment.development';
 
 @Component({
   selector: 'app-form-edit-apropos',
@@ -34,6 +35,7 @@ export class FormEditAproposComponent implements OnInit, OnDestroy {
   @Input() selectedSkills!: Skill[];
   @Input() profil!: MentorDTO;
   skills!: Skill[];
+  maxSkillsNumber: number = environment.MAX_SKILLS_NUMBER;
 
   destroyRef = inject(DestroyRef);
   listSkills$ = inject(UserService).getListSkills();

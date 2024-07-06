@@ -13,6 +13,7 @@ import { Subject, Subscription, take, takeUntil } from 'rxjs';
 import { UserStoreService } from '../../../shared/services/stores/user-store.service';
 import { AutoDestroy } from '../../../shared/utilities/decorators';
 import { UserService } from '../../../shared/services/user.service';
+import { environment } from '../../../../environments/environment.development';
 
 @Component({
   selector: 'app-modal-edit-languages',
@@ -26,6 +27,7 @@ export class ModalEditLanguagesComponent implements OnInit, OnDestroy {
   @Output() onCancel = new EventEmitter();
   @Input() visible: boolean = true;
   @Input() selectedLanguages!: Language[];
+  maxLanguagesNumber = environment.MAX_LANGUAGES_NUMBER;
   languages!: Language[];
   @AutoDestroy destroy$: Subject<void> = new Subject<void>();
 
