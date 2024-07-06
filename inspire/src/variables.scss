@@ -7,11 +7,19 @@ $font-color-grey: #9c9c9c;
 $background-light-list: #fff4e8;
 $background-light-list-pink: #fedae376;
 
-$question-bg: #fde9ee;
-$response-bg: #fff3e8;
-
 // break points
 $extra-large: 1200px;
 $large: 992px;
 $medium: 768px;
 $small: 576px;
+
+// question and response
+
+$question-bg: #fde9ee;
+$response-bg: #fff3e8;
+
+// slots variables
+$slot-free-presential: #f7156b;
+$slot-free-visio: #ffbe77;
+$slot-booked: #447597;
+$slot-passed: #9c9c9c;
