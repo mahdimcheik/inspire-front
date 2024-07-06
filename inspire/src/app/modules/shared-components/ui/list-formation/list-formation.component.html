@@ -6,7 +6,7 @@
 </div>
 <div class="list-skills">
   <ng-container *ngIf="formations.length === 0">
-    <app-skeleton-formation></app-skeleton-formation>
+    <app-skeleton-reservation></app-skeleton-reservation>
   </ng-container>
   <ng-container *ngIf="formations">
     @for( formation of formations; track $index ){
