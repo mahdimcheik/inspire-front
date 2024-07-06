@@ -101,8 +101,8 @@ export class CalendarComponent
 
       this.formattedSlotInfo = {
         // formattedDuration,
-        dateBegin: selectionInfo.start,
-        dateEnd: selectionInfo.end,
+        dateBegin: startLocalDateTime,
+        dateEnd: endLocalDateTime,
         visio: this.formulaire.value.mode === 'visio',
         mentorId: this.mentorId,
       };
