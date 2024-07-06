@@ -109,6 +109,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   };
 
   validateSlot() {
+    console.log(' new slot', this.formattedSlotInfo);
     this.reservationService
       .addSlotToMentor(this.formattedSlotInfo, this.dateStart, this.dateEnd)
       .subscribe(() => {
@@ -300,14 +301,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         start: '2024-05-24',
       },
     },
-    // buttonText: {
-    //   // today: "Aujourd'hui",
-    //   // month: 'Mois',
-    //   // week: 'Semaine',
-    //   // day: 'Jour',
-    //   // list: 'list',
-    //   // allDayText: 'tous',
-    // },
     weekends: true,
     slotDuration: '00:15:00',
     slotMinTime: '09:00',
@@ -361,7 +354,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       dateBegin: eventClickArg.event.start || new Date(),
       dateEnd: eventClickArg.event.end || new Date(),
       visio: eventClickArg.event.extendedProps['visio'],
-      // booked: eventClickArg.event.extendedProps['booked'],
     };
 
     this.editForm.setValue({

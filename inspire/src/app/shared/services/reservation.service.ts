@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment.development';
 import {
   Reservation,
   reservationForMentorDTO,
+  Slot,
   SlotDTO,
 } from '../models/reservation';
 import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
@@ -61,12 +62,13 @@ export class ReservationService {
     dateBegin: Date,
     dateEnd: Date
   ): Observable<any> {
-    const formattedSlotInfo = {
+    const formattedSlotInfo: any = {
       dateBegin: slotInfo.dateBegin,
       dateEnd: slotInfo.dateEnd,
       visio: slotInfo.visio,
       mentorId: slotInfo.mentorId,
     };
+    console.log('formatted slot ', formattedSlotInfo);
 
     return this.httpClient
       .post(`${environment.BASE_URL_API}/user/slot/add`, formattedSlotInfo)
@@ -82,8 +84,6 @@ export class ReservationService {
     dateBegin: Date,
     dateEnd: Date
   ): Observable<SlotDTO[]> {
-    console.log('called to get slots ');
-
     return this.httpClient.post<SlotDTO[]>(
       `${environment.BASE_URL_API}/user/slot/get/${mentorId}`,
       {
