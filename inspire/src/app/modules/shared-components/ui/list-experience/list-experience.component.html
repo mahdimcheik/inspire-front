@@ -3,12 +3,16 @@
   <button
     class="edit-button"
     (click)="showAddExperienceForm()"
-    *ngIf="editModeOn"
+    *ngIf="editModeOn && experiences.length < maxExperiencesNumber"
   >
     <img src="assets/svgs/plus.svg" alt="edit" width="25" height="25" />
   </button>
 </div>
+
 <div class="list-skills">
+  <ng-container *ngIf="experiences.length === 0">
+    <app-skeleton-reservation></app-skeleton-reservation>
+  </ng-container>
   <ng-container *ngIf="experiences">
     @for( experience of experiences; track $index ){
     <app-card-experience

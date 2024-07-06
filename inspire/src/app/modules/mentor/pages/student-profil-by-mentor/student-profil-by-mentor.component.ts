@@ -37,11 +37,5 @@ export class StudentProfilByMentorComponent {
     this.formations = this.activatedRoute.snapshot.data['formations'];
     this.skills = this.activatedRoute.snapshot.data['skills'];
     this.profil = this.activatedRoute.snapshot.data['profil'];
-
-    console.log('Languages:', this.languages);
-    console.log('Experiences:', this.experiences);
-    console.log('Formations:', this.formations);
-    console.log('Skills:', this.skills);
-    console.log('Profil:', this.profil);
   }
 }

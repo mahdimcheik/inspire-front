@@ -40,10 +40,7 @@ export const studentExperiencesResolver: ResolveFn<Experience[]> = (
 
 export const studentProfilByIdResolver: ResolveFn<Student> = (route, state) => {
   const userId: number = +route.params['userId'];
-  console.log('Resolving student profile for userId:', userId);
-  return inject(UserByIdService)
-    .getStudentProfilById(userId)
-    .pipe(tap((data) => console.log('Resolved student profile data:', data)));
+  return inject(UserByIdService).getStudentProfilById(userId);
 };
 
 export const studentLanguagesByIdResolver: ResolveFn<Observable<Language[]>> = (
@@ -51,10 +48,7 @@ export const studentLanguagesByIdResolver: ResolveFn<Observable<Language[]>> = (
   state
 ) => {
   const userId: number = +route.params['userId'];
-  console.log('Resolving student languages for userId:', userId);
-  return inject(UserByIdService)
-    .getUserLanguagesById(userId)
-    .pipe(tap((data) => console.log('Resolved student languages data:', data)));
+  return inject(UserByIdService).getUserLanguagesById(userId);
 };
 
 export const studentSkillsByIdResolver: ResolveFn<Skill[]> = (route, state) => {

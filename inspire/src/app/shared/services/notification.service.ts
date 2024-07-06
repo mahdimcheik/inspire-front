@@ -19,7 +19,6 @@ export class NotificationService {
       )
       .pipe(
         tap((res) => {
-          console.log('notifications ', res);
           this.notifcationsMentor$.next(res);
         })
       );

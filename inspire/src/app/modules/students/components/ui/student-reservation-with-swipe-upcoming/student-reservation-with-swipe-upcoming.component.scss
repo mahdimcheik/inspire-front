@@ -239,6 +239,19 @@
 
 .subject-info {
   border: solid 1px black;
+  display: flex;
+  flex-direction: column;
+  p {
+    width: 80%;
+    background-color: $question-bg;
+    margin: 5px;
+    padding: 3px 10px;
+    border-radius: 10px;
+  }
+  .response {
+    align-self: end;
+    background-color: $response-bg;
+  }
 }
 
 .info {

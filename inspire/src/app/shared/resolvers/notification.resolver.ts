@@ -9,7 +9,6 @@ export const notificationResolver: ResolveFn<NotificationDTO[]> = (
   state
 ) => {
   const userId = inject(UserStoreService).getUserConnected$().value.id;
-  console.log('user in notif ', userId);
 
   return inject(NotificationService).getNotificationsMentor(userId);
 };

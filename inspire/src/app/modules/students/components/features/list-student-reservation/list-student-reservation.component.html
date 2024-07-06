@@ -7,13 +7,17 @@
     <div class="creneau">CRÉNEAU</div>
     <div class="action">{{ isHistory ? "MESSAGE" : "ACTION" }}</div>
   </div>
-  <h3 *ngIf="!reservations?.length">
+  <h3 *ngIf="!reservations.length">
     {{
       isHistory
         ? "Aucune ancienne réservation"
         : "Pas de nouvelles réservations"
     }}
   </h3>
+  <ng-container *ngIf="!reservations.length">
+    <app-skeleton-reservation></app-skeleton-reservation>
+    <app-skeleton-reservation></app-skeleton-reservation>
+  </ng-container>
   @for(item of reservations; track $index){
 
   <app-student-reservation-with-swipe-upcoming

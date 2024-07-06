@@ -1,10 +1,17 @@
 <div class="title-list">
   <h3>{{ title }}</h3>
-  <button class="edit-button" (click)="addCourse()" *ngIf="editModeOn">
+  <button
+    class="edit-button"
+    (click)="addCourse()"
+    *ngIf="editModeOn && formations.length < maxFormationsNumber"
+  >
     <img src="assets/svgs/plus.svg" alt="edit" width="25" height="25" />
   </button>
 </div>
 <div class="list-skills">
+  <ng-container *ngIf="formations.length === 0">
+    <app-skeleton-reservation></app-skeleton-reservation>
+  </ng-container>
   <ng-container *ngIf="formations">
     @for( formation of formations; track $index ){
     <app-card-formation

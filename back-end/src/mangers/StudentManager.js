@@ -35,7 +35,6 @@ export default class StudentManager {
     linkedinUrl = "www.linkedin.com"
   ) {
     try {
-      console.log("inside manager");
       const [result] = await client.query(
         `insert into students (firstname, lastname, title, description,userId, imgUrl, githubUrl, linkedinUrl) 
         values (? , ? , ? , ? , ? , ? , ? , ?)`,

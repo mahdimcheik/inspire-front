@@ -1,11 +1,17 @@
 import {
   AfterViewChecked,
+  AfterViewInit,
   Component,
   Input,
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { CalendarOptions, EventClickArg, EventInput } from '@fullcalendar/core';
+import {
+  CalendarOptions,
+  DatesSetArg,
+  EventClickArg,
+  EventInput,
+} from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
@@ -19,17 +25,18 @@ import { MentorDTO } from '../../../../../shared/models/user';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DateTimeService } from '../../../../../shared/services/dateTime.service';
 import { MessageService } from 'primeng/api';
+import { Slot, SlotDTO } from '../../../../../shared/models/reservation';
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.scss',
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, AfterViewInit {
   @ViewChild('calendar')
   calendarComponent!: FullCalendarComponent;
 
-  today!: string;
+  viewChecked = false;
   visible = false;
   mentorId!: number;
   userId!: number;
@@ -37,16 +44,14 @@ export class CalendarComponent implements OnInit {
   @Input() formattedSlotInfo!: any;
   events: EventInput[] = [];
   displayModal: boolean = false;
-  eventDetails: any = {};
+  eventDetails: Slot = {} as Slot;
   eventDetailsEdit: any = {};
+  dateStart!: Date;
+  dateEnd!: Date;
+  currentDate!: Date;
 
   mode: string = '';
   isModfify: boolean = false;
-  datetime24h: Date[] | undefined;
-  time: Date[] | undefined;
-  selectedTime: string = '';
-  selectedDate: string = '';
-  selectedEndTime: string = '';
 
   constructor(
     private reservationService: ReservationService,
@@ -90,9 +95,9 @@ export class CalendarComponent implements OnInit {
         this.dateTimeService.convertToLocalDateTimeString(selectionInfo.end);
 
       this.formattedSlotInfo = {
-        formattedDuration,
-        dateBegin: startLocalDateTime,
-        dateEnd: endLocalDateTime,
+        // formattedDuration,
+        dateBegin: selectionInfo.start,
+        dateEnd: selectionInfo.end,
         visio: this.formulaire.value.mode === 'visio',
         mentorId: this.mentorId,
       };
@@ -105,7 +110,7 @@ export class CalendarComponent implements OnInit {
 
   validateSlot() {
     this.reservationService
-      .addSlotToMentor(this.formattedSlotInfo)
+      .addSlotToMentor(this.formattedSlotInfo, this.dateStart, this.dateEnd)
       .subscribe(() => {
         this.visible = false;
         this.messageService.add({
@@ -118,28 +123,9 @@ export class CalendarComponent implements OnInit {
   }
 
   deleteSlot() {
-    console.log('event details ', this.eventDetails);
-    if (this.eventDetails.booked) {
-      this.reservationService
-        .deleteReservationAndSlot(this.eventDetails.id)
-        .pipe(
-          switchMap((res) => {
-            return this.reservationService.getMentorReservationList(0, 5, 0);
-          })
-        )
-        .subscribe(() => {
-          this.displayModal = false;
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Super ! ',
-            detail: 'Votre créneau a bien été supprimé',
-          });
-          this.loadSlots();
-        });
-      return;
-    }
-    if (this.eventDetails.id) {
-      this.reservationService.deleteSlot(this.eventDetails.id).subscribe(() => {
+    this.reservationService
+      .deleteSlot(this.eventDetails.id || 0)
+      .subscribe(() => {
         this.displayModal = false;
         this.messageService.add({
           severity: 'success',
@@ -148,16 +134,13 @@ export class CalendarComponent implements OnInit {
         });
         this.loadSlots();
       });
-    } else {
-      console.error('Pas de slot à supprimer');
-    }
   }
 
   editSlot() {
     this.eventDetailsEdit = {
       id: this.eventDetails.id,
-      start: this.eventDetails.start,
-      end: this.eventDetails.end,
+      start: this.eventDetails.dateBegin,
+      end: this.eventDetails.dateEnd,
       visio: this.eventDetails.visio,
     };
     this.isModfify = true;
@@ -174,9 +157,6 @@ export class CalendarComponent implements OnInit {
     const date: Date = this.editForm.get(field)?.value;
     if (date) {
       const formattedDate = this.formatDate(date);
-      console.log(`Date and time selected for ${field}: ${formattedDate}`);
-    } else {
-      console.log(`No date selected for ${field}`);
     }
   }
 
@@ -188,10 +168,10 @@ export class CalendarComponent implements OnInit {
 
     const id = Number(this.eventDetails.id);
     const dateBegin = this.dateTimeService.convertToLocalDateTimeString(
-      this.eventDetails.start
+      this.eventDetails.dateBegin
     );
     const dateEnd = this.dateTimeService.convertToLocalDateTimeString(
-      this.eventDetails.end
+      this.eventDetails.dateEnd
     );
 
     const visio = this.editForm.value.visio === 'visio';
@@ -271,8 +251,8 @@ export class CalendarComponent implements OnInit {
   handleEventDrop(eventDropArg: any) {
     this.eventDetails = {
       id: eventDropArg.oldEvent.id,
-      start: eventDropArg.oldEvent.start,
-      end: eventDropArg.oldEvent.end,
+      dateBegin: eventDropArg.oldEvent.start,
+      dateEnd: eventDropArg.oldEvent.end,
       visio: eventDropArg.oldEvent.extendedProps.visio,
     };
 
@@ -288,8 +268,6 @@ export class CalendarComponent implements OnInit {
 
     this.displayModal = true;
     this.isModfify = true;
-    console.log('edit', this.eventDetailsEdit);
-    console.log('pasedit', this.eventDetails);
   }
 
   closeModal() {
@@ -301,11 +279,13 @@ export class CalendarComponent implements OnInit {
   calendarOptions: CalendarOptions = {
     initialView: 'timeGridWeek',
     plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
+    // datesSet: this.handleDatesSet.bind(this),
 
     locale: frLocale,
     headerToolbar: {
-      right: 'today prev,next',
-      left: 'title dayGridMonth timeGridWeek timeGridDay',
+      right: '',
+      left: '',
+      center: '',
     },
     views: {
       dayGridMonth: {
@@ -320,14 +300,14 @@ export class CalendarComponent implements OnInit {
         start: '2024-05-24',
       },
     },
-    buttonText: {
-      today: "Aujourd'hui",
-      month: 'Mois',
-      week: 'Semaine',
-      day: 'Jour',
-      list: 'list',
-      allDayText: 'tous',
-    },
+    // buttonText: {
+    //   // today: "Aujourd'hui",
+    //   // month: 'Mois',
+    //   // week: 'Semaine',
+    //   // day: 'Jour',
+    //   // list: 'list',
+    //   // allDayText: 'tous',
+    // },
     weekends: true,
     slotDuration: '00:15:00',
     slotMinTime: '09:00',
@@ -357,7 +337,6 @@ export class CalendarComponent implements OnInit {
   };
 
   renderEventContent(arg: any) {
-    console.log('args', arg);
     let html = `<div class="custom-event">
                   <b>${arg.event.title}</b>
                   <div>${
@@ -376,15 +355,13 @@ export class CalendarComponent implements OnInit {
   }
 
   handleEventClick(eventClickArg: EventClickArg) {
-    console.log('event details ', eventClickArg.event);
-
     this.eventDetails = {
-      id: eventClickArg.event.id,
-      title: eventClickArg.event.title,
-      start: eventClickArg.event.start,
-      end: eventClickArg.event.end,
+      id: +eventClickArg.event.id,
+      // title: eventClickArg.event.title,
+      dateBegin: eventClickArg.event.start || new Date(),
+      dateEnd: eventClickArg.event.end || new Date(),
       visio: eventClickArg.event.extendedProps['visio'],
-      booked: eventClickArg.event.extendedProps['booked'],
+      // booked: eventClickArg.event.extendedProps['booked'],
     };
 
     this.editForm.setValue({
@@ -402,20 +379,28 @@ export class CalendarComponent implements OnInit {
 
   loadSlots(): void {
     const mentorId = this.mentorId;
-    this.reservationService.getSlotsForMentor(mentorId).subscribe((slots) => {
-      this.events = this.formatSlotsToEvents(slots);
-    });
+    this.reservationService
+      .getSlotsForMentor(mentorId, this.dateStart, this.dateEnd)
+      .subscribe((slots) => {
+        this.events = this.formatSlotsToEvents(slots);
+      });
   }
+
   formatSlotsToEvents(slots: any[]): EventInput[] {
     return slots.map((slot) => ({
       id: slot.id,
       title: slot.visio ? 'Visio' : 'Présentiel',
       start: slot.dateBegin,
       end: slot.dateEnd,
-      color: slot.visio ? '#FCBE77' : '#F8156B',
+      color:
+        slot.reservationId !== null
+          ? '#447597'
+          : slot.visio
+          ? '#FCBE77'
+          : '#F8156B',
       extendedProps: {
         visio: slot.visio,
-        booked: slot.booked,
+        booked: !!slot.reservationId,
         imgUrl: slot.imgUrl,
         firstname: slot.firstname,
         subject: slot.subject,
@@ -434,7 +419,47 @@ export class CalendarComponent implements OnInit {
         }
       }
     );
+  }
+
+  ngAfterViewInit(): void {
+    this.updateViewDates();
+    this.viewChecked = true;
+  }
+
+  handleDatesSet(arg: any) {
+    this.updateViewDates();
+  }
+
+  updateViewDates() {
+    const calendarApi = this.calendarComponent.getApi();
+    this.dateStart = calendarApi.view.currentStart;
+    this.dateEnd = calendarApi.view.currentEnd;
+    this.currentDate = calendarApi.getDate();
     this.loadSlots();
+  }
+  next(): void {
+    this.calendarComponent.getApi().next();
+    this.updateViewDates();
+  }
+  prev(): void {
+    this.calendarComponent.getApi().prev();
+    this.updateViewDates();
+  }
+  getToday(): void {
+    this.calendarComponent.getApi().today();
+    this.updateViewDates();
+  }
+  weekView() {
+    this.calendarComponent.getApi().changeView('timeGridWeek');
+    this.updateViewDates();
+  }
+  monthView() {
+    this.calendarComponent.getApi().changeView('dayGridMonth');
+    this.updateViewDates();
+  }
+  dayView() {
+    this.calendarComponent.getApi().changeView('timeGridDay');
+    this.updateViewDates();
   }
 
   ngOnDestroy(): void {

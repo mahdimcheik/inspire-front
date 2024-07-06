@@ -1,7 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
-import { Reservation, reservationForMentorDTO } from '../models/reservation';
+import {
+  Reservation,
+  reservationForMentorDTO,
+  SlotDTO,
+} from '../models/reservation';
 import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
 import { ReservationForStudentDTO } from '../models/reservation';
 import { MentorService } from './mentor.service';
@@ -52,7 +56,11 @@ export class ReservationService {
 
   constructor() {}
 
-  addSlotToMentor(slotInfo: any): Observable<any> {
+  addSlotToMentor(
+    slotInfo: any,
+    dateBegin: Date,
+    dateEnd: Date
+  ): Observable<any> {
     const formattedSlotInfo = {
       dateBegin: slotInfo.dateBegin,
       dateEnd: slotInfo.dateEnd,
@@ -62,23 +70,40 @@ export class ReservationService {
 
     return this.httpClient
       .post(`${environment.BASE_URL_API}/user/slot/add`, formattedSlotInfo)
-      .pipe(switchMap(() => this.getSlotsForMentor(slotInfo.mentorId)));
+      .pipe(
+        switchMap(() =>
+          this.getSlotsForMentor(slotInfo.mentorId, dateBegin, dateEnd)
+        )
+      );
   }
 
-  getSlotsForMentor(mentorId: number): Observable<any> {
-    console.log('getSlotsformentor', mentorId);
-    return this.httpClient.get(
-      `${environment.BASE_URL_API}/user/slot/get/${mentorId}`
+  getSlotsForMentor(
+    mentorId: number,
+    dateBegin: Date,
+    dateEnd: Date
+  ): Observable<SlotDTO[]> {
+    console.log('called to get slots ');
+
+    return this.httpClient.post<SlotDTO[]>(
+      `${environment.BASE_URL_API}/user/slot/get/${mentorId}`,
+      {
+        start: dateBegin,
+        end: dateEnd,
+      }
     );
   }
 
-  getSlotsforStudentByMentorId(mentorId: number): Observable<any> {
+  getSlotsforStudentByMentorId(
+    mentorId: number,
+    dateBegin: Date,
+    dateEnd: Date
+  ): Observable<SlotDTO[]> {
     const studentId = this.studentService.activeStudentProfil$.value.id;
-    let end = new Date();
-    end.setDate(end.getDate() + 50);
-    return this.httpClient.post(
+    // let end = new Date();
+    // end.setDate(end.getDate() + 50);
+    return this.httpClient.post<SlotDTO[]>(
       `${environment.BASE_URL_API}/user/slot/slots/${mentorId}/${studentId}`,
-      { start: new Date(), end: end }
+      { start: dateBegin, end: dateEnd }
     );
   }
 
@@ -88,11 +113,11 @@ export class ReservationService {
     );
   }
 
-  deleteReservationAndSlot(id: number): Observable<any> {
-    return this.httpClient.delete(
-      `${environment.BASE_URL_API}/reservation/delete/mentor/${id}`
-    );
-  }
+  // deleteReservationAndSlot(id: number): Observable<any> {
+  //   return this.httpClient.delete(
+  //     `${environment.BASE_URL_API}/reservation/delete/mentor/${id}`
+  //   );
+  // }
 
   deleteReservationOnly(id: number): Observable<any> {
     return this.httpClient.delete(
@@ -127,8 +152,6 @@ export class ReservationService {
       )
       .pipe(
         tap((res) => {
-          console.log(res);
-
           this.activeMentorReservations$.next(res);
         })
       );
@@ -169,7 +192,6 @@ export class ReservationService {
       )
       .pipe(
         tap((res) => {
-          console.log('new list ', res);
           this.activeMentorReservationsHistory$.next(res);
         })
       );
@@ -279,7 +301,6 @@ export class ReservationService {
       subject: subject,
       details: details,
     };
-    console.log('lolus');
 
     return this.httpClient.post<Reservation>(
       environment.BASE_URL_API + '/reservation/add',

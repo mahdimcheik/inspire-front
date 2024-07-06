@@ -15,8 +15,6 @@ export class FavoritesService {
   constructor(private http: HttpClient) {}
 
   addToFavorites(studentId: number, mentorId: number): Observable<any> {
-    console.log(studentId);
-    console.log(mentorId);
     return this.http.post(
       environment.BASE_URL_API +
         `/student/favorite/add/${studentId}/${mentorId}`,

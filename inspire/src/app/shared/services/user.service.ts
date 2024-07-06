@@ -96,10 +96,6 @@ export class UserService {
       )
       .pipe(
         tap((result) => {
-          console.log('updating !!!');
-
-          console.log(result);
-
           this.activeUserLanguages$.next(result.languages);
         })
       );
@@ -137,8 +133,6 @@ export class UserService {
     affectedRows: number;
     formations: FormationDTO[];
   }> {
-    console.log('formation ', formation);
-
     return this.http
       .put<{
         success: string;
@@ -267,8 +261,6 @@ export class UserService {
       }>(environment.BASE_URL_API + '/experience/user/delete/' + experienceId)
       .pipe(
         tap((res) => {
-          console.log('deleting res ', res);
-
           this.activeUserExperiences$.next(res.experiences);
         })
       );

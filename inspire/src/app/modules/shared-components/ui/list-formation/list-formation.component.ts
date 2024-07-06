@@ -4,6 +4,7 @@ import { WindowWatcherService } from '../../../../shared/services/window-watcher
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MessageService } from 'primeng/api';
 import { UserService } from '../../../../shared/services/user.service';
+import { environment } from '../../../../../environments/environment.development';
 
 @Component({
   selector: 'app-list-formation',
@@ -14,6 +15,7 @@ export class ListFormationComponent {
   @Input() title: string = '';
   @Input() formations!: FormationDTO[];
   @Input() editModeOn: boolean = true;
+  maxFormationsNumber: number = environment.MAX_FORMATIONS_NUMBER;
   isVisibleFormCourse = false;
 
   windowWatcherService = inject(WindowWatcherService);

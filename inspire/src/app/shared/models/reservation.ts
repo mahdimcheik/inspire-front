@@ -1,6 +1,8 @@
 export type Slot = {
-  dateTime: Date;
-  mentorId: number;
+  id?: number;
+  dateBegin: Date;
+  dateEnd: Date;
+  mentorId?: number;
   visio: boolean;
 };
 
