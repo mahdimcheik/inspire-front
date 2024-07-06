@@ -1,4 +1,5 @@
 import {
+  AfterContentInit,
   AfterViewChecked,
   AfterViewInit,
   Component,
@@ -27,16 +28,20 @@ import { DateTimeService } from '../../../../../shared/services/dateTime.service
 import { MessageService } from 'primeng/api';
 import { Slot, SlotDTO } from '../../../../../shared/models/reservation';
 
+type NewType = AfterViewChecked;
+
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.scss',
 })
-export class CalendarComponent implements OnInit, AfterViewInit {
+export class CalendarComponent
+  implements OnInit, AfterViewInit, AfterViewChecked
+{
   @ViewChild('calendar')
   calendarComponent!: FullCalendarComponent;
 
-  viewChecked = false;
+  today = '';
   visible = false;
   mentorId!: number;
   userId!: number;
@@ -280,7 +285,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   calendarOptions: CalendarOptions = {
     initialView: 'timeGridWeek',
     plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
-    // datesSet: this.handleDatesSet.bind(this),
+    datesSet: this.handleDatesSet.bind(this),
 
     locale: frLocale,
     headerToolbar: {
@@ -415,8 +420,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.updateViewDates();
-    this.viewChecked = true;
   }
+  ngAfterViewChecked(): void {}
 
   handleDatesSet(arg: any) {
     this.updateViewDates();
