@@ -8,7 +8,11 @@
     <img src="assets/svgs/plus.svg" alt="edit" width="25" height="25" />
   </button>
 </div>
+
 <div class="list-skills">
+  <ng-container *ngIf="experiences.length === 0">
+    <app-skeleton-formation></app-skeleton-formation>
+  </ng-container>
   <ng-container *ngIf="experiences">
     @for( experience of experiences; track $index ){
     <app-card-experience

@@ -5,6 +5,9 @@
   </button>
 </div>
 <div class="list-skills">
+  <ng-container *ngIf="formations.length === 0">
+    <app-skeleton-formation></app-skeleton-formation>
+  </ng-container>
   <ng-container *ngIf="formations">
     @for( formation of formations; track $index ){
     <app-card-formation

@@ -14,6 +14,10 @@
         : "Pas de nouvelles réservations"
     }}
   </h3>
+  <ng-container *ngIf="!reservations.length">
+    <app-skeleton-reservation></app-skeleton-reservation>
+    <app-skeleton-reservation></app-skeleton-reservation>
+  </ng-container>
   <ng-container *ngIf="reservations.length">
     @for(item of reservations; track $index){
 

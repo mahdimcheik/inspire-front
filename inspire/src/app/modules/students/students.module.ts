@@ -7,7 +7,6 @@ import { CardMentorComponent } from './components/features/card-mentor/card-ment
 import { SharedComponentsModule } from '../shared-components/shared-components.module';
 import { StudentLayoutComponent } from './pages/student-layout/student-layout.component';
 import { HttpClientModule } from '@angular/common/http';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { FilterSearchListComponent } from './components/features/filter-search-list/filter-search-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MultiSelectModule } from 'primeng/multiselect';
@@ -32,7 +31,6 @@ import { AgendaStudentComponent } from './components/features/agenda-student/age
     ListMentorsComponent,
     CardMentorComponent,
     StudentLayoutComponent,
-    DashboardComponent,
     FilterSearchListComponent,
     DashboardLinkStudentComponent,
     ProfilStudentComponent,

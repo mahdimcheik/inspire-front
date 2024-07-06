@@ -34,6 +34,9 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { RouterLink } from '@angular/router';
+import { SkeletonFormationComponent } from './ui/skeleton-formation/skeleton-formation.component';
+import { SkeletonModule } from 'primeng/skeleton';
+import { SkeletonReservationComponent } from './ui/skeleton-reservation/skeleton-reservation.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +63,8 @@ import { RouterLink } from '@angular/router';
     FileUploadComponent,
     DashboardLinksComponent,
     NavbarButtonComponent,
+    SkeletonFormationComponent,
+    SkeletonReservationComponent,
   ],
   imports: [
     CommonModule,
@@ -74,6 +79,7 @@ import { RouterLink } from '@angular/router';
     FileUploadModule,
     ToastModule,
     RouterLink,
+    SkeletonModule,
   ],
   exports: [
     ButtonComponent,
@@ -96,6 +102,8 @@ import { RouterLink } from '@angular/router';
     FileUploadComponent,
     DashboardLinksComponent,
     NavbarButtonComponent,
+    SkeletonFormationComponent,
+    SkeletonReservationComponent,
   ],
   providers: [MessageService],
 })
