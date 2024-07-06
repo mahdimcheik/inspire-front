@@ -25,6 +25,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { PaginatorModule } from 'primeng/paginator';
 import { SidebarModule } from 'primeng/sidebar';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { AgendaStudentComponent } from './components/features/agenda-student/agenda-student.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
     ListStudentReservationComponent,
     StudentReservationWithSwipeUpcomingComponent,
     MentorReservationPageByStudentComponent,
+    AgendaStudentComponent,
   ],
   imports: [
     CommonModule,

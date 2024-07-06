@@ -95,9 +95,9 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         this.dateTimeService.convertToLocalDateTimeString(selectionInfo.end);
 
       this.formattedSlotInfo = {
-        formattedDuration,
-        dateBegin: startLocalDateTime,
-        dateEnd: endLocalDateTime,
+        // formattedDuration,
+        dateBegin: selectionInfo.start,
+        dateEnd: selectionInfo.end,
         visio: this.formulaire.value.mode === 'visio',
         mentorId: this.mentorId,
       };
@@ -123,15 +123,17 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   }
 
   deleteSlot() {
-    this.reservationService.deleteSlot(this.eventDetails.id).subscribe(() => {
-      this.displayModal = false;
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Super ! ',
-        detail: 'Votre créneau a bien été supprimé',
+    this.reservationService
+      .deleteSlot(this.eventDetails.id || 0)
+      .subscribe(() => {
+        this.displayModal = false;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Super ! ',
+          detail: 'Votre créneau a bien été supprimé',
+        });
+        this.loadSlots();
       });
-      this.loadSlots();
-    });
   }
 
   editSlot() {

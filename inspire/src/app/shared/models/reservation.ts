@@ -1,5 +1,5 @@
 export type Slot = {
-  id: number;
+  id?: number;
   dateBegin: Date;
   dateEnd: Date;
   mentorId?: number;
