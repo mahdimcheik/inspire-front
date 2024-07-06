@@ -2,8 +2,6 @@
 .modal-note {
   display: flex;
   flex-direction: column;
-  // justify-content: center;
-  // align-items: center;
 
   .pop-up-date {
     display: flex;
@@ -41,14 +39,14 @@
       flex-direction: column;
       .message {
         width: 80%;
-        background-color: #fde9ee;
+        background-color: $question-bg;
         color: black;
         border-radius: 10px;
         padding: 10px 10px;
       }
       .response {
         width: 80%;
-        background-color: #fff3e8;
+        background-color: $response-bg;
         border-radius: 10px;
         padding: 10px 10px;
         color: black;
