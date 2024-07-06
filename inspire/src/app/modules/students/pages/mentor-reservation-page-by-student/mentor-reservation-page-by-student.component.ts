@@ -35,7 +35,7 @@ export class MentorReservationPageByStudentComponent
 {
   @ViewChild('calendar')
   calendarComponent!: FullCalendarComponent;
-  today!: string;
+  viewChecked = false;
   visible = false;
   mentorId!: number;
   events: EventInput[] = [];
@@ -223,6 +223,7 @@ export class MentorReservationPageByStudentComponent
   ngAfterViewInit(): void {
     this.updateViewDates();
     this.loadSlots();
+    this.viewChecked = true;
   }
 
   handleDatesSet(arg: any) {

@@ -1,4 +1,4 @@
-@import "../../../../../../variables.scss";
+@import "variables.scss";
 .modal {
   padding: 20px 40px;
   display: flex;
@@ -12,12 +12,6 @@
     color: black;
   }
 
-  .control {
-    margin-top: 30px;
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-  }
   .content {
     margin-top: 20px;
     text-align: center;
@@ -145,9 +139,12 @@
   margin-top: 20px;
 }
 
-h3 span {
-  color: $primary-color;
-  font-weight: 600;
+h3 {
+  span {
+    color: $primary-color;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
 }
 
 .old-slot.is-editing {
@@ -200,4 +197,23 @@ select {
   font-size: 14px;
   font-weight: 600;
   color: black;
+}
+
+.control {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: auto;
+
+  .mode,
+  .navigation {
+    display: flex;
+    gap: 10px;
+  }
+
+  button {
+    height: 35px;
+    min-width: 50px;
+    padding: 0 10px;
+  }
 }

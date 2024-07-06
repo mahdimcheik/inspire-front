@@ -36,7 +36,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   @ViewChild('calendar')
   calendarComponent!: FullCalendarComponent;
 
-  today!: string;
+  viewChecked = false;
   visible = false;
   mentorId!: number;
   userId!: number;
@@ -421,7 +421,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.updateViewDates();
-    // this.loadSlots();
+    this.viewChecked = true;
   }
 
   handleDatesSet(arg: any) {
