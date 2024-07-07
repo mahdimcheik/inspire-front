@@ -286,7 +286,7 @@ export class CalendarComponent
   calendarOptions: CalendarOptions = {
     initialView: 'timeGridWeek',
     plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
-    datesSet: this.handleDatesSet.bind(this),
+    // datesSet: this.handleDatesSet.bind(this),
 
     locale: frLocale,
     headerToolbar: {
@@ -420,13 +420,16 @@ export class CalendarComponent
   }
 
   ngAfterViewInit(): void {
-    this.updateViewDates();
+    const calendarApi = this.calendarComponent.getApi();
+    this.dateStart = calendarApi.view.currentStart;
+    this.dateEnd = calendarApi.view.currentEnd;
+    this.currentDate = calendarApi.getDate();
+    this.loadSlots();
+    setTimeout(() => {
+      this.today = signal('today');
+    }, 10);
   }
   ngAfterViewChecked(): void {}
-
-  handleDatesSet(arg: any) {
-    this.updateViewDates();
-  }
 
   updateViewDates() {
     const calendarApi = this.calendarComponent.getApi();
