@@ -10,5 +10,5 @@ export const notificationResolver: ResolveFn<NotificationDTO[]> = (
 ) => {
   const userId = inject(UserStoreService).getUserConnected$().value.id;
 
-  return inject(NotificationService).getNotificationsMentor(userId);
+  return inject(NotificationService).getNotifications(userId);
 };

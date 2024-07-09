@@ -50,28 +50,7 @@
       </div>
 
       <div class="container-notification">
-        <!-- <div class="icon-wrapper">
-          <img
-            class="img-fluid"
-            src="/assets/svgs/message.svg"
-            alt="messages"
-            width="25"
-            height="25"
-          />
-          <span class="badge">3</span>
-        </div> -->
-
-        <!-- <div class="icon-wrapper">
-          <img
-            class="img-fluid"
-            src="/assets/svgs/bell.svg"
-            alt="notifications"
-            width="25"
-            height="25"
-          />
-          <span class="badge">5</span>
-        </div> -->
-
+        <app-notifcation-dropdown></app-notifcation-dropdown>
         <div class="icon-wrapper" *ngIf="studentProfil$ | async as student">
           <a [routerLink]="['/student']">
             <img

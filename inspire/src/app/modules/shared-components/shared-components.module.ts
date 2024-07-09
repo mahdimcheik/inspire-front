@@ -37,6 +37,8 @@ import { RouterLink } from '@angular/router';
 import { SkeletonFormationComponent } from './ui/skeleton-formation/skeleton-formation.component';
 import { SkeletonModule } from 'primeng/skeleton';
 import { SkeletonReservationComponent } from './ui/skeleton-reservation/skeleton-reservation.component';
+import { NotifcationDropdownComponent } from './notifcation-dropdown/notifcation-dropdown.component';
+import { MenuModule } from 'primeng/menu';
 
 @NgModule({
   declarations: [
@@ -65,6 +67,7 @@ import { SkeletonReservationComponent } from './ui/skeleton-reservation/skeleton
     NavbarButtonComponent,
     SkeletonFormationComponent,
     SkeletonReservationComponent,
+    NotifcationDropdownComponent,
   ],
   imports: [
     CommonModule,
@@ -80,6 +83,7 @@ import { SkeletonReservationComponent } from './ui/skeleton-reservation/skeleton
     ToastModule,
     RouterLink,
     SkeletonModule,
+    MenuModule,
   ],
   exports: [
     ButtonComponent,
@@ -104,6 +108,7 @@ import { SkeletonReservationComponent } from './ui/skeleton-reservation/skeleton
     NavbarButtonComponent,
     SkeletonFormationComponent,
     SkeletonReservationComponent,
+    NotifcationDropdownComponent,
   ],
   providers: [MessageService],
 })

@@ -12,7 +12,7 @@ export class NotificationService {
   http = inject(HttpClient);
   constructor() {}
 
-  getNotificationsMentor(userId: number) {
+  getNotifications(userId: number) {
     return this.http
       .get<NotificationDTO[]>(
         environment.BASE_URL_API + '/notification/get/user/' + userId
@@ -24,7 +24,7 @@ export class NotificationService {
       );
   }
 
-  resetNotificationsMentor(userId: number) {
+  resetNotifications(userId: number) {
     return this.http.get<NotificationDTO[]>(
       environment.BASE_URL_API + '/notification/reset/' + userId
     );

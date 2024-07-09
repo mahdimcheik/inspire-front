@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { NotificationService } from '../../../../../shared/services/notification.service';
-import { UserStoreService } from '../../../../../shared/services/stores/user-store.service';
+import { NotificationService } from '../../../shared/services/notification.service';
+import { UserStoreService } from '../../../shared/services/stores/user-store.service';
 
 @Component({
   selector: 'app-notifcation-dropdown',
@@ -16,7 +16,7 @@ export class NotifcationDropdownComponent {
 
   ngOnInit() {
     this.notificationService
-      .getNotificationsMentor(this.user.value.id)
+      .getNotifications(this.user.value.id)
       .subscribe((res) => {
         this.total = res.length ? '' + res.length : '';
         const notifs = res.map((ele) => {
@@ -42,8 +42,6 @@ export class NotifcationDropdownComponent {
 
   resetNotification() {
     this.total = '';
-    this.notificationService
-      .resetNotificationsMentor(this.user.value.id)
-      .subscribe();
+    this.notificationService.resetNotifications(this.user.value.id).subscribe();
   }
 }
