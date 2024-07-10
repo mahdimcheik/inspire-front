@@ -43,6 +43,7 @@ export class AgendaStudentComponent implements OnInit, AfterViewInit {
   destroyRef = inject(DestroyRef);
   subject = 'Autre';
   details = '';
+  period!: string;
 
   dateStart!: Date;
   dateEnd!: Date;
@@ -212,7 +213,6 @@ export class AgendaStudentComponent implements OnInit, AfterViewInit {
       map((data) => data['profil']),
       tap((res) => {
         this.mentorId = res.id;
-        // this.loadSlots();
       })
     );
   }
@@ -221,6 +221,9 @@ export class AgendaStudentComponent implements OnInit, AfterViewInit {
     this.updateViewDates();
     this.loadSlots();
     this.viewChecked = true;
+    setTimeout(() => {
+      this.period = this.calendarComponent.getApi().view.title;
+    }, 10);
   }
 
   handleDatesSet(arg: any) {

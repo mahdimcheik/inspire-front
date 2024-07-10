@@ -1,6 +1,6 @@
-<ng-container *ngIf="viewChecked">
+<ng-container *ngIf="period">
   <h3 class="week">
-    La semaine de <span>{{ calendar.getApi().view.title }}</span>
+    La semaine de <span>{{ period }}</span>
   </h3>
 </ng-container>
 <h2 *ngIf="profil | async as profil">

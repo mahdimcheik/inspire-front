@@ -15,29 +15,27 @@ export class NotifcationDropdownComponent {
   total = '';
 
   ngOnInit() {
-    this.notificationService
-      .getNotifications(this.user.value.id)
-      .subscribe((res) => {
-        this.total = res.length ? '' + res.length : '';
-        const notifs = res.map((ele) => {
-          return {
-            label: ele.message,
-            icon: ele.message.includes('Annulation')
-              ? 'pi pi-times'
-              : 'pi pi-plus',
-            class: ele.message.includes('Annulation')
-              ? 'annulation'
-              : 'reservation',
-            route: '/mentor',
-          };
-        });
-        this.items = [
-          {
-            label: 'Notifications',
-            items: notifs,
-          },
-        ];
+    this.notificationService.notifcationsMentor$.subscribe((res) => {
+      this.total = res.length ? '' + res.length : '';
+      const notifs = res.map((ele) => {
+        return {
+          label: ele.message,
+          icon: ele.message.includes('Annulation')
+            ? 'pi pi-times'
+            : 'pi pi-plus',
+          class: ele.message.includes('Annulation')
+            ? 'annulation'
+            : 'reservation',
+          route: '/mentor',
+        };
       });
+      this.items = [
+        {
+          label: 'Notifications',
+          items: notifs,
+        },
+      ];
+    });
   }
 
   resetNotification() {

@@ -6,6 +6,7 @@ import { Observable, Subject, tap } from 'rxjs';
 import { LoginDTO, UserDTO } from '../models/user';
 import { BroadcastMessage } from '../models/broadcastMessage';
 import { environment } from '../../../environments/environment.development';
+import { SseService } from './sse.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,7 @@ export class LoginService {
   private router = inject(Router);
   private http = inject(HttpClient);
   private userStore = inject(UserStoreService);
+  private sseService = inject(SseService);
 
   private readonly BASE_URL_API = environment.BASE_URL_API;
 
@@ -22,16 +24,18 @@ export class LoginService {
     return this.http.get<UserDTO>(`${this.BASE_URL_API}/api/v1/users/me`).pipe(
       tap((user) => {
         this.userStore.setUserConnected(user);
+        this.sseService.subscribe(user.id);
       })
     );
   }
 
-  login(email: string, password: string): Observable<UserDTO | null> {
+  login(email: string, password: string): Observable<UserDTO> {
     const user = { email, password } as LoginDTO;
     return this.http
-      .post<any>(`${this.BASE_URL_API}/api/v1/auth/authenticate `, user)
+      .post<UserDTO>(`${this.BASE_URL_API}/api/v1/auth/authenticate `, user)
       .pipe(
         tap((users) => {
+          this.sseService.subscribe(users.id);
           if (users) {
             const user = users;
             this.userStore.setUserConnected(user);
