@@ -1,11 +1,12 @@
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, take } from 'rxjs';
+import { BehaviorSubject, first, take } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 import { NotificationService } from './notification.service';
 import { MessageService } from 'primeng/api';
 import { ActivatedRoute, Router, RouteReuseStrategy } from '@angular/router';
 import { UserStoreService } from './stores/user-store.service';
 import { ReservationService } from './reservation.service';
+import { MentorService } from './mentor.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,7 @@ export class SseService {
   private router = inject(Router);
   private userStore = inject(UserStoreService);
   private reservationService = inject(ReservationService);
+  private mentorService = inject(MentorService);
 
   constructor() {}
 
@@ -71,6 +73,14 @@ export class SseService {
           .subscribe();
       }
       if (path === '/mentor/agenda') {
+        this.reservationService
+          .getSlotsForMentor(
+            this.mentorService.activeMentorProfil$.value.id,
+            this.reservationService.MentorViewDateStart.value,
+            this.reservationService.MentorViewDateEnd.value
+          )
+          .pipe(first())
+          .subscribe((res) => console.log('respond fro, notif', res));
       }
     }
     if (this.userStore.getUserConnected$().value.role === 'STUDENT') {

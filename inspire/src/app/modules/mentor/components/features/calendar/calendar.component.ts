@@ -3,6 +3,8 @@ import {
   AfterViewChecked,
   AfterViewInit,
   Component,
+  DestroyRef,
+  inject,
   Input,
   OnInit,
   signal,
@@ -22,12 +24,13 @@ import frLocale from '@fullcalendar/core/locales/fr';
 import interactionPlugin from '@fullcalendar/interaction';
 import { ReservationService } from '../../../../../shared/services/reservation.service';
 import { MentorService } from '../../../../../shared/services/mentor.service';
-import { Subject, Subscription, switchMap } from 'rxjs';
+import { BehaviorSubject, first, Subject, Subscription, switchMap } from 'rxjs';
 import { MentorDTO } from '../../../../../shared/models/user';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DateTimeService } from '../../../../../shared/services/dateTime.service';
 import { MessageService } from 'primeng/api';
 import { Slot, SlotDTO } from '../../../../../shared/models/reservation';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 type NewType = AfterViewChecked;
 
@@ -36,9 +39,7 @@ type NewType = AfterViewChecked;
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.scss',
 })
-export class CalendarComponent
-  implements OnInit, AfterViewInit, AfterViewChecked
-{
+export class CalendarComponent implements OnInit, AfterViewInit {
   @ViewChild('calendar')
   calendarComponent!: FullCalendarComponent;
 
@@ -49,18 +50,21 @@ export class CalendarComponent
   mentorSubscription!: Subscription;
   @Input() formattedSlotInfo!: any;
   events: EventInput[] = [];
+
   displayModal: boolean = false;
   eventDetails: Slot = {} as Slot;
   eventDetailsEdit: any = {};
   dateStart!: Date;
   dateEnd!: Date;
   currentDate!: Date;
+  reservationService = inject(ReservationService);
+  destroyRef = inject(DestroyRef);
+  events$ = this.reservationService.activeMentorSlots;
 
   mode: string = '';
   isModfify: boolean = false;
 
   constructor(
-    private reservationService: ReservationService,
     private mentorService: MentorService,
     private fb: FormBuilder,
     private dateTimeService: DateTimeService,
@@ -75,33 +79,27 @@ export class CalendarComponent
     this.formattedSlotInfo.visio = this.formulaire.value.mode === 'visio';
   }
 
-  selectAllow = (selectionInfo: any) => {
-    return selectionInfo.start > new Date();
+  selectAllow = (selectionInfo: EventInput) => {
+    return (selectionInfo.start || new Date()) > new Date();
   };
 
-  eventAllow = (dropInfo: any, draggedEvent: any) => {
+  eventAllow = (dropInfo: EventInput, draggedEvent: any) => {
     const now = new Date();
     const booked = draggedEvent.extendedProps.booked;
-    return dropInfo.start >= now && !booked;
+    if (dropInfo.start) {
+      return dropInfo.start >= now && !booked;
+    }
+    return false;
   };
 
   onDateSelect = (selectionInfo: any) => {
-    if (this.formulaire.valid) {
-      const diffMilliseconds = selectionInfo.end - selectionInfo.start;
-      const hours = Math.floor(diffMilliseconds / (1000 * 60 * 60));
-      const minutes = Math.floor(
-        (diffMilliseconds % (1000 * 60 * 60)) / (1000 * 60)
-      );
-
-      const formattedDuration = `${hours}:${minutes < 10 ? '0' : ''}${minutes}`;
-
+    if (this.formulaire.valid && selectionInfo.end && selectionInfo.start) {
       const startLocalDateTime =
         this.dateTimeService.convertToLocalDateTimeString(selectionInfo.start);
       const endLocalDateTime =
         this.dateTimeService.convertToLocalDateTimeString(selectionInfo.end);
 
       this.formattedSlotInfo = {
-        // formattedDuration,
         dateBegin: startLocalDateTime,
         dateEnd: endLocalDateTime,
         visio: this.formulaire.value.mode === 'visio',
@@ -132,6 +130,7 @@ export class CalendarComponent
   deleteSlot() {
     this.reservationService
       .deleteSlot(this.eventDetails.id || 0)
+      .pipe(first())
       .subscribe(() => {
         this.displayModal = false;
         this.messageService.add({
@@ -379,31 +378,8 @@ export class CalendarComponent
     const mentorId = this.mentorId;
     this.reservationService
       .getSlotsForMentor(mentorId, this.dateStart, this.dateEnd)
-      .subscribe((slots) => {
-        this.events = this.formatSlotsToEvents(slots);
-      });
-  }
-
-  formatSlotsToEvents(slots: any[]): EventInput[] {
-    return slots.map((slot) => ({
-      id: slot.id,
-      title: slot.visio ? 'Visio' : 'Présentiel',
-      start: slot.dateBegin,
-      end: slot.dateEnd,
-      color:
-        slot.reservationId !== null
-          ? '#447597'
-          : slot.visio
-          ? '#FCBE77'
-          : '#F8156B',
-      extendedProps: {
-        visio: slot.visio,
-        booked: !!slot.reservationId,
-        imgUrl: slot.imgUrl,
-        firstname: slot.firstname,
-        subject: slot.subject,
-      },
-    }));
+      .pipe(first())
+      .subscribe();
   }
 
   ngOnInit(): void {
@@ -424,12 +400,15 @@ export class CalendarComponent
     this.dateStart = calendarApi.view.currentStart;
     this.dateEnd = calendarApi.view.currentEnd;
     this.currentDate = calendarApi.getDate();
+
+    this.reservationService.MentorViewDateEnd.next(this.dateEnd);
+    this.reservationService.MentorViewDateStart.next(this.dateStart);
+
     this.loadSlots();
     setTimeout(() => {
       this.today = signal('today');
     }, 10);
   }
-  ngAfterViewChecked(): void {}
 
   updateViewDates() {
     const calendarApi = this.calendarComponent.getApi();
@@ -437,6 +416,10 @@ export class CalendarComponent
     this.dateEnd = calendarApi.view.currentEnd;
     this.currentDate = calendarApi.getDate();
     this.loadSlots();
+
+    this.reservationService.MentorViewDateEnd.next(this.dateEnd);
+    this.reservationService.MentorViewDateStart.next(this.dateStart);
+
     setTimeout(() => {
       this.today = signal('today');
     }, 10);

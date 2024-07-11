@@ -23,6 +23,7 @@ export class LoginService {
     this.userStore.token$.next(token);
     return this.http.get<UserDTO>(`${this.BASE_URL_API}/api/v1/users/me`).pipe(
       tap((user) => {
+        this.sseService.subscribe(user.id);
         this.userStore.setUserConnected(user);
         this.sseService.subscribe(user.id);
       })

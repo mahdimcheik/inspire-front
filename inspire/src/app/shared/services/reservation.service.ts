@@ -6,12 +6,14 @@ import {
   reservationForMentorDTO,
   Slot,
   SlotDTO,
+  SlotFormated,
 } from '../models/reservation';
-import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, switchMap, tap } from 'rxjs';
 import { ReservationForStudentDTO } from '../models/reservation';
 import { MentorService } from './mentor.service';
 import { StudentService } from './student.service';
 import { PaginationService } from './pagination.service';
+import { EventInput } from '@fullcalendar/core';
 
 @Injectable({
   providedIn: 'root',
@@ -52,6 +54,11 @@ export class ReservationService {
     total: 0,
   });
 
+  activeMentorSlots = new BehaviorSubject<EventInput[]>([]);
+
+  MentorViewDateStart = new BehaviorSubject<Date>(new Date());
+  MentorViewDateEnd = new BehaviorSubject<Date>(new Date());
+
   mentorService = inject(MentorService);
   studentService = inject(StudentService);
 
@@ -84,13 +91,19 @@ export class ReservationService {
     dateBegin: Date,
     dateEnd: Date
   ): Observable<SlotDTO[]> {
-    return this.httpClient.post<SlotDTO[]>(
-      `${environment.BASE_URL_API}/user/slot/get/${mentorId}`,
-      {
-        start: dateBegin,
-        end: dateEnd,
-      }
-    );
+    return this.httpClient
+      .post<SlotDTO[]>(
+        `${environment.BASE_URL_API}/user/slot/get/${mentorId}`,
+        {
+          start: dateBegin,
+          end: dateEnd,
+        }
+      )
+      .pipe(
+        tap((res) => {
+          this.activeMentorSlots.next(this.formatSlotsToEvents(res));
+        })
+      );
   }
 
   getSlotsforStudentByMentorId(
@@ -99,33 +112,41 @@ export class ReservationService {
     dateEnd: Date
   ): Observable<SlotDTO[]> {
     const studentId = this.studentService.activeStudentProfil$.value.id;
-    // let end = new Date();
-    // end.setDate(end.getDate() + 50);
     return this.httpClient.post<SlotDTO[]>(
       `${environment.BASE_URL_API}/user/slot/slots/${mentorId}/${studentId}`,
       { start: dateBegin, end: dateEnd }
     );
   }
 
-  deleteSlot(id: number): Observable<any> {
-    return this.httpClient.delete(
+  deleteSlot(id: number): Observable<void> {
+    return this.httpClient.delete<void>(
       `${environment.BASE_URL_API}/user/slot/delete/${id}`
     );
   }
 
-  // deleteReservationAndSlot(id: number): Observable<any> {
-  //   return this.httpClient.delete(
-  //     `${environment.BASE_URL_API}/reservation/delete/mentor/${id}`
-  //   );
-  // }
-
-  deleteReservationOnly(id: number): Observable<any> {
-    return this.httpClient.delete(
-      `${environment.BASE_URL_API}/reservation/delete/mentor/reservation/${id}`
-    );
+  formatSlotsToEvents(slots: SlotDTO[]): EventInput[] {
+    return slots.map((slot) => ({
+      id: '' + slot.id,
+      title: slot.visio ? 'Visio' : 'Présentiel',
+      start: slot.dateBegin,
+      end: slot.dateEnd,
+      color:
+        slot.reservationId !== null
+          ? '#447597'
+          : slot.visio
+          ? '#FCBE77'
+          : '#F8156B',
+      extendedProps: {
+        visio: slot.visio,
+        booked: !!slot.reservationId,
+        imgUrl: slot.imgUrl,
+        firstname: slot.firstname,
+        subject: slot.subject,
+      },
+    }));
   }
 
-  updateSlot(id: number, slotInfo: any): Observable<any> {
+  updateSlot(id: number, slotInfo: SlotFormated): Observable<SlotDTO> {
     const updatedSlotInfo = {
       id: id,
       dateBegin: slotInfo.dateBegin,
@@ -134,7 +155,7 @@ export class ReservationService {
       mentorId: slotInfo.mentorId,
     };
 
-    return this.httpClient.put(
+    return this.httpClient.put<SlotDTO>(
       `${environment.BASE_URL_API}/user/slot/update`,
       updatedSlotInfo
     );

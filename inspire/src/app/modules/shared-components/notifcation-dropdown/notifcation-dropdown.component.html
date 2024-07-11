@@ -15,6 +15,6 @@
       width="25"
       height="25"
     />
-    <span class="badge" *ngIf="total">{{ total }}</span>
+    <span class="badge" *ngIf="total">{{ +total <= 9 ? total : "9+" }}</span>
   </div>
 </div>
