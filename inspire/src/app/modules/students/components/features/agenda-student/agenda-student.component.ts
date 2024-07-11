@@ -8,6 +8,7 @@ import {
   OnInit,
   ViewChild,
   inject,
+  signal,
 } from '@angular/core';
 import { CalendarOptions, EventClickArg, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -23,6 +24,7 @@ import { MentorDTO } from '../../../../../shared/models/user';
 import { Reservation, SlotDTO } from '../../../../../shared/models/reservation';
 import { StudentService } from '../../../../../shared/services/student.service';
 import { ReservationService } from '../../../../../shared/services/reservation.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-agenda-student',
@@ -40,11 +42,12 @@ export class AgendaStudentComponent implements OnInit, AfterViewInit {
   eventDetails!: Reservation;
   studentService = inject(StudentService);
   destroyRef = inject(DestroyRef);
+  messageService = inject(MessageService);
   subject = 'Autre';
   details = '';
   period!: string;
   events$ = this.reservationService.activeStudentSlots;
-
+  today = signal('');
   dateStart!: Date;
   dateEnd!: Date;
   currentDate!: Date;
@@ -175,7 +178,13 @@ export class AgendaStudentComponent implements OnInit, AfterViewInit {
         }),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe();
+      .subscribe(() => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Super ! ',
+          detail: 'Votre créneau a bien été réservé',
+        });
+      });
     this.visible = false;
   }
 
@@ -194,7 +203,7 @@ export class AgendaStudentComponent implements OnInit, AfterViewInit {
     this.updateViewDates();
     this.loadSlots();
     setTimeout(() => {
-      this.period = this.calendarComponent.getApi().view.title;
+      this.today = signal('today');
     }, 10);
   }
 

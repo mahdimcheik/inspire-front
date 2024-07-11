@@ -14,6 +14,7 @@ import { ReservationService } from '../../../../../shared/services/reservation.s
 import { UserStoreService } from '../../../../../shared/services/stores/user-store.service';
 import { PaginationService } from '../../../../../shared/services/pagination.service';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-student-reservation-with-swipe-upcoming',
@@ -32,6 +33,7 @@ export class StudentReservationWithSwipeUpcomingComponent implements OnInit {
   modalVisible: boolean = false;
 
   destroyRef = inject(DestroyRef);
+  messageService = inject(MessageService);
   reservationService = inject(ReservationService);
   user = inject(UserStoreService).getUserConnected$();
   paginationService = inject(PaginationService);
@@ -124,7 +126,13 @@ export class StudentReservationWithSwipeUpcomingComponent implements OnInit {
         first
       )
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe();
+      .subscribe(() => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Super ! ',
+          detail: "Votre réservation viens d'être annulée ",
+        });
+      });
     this.modalVisible = false;
   }
 }

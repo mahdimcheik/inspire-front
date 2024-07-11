@@ -25,6 +25,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { SidebarModule } from 'primeng/sidebar';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { AgendaStudentComponent } from './components/features/agenda-student/agenda-student.component';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { AgendaStudentComponent } from './components/features/agenda-student/age
     SidebarModule,
     FloatLabelModule,
     FormsModule,
+    ToastModule,
   ],
 })
 export class StudentsModule {}

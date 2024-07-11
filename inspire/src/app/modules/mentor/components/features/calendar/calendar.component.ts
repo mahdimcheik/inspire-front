@@ -57,6 +57,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   dateStart!: Date;
   dateEnd!: Date;
   currentDate!: Date;
+  period!: string;
   reservationService = inject(ReservationService);
   destroyRef = inject(DestroyRef);
   events$ = this.reservationService.activeMentorSlots;
@@ -414,6 +415,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.dateStart = calendarApi.view.currentStart;
     this.dateEnd = calendarApi.view.currentEnd;
     this.currentDate = calendarApi.getDate();
+    this.period = this.calendarComponent.getApi().view.title;
     this.loadSlots();
 
     this.reservationService.MentorViewDateEnd.next(this.dateEnd);

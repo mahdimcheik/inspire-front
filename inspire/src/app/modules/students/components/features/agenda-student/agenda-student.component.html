@@ -1,5 +1,5 @@
 <ng-container *ngIf="events$ | async as slots">
-  <ng-container *ngIf="period">
+  <ng-container *ngIf="today()">
     <h3 class="week">
       La période de <span>{{ period }}</span>
     </h3>
