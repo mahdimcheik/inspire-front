@@ -29,36 +29,7 @@ export class StudentLayoutComponent implements OnInit {
 
   displayMobileNav = false;
 
-  listLink: DashboardLink[] = [
-    {
-      title: 'Mon profil',
-      logoUrl: 'assets/svgs/profile.svg',
-      logoUrlActive: 'assets/svgs/profile-blanc.svg',
-      path: 'student',
-      active: true,
-    },
-    {
-      title: 'Trouver un mentor',
-      logoUrl: 'assets/svgs/find.svg',
-      logoUrlActive: 'assets/svgs/find-blanc.svg',
-      path: 'student/list-mentors',
-      active: false,
-    },
-    {
-      title: 'Mes réservations',
-      logoUrl: 'assets/svgs/agenda.svg',
-      logoUrlActive: 'assets/svgs/agenda-blanc.svg',
-      path: 'student/reservations',
-      active: false,
-    },
-    {
-      title: 'Mes favoris',
-      logoUrl: 'assets/svgs/coeur.svg',
-      logoUrlActive: 'assets/svgs/coeur-blanc.svg',
-      path: 'student/list-favorites',
-      active: false,
-    },
-  ];
+  listLink: DashboardLink[] = this.userStoreService.getDashboardLinks();
   name!: string;
   intro!: string;
   imgUrl!: string;

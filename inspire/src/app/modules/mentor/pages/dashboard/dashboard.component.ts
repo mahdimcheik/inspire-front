@@ -42,11 +42,7 @@ export class DashboardComponent implements OnInit {
     this.paginationService.offsetReservationMentor.next(event.first || 0);
 
     this.reservationService
-      .getMentorReservationList(
-        this.activeMentor$.value.userId,
-        5,
-        event.first || 0
-      )
+      .getMentorReservationList(5, event.first || 0)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe();
   }
@@ -61,11 +57,7 @@ export class DashboardComponent implements OnInit {
     );
 
     this.reservationService
-      .getMentorReservationHistoryList(
-        this.activeMentor$.value.userId,
-        5,
-        event.first || 0
-      )
+      .getMentorReservationHistoryList(5, event.first || 0)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe();
   }

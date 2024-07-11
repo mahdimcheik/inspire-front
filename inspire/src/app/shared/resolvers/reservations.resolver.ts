@@ -13,7 +13,7 @@ export const mentorReservationsResolver: ResolveFn<{
 }> = (route, state) => {
   const userId = inject(UserStoreService).getUserConnected$().value?.id;
 
-  return inject(ReservationService).getMentorReservationList(userId, 5, 0);
+  return inject(ReservationService).getMentorReservationList(5, 0);
 };
 
 export const mentorReservationsHistoryResolver: ResolveFn<{
@@ -22,11 +22,7 @@ export const mentorReservationsHistoryResolver: ResolveFn<{
 }> = (route, state) => {
   const userId = inject(UserStoreService).getUserConnected$().value?.id;
 
-  return inject(ReservationService).getMentorReservationHistoryList(
-    userId,
-    5,
-    0
-  );
+  return inject(ReservationService).getMentorReservationHistoryList(5, 0);
 };
 
 export const studentReservationsResolver: ResolveFn<{
@@ -36,7 +32,7 @@ export const studentReservationsResolver: ResolveFn<{
   const userId = inject(UserStoreService).getUserConnected$().value?.id;
   const reservationService = inject(ReservationService);
 
-  return reservationService.getStudentReservationList(userId || 0, 5, 0);
+  return reservationService.getStudentReservationList(5, 0);
 };
 
 export const studentReservationsHistoryResolver: ResolveFn<{
@@ -45,9 +41,5 @@ export const studentReservationsHistoryResolver: ResolveFn<{
 }> = (route, state) => {
   const userId = inject(UserStoreService).getUserConnected$().value?.id;
   const reservationService = inject(ReservationService);
-  return reservationService.getStudentReservationHistoryList(
-    userId || 0,
-    10,
-    0
-  );
+  return reservationService.getStudentReservationHistoryList(10, 0);
 };

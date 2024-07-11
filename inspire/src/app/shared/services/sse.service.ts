@@ -1,7 +1,11 @@
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, take } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 import { NotificationService } from './notification.service';
+import { MessageService } from 'primeng/api';
+import { ActivatedRoute, Router, RouteReuseStrategy } from '@angular/router';
+import { UserStoreService } from './stores/user-store.service';
+import { ReservationService } from './reservation.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +14,10 @@ export class SseService {
   private sseEndpoint = environment.BASE_URL_API + '/sse/subscribe/';
   private eventSource!: EventSource;
   private notificationService = inject(NotificationService);
+  private messageService = inject(MessageService);
+  private router = inject(Router);
+  private userStore = inject(UserStoreService);
+  private reservationService = inject(ReservationService);
 
   constructor() {}
 
@@ -33,6 +41,45 @@ export class SseService {
 
   public onMessageRecieved(ev: MessageEvent<any>, id: number) {
     console.log('message re ' + ev.data);
-    this.notificationService.getNotifications(id).subscribe();
+    this.notificationService.getNotifications(id).subscribe(() => {
+      if (!ev.data.includes('connexion')) {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Notification ',
+          detail: 'Vous venez de recevoir une nouvelle notification',
+        });
+        const path = this.router.url;
+        console.log('path', path);
+        this.reactOnNotification();
+      }
+    });
+  }
+
+  public reactOnNotification() {
+    const path = this.router.url;
+    console.log('active path ', path);
+
+    if (this.userStore.getUserConnected$().value.role === 'MENTOR') {
+      console.log('is mentor');
+
+      if (path === '/mentor') {
+        console.log('in /mentor');
+
+        this.reservationService
+          .getMentorReservationList(5, 0)
+          .pipe(take(1))
+          .subscribe();
+      }
+      if (path === '/mentor/agenda') {
+      }
+    }
+    if (this.userStore.getUserConnected$().value.role === 'STUDENT') {
+      if (path === '/student/reservations') {
+        this.reservationService
+          .getStudentReservationList(5, 0)
+          .pipe(take(1))
+          .subscribe();
+      }
+    }
   }
 }

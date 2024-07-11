@@ -140,7 +140,7 @@ export class ReservationService {
     );
   }
 
-  getMentorReservationList(userId: number, perPage: number, offset: number) {
+  getMentorReservationList(perPage: number, offset: number) {
     const mentorId = this.mentorService.activeMentorProfil$.value.id;
     return this.httpClient
       .get<{
@@ -152,16 +152,14 @@ export class ReservationService {
       )
       .pipe(
         tap((res) => {
+          console.log('reservations list ', res);
+
           this.activeMentorReservations$.next(res);
         })
       );
   }
 
-  getMentorReservationHistoryList(
-    userId: number,
-    perPage: number,
-    offset: number
-  ) {
+  getMentorReservationHistoryList(perPage: number, offset: number) {
     const mentorId = this.mentorService.activeMentorProfil$.value.id;
     return this.httpClient
       .get<{ reservations: reservationForMentorDTO[]; total: number }>(
@@ -197,7 +195,7 @@ export class ReservationService {
       );
   }
 
-  getStudentReservationList(userId: number, perPage: number, offset: number) {
+  getStudentReservationList(perPage: number, offset: number) {
     const studentId = this.studentService.activeStudentProfil$.value.id;
     return this.httpClient
       .get<{
@@ -214,11 +212,7 @@ export class ReservationService {
       );
   }
 
-  getStudentReservationHistoryList(
-    userId: number,
-    perPage: number,
-    offset: number
-  ) {
+  getStudentReservationHistoryList(perPage: number, offset: number) {
     const studentId = this.studentService.activeStudentProfil$.value.id;
 
     return this.httpClient
@@ -254,9 +248,9 @@ export class ReservationService {
             this.pagination.offsetReservationStudent.next(
               this.pagination.offsetReservationStudent.value - 1
             );
-            return this.getMentorReservationList(mentorId, 5, first - 5);
+            return this.getMentorReservationList(5, first - 5);
           }
-          return this.getMentorReservationList(mentorId, 5, first);
+          return this.getMentorReservationList(5, first);
         })
       );
   }
@@ -282,9 +276,9 @@ export class ReservationService {
             this.pagination.offsetReservationStudent.next(
               this.pagination.offsetReservationStudent.value - 1
             );
-            return this.getStudentReservationList(studentId, 5, first - 5);
+            return this.getStudentReservationList(5, first - 5);
           }
-          return this.getStudentReservationList(studentId, 5, first);
+          return this.getStudentReservationList(5, first);
         })
       );
   }

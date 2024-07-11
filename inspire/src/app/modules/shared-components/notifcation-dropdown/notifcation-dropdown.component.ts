@@ -17,6 +17,7 @@ export class NotifcationDropdownComponent {
   ngOnInit() {
     this.notificationService.notifcationsMentor$.subscribe((res) => {
       this.total = res.length ? '' + res.length : '';
+
       const notifs = res.map((ele) => {
         return {
           label: ele.message,
@@ -26,7 +27,10 @@ export class NotifcationDropdownComponent {
           class: ele.message.includes('Annulation')
             ? 'annulation'
             : 'reservation',
-          route: '/mentor',
+          route:
+            this.user.value.role === 'MENTOR'
+              ? '/mentor'
+              : '/student/reservations',
         };
       });
       this.items = [
