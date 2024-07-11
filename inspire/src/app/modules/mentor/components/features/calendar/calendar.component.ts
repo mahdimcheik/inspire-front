@@ -113,7 +113,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   };
 
   validateSlot() {
-    console.log(' new slot', this.formattedSlotInfo);
     this.reservationService
       .addSlotToMentor(this.formattedSlotInfo, this.dateStart, this.dateEnd)
       .subscribe(() => {
