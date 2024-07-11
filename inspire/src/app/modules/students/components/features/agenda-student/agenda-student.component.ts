@@ -1,10 +1,7 @@
 import {
-  AfterViewChecked,
   AfterViewInit,
   Component,
   DestroyRef,
-  Inject,
-  Input,
   OnInit,
   ViewChild,
   inject,
@@ -16,12 +13,12 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import frLocale from '@fullcalendar/core/locales/fr';
 import interactionPlugin from '@fullcalendar/interaction';
-import { Observable, Subscription, first, map, switchMap, tap } from 'rxjs';
+import { Observable, first, map, switchMap, tap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { MentorDTO } from '../../../../../shared/models/user';
-import { Reservation, SlotDTO } from '../../../../../shared/models/reservation';
+import { Reservation } from '../../../../../shared/models/reservation';
 import { StudentService } from '../../../../../shared/services/student.service';
 import { ReservationService } from '../../../../../shared/services/reservation.service';
 import { MessageService } from 'primeng/api';
