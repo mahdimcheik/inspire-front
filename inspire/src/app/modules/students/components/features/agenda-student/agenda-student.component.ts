@@ -15,7 +15,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import frLocale from '@fullcalendar/core/locales/fr';
 import interactionPlugin from '@fullcalendar/interaction';
-import { Observable, Subscription, map, switchMap, tap } from 'rxjs';
+import { Observable, Subscription, first, map, switchMap, tap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FullCalendarComponent } from '@fullcalendar/angular';
@@ -32,7 +32,6 @@ import { ReservationService } from '../../../../../shared/services/reservation.s
 export class AgendaStudentComponent implements OnInit, AfterViewInit {
   @ViewChild('calendar')
   calendarComponent!: FullCalendarComponent;
-  viewChecked = false;
   visible = false;
   mentorId!: number;
   events: EventInput[] = [];
@@ -44,6 +43,7 @@ export class AgendaStudentComponent implements OnInit, AfterViewInit {
   subject = 'Autre';
   details = '';
   period!: string;
+  events$ = this.reservationService.activeStudentSlots;
 
   dateStart!: Date;
   dateEnd!: Date;
@@ -152,30 +152,8 @@ export class AgendaStudentComponent implements OnInit, AfterViewInit {
     const mentorId = this.mentorId;
     this.reservationService
       .getSlotsforStudentByMentorId(mentorId, this.dateStart, this.dateEnd)
-      .subscribe((slots) => {
-        this.events = this.formatSlotsToEvents(slots).filter(
-          (ele) => !ele['booked']
-        );
-      });
-  }
-
-  formatSlotsToEvents(slots: SlotDTO[]): EventInput[] {
-    return slots.map((slot) => ({
-      id: '' + slot.id,
-      title: slot.visio ? 'Visio' : 'Présentiel',
-      start: slot.dateBegin,
-      end: slot.dateEnd,
-
-      color: slot.booked ? '#A4A4A2' : slot.visio ? '#FCBE77' : '#F8156B',
-      className: slot.booked ? 'booked' : 'not-booked',
-
-      extendedProps: {
-        slotId: slot.id,
-        mentorId: slot.mentorId,
-        reservationId: slot.reservationId,
-        isBooked: !!slot.reservationId,
-      },
-    }));
+      .pipe(first())
+      .subscribe();
   }
 
   bookSlot() {
@@ -197,12 +175,7 @@ export class AgendaStudentComponent implements OnInit, AfterViewInit {
         }),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe((slots) => {
-        this.events = this.formatSlotsToEvents(slots).filter(
-          (ele) => !ele['booked']
-        );
-        (this.subject = 'Autre'), (this.details = '');
-      });
+      .subscribe();
     this.visible = false;
   }
 
@@ -220,7 +193,6 @@ export class AgendaStudentComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.updateViewDates();
     this.loadSlots();
-    this.viewChecked = true;
     setTimeout(() => {
       this.period = this.calendarComponent.getApi().view.title;
     }, 10);
@@ -235,6 +207,7 @@ export class AgendaStudentComponent implements OnInit, AfterViewInit {
     this.dateStart = calendarApi.view.currentStart;
     this.dateEnd = calendarApi.view.currentEnd;
     this.currentDate = calendarApi.getDate();
+    this.period = this.calendarComponent.getApi().view.title;
     this.loadSlots();
   }
   next(): void {

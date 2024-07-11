@@ -55,6 +55,7 @@ export class ReservationService {
   });
 
   activeMentorSlots = new BehaviorSubject<EventInput[]>([]);
+  activeStudentSlots = new BehaviorSubject<EventInput[]>([]);
 
   MentorViewDateStart = new BehaviorSubject<Date>(new Date());
   MentorViewDateEnd = new BehaviorSubject<Date>(new Date());
@@ -112,10 +113,21 @@ export class ReservationService {
     dateEnd: Date
   ): Observable<SlotDTO[]> {
     const studentId = this.studentService.activeStudentProfil$.value.id;
-    return this.httpClient.post<SlotDTO[]>(
-      `${environment.BASE_URL_API}/user/slot/slots/${mentorId}/${studentId}`,
-      { start: dateBegin, end: dateEnd }
-    );
+    return this.httpClient
+      .post<SlotDTO[]>(
+        `${environment.BASE_URL_API}/user/slot/slots/${mentorId}/${studentId}`,
+        { start: dateBegin, end: dateEnd }
+      )
+      .pipe(
+        tap((res) => {
+          this.activeStudentSlots.next(this.formatStudentSlotsToEvents(res));
+          console.log('slots for student ', res);
+          console.log(
+            'slots for student formatted ',
+            this.formatStudentSlotsToEvents(res)
+          );
+        })
+      );
   }
 
   deleteSlot(id: number): Observable<void> {
@@ -142,6 +154,30 @@ export class ReservationService {
         imgUrl: slot.imgUrl,
         firstname: slot.firstname,
         subject: slot.subject,
+      },
+    }));
+  }
+
+  formatStudentSlotsToEvents(slots: SlotDTO[]): EventInput[] {
+    return slots.map((slot) => ({
+      id: '' + slot.id,
+      title: slot.visio ? 'Visio' : 'Présentiel',
+      start: slot.dateBegin,
+      end: slot.dateEnd,
+
+      color:
+        slot.reservationId !== null
+          ? '#447597'
+          : slot.visio
+          ? '#FCBE77'
+          : '#F8156B',
+      className: slot.booked ? 'booked' : 'not-booked',
+
+      extendedProps: {
+        slotId: slot.id,
+        mentorId: slot.mentorId,
+        reservationId: slot.reservationId,
+        isBooked: !!slot.reservationId,
       },
     }));
   }

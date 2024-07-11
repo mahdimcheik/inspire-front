@@ -1,34 +1,36 @@
-<ng-container *ngIf="period">
-  <h3 class="week">
-    La semaine de <span>{{ period }}</span>
-  </h3>
+<ng-container *ngIf="events$ | async as slots">
+  <ng-container *ngIf="period">
+    <h3 class="week">
+      La période de <span>{{ period }}</span>
+    </h3>
+  </ng-container>
+  <h2 *ngIf="profil | async as profil">
+    Réservez un créneau avec <span>{{ profil.firstname | titlecase }}</span>
+  </h2>
+  <div class="control">
+    <div class="mode">
+      <button (click)="dayView()">Jour</button>
+      <button (click)="weekView()">Semaine</button>
+      <button (click)="monthView()">Mois</button>
+    </div>
+    <div class="navigation">
+      <button (click)="getToday()">Aujourd'hui</button>
+      <button (click)="prev()">
+        <img src="assets/svgs/left.svg" alt="" width="35" height="35" />
+      </button>
+      <button (click)="next()">
+        <img src="assets/svgs/right.svg" alt="" width="35" height="35" />
+      </button>
+    </div>
+  </div>
+  <div class="calendar-background">
+    <full-calendar
+      [events]="slots"
+      [options]="calendarOptions"
+      #calendar
+    ></full-calendar>
+  </div>
 </ng-container>
-<h2 *ngIf="profil | async as profil">
-  Réservez un créneau avec <span>{{ profil.firstname | titlecase }}</span>
-</h2>
-<div class="control">
-  <div class="mode">
-    <button (click)="dayView()">Jour</button>
-    <button (click)="weekView()">Semaine</button>
-    <button (click)="monthView()">Mois</button>
-  </div>
-  <div class="navigation">
-    <button (click)="getToday()">Aujourd'hui</button>
-    <button (click)="prev()">
-      <img src="assets/svgs/left.svg" alt="" width="35" height="35" />
-    </button>
-    <button (click)="next()">
-      <img src="assets/svgs/right.svg" alt="" width="35" height="35" />
-    </button>
-  </div>
-</div>
-<div class="calendar-background">
-  <full-calendar
-    [events]="events"
-    [options]="calendarOptions"
-    #calendar
-  ></full-calendar>
-</div>
 <p-dialog [modal]="true" [visible]="visible" [closable]="false">
   <div class="modal">
     <div class="container-img-forgot">
