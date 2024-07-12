@@ -1,4 +1,7 @@
-<div class="notif-card flex justify-content-center">
+<div
+  class="notif-card flex justify-content-center"
+  (click)="menu.toggle($event); resetNotification()"
+>
   <p-menu #menu [model]="items" [popup]="true">
     <ng-template let-item pTemplate="item">
       <a [routerLink]="item.route" class="p-menuitem-link">
@@ -7,7 +10,7 @@
       </a>
     </ng-template>
   </p-menu>
-  <div class="icon-wrapper" (click)="menu.toggle($event); resetNotification()">
+  <div class="icon-wrapper">
     <img
       class="img-fluid"
       src="/assets/svgs/bell.svg"

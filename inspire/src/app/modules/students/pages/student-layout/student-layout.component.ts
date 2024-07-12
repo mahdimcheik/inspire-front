@@ -33,7 +33,10 @@ export class StudentLayoutComponent implements OnInit {
   name!: string;
   intro!: string;
   imgUrl!: string;
-  toggleVisibility() {
+  toggleVisibility(event: Event) {
+    console.log('clicked toggle visibility');
+
+    event.stopPropagation();
     this.showNavbar = !this.showNavbar;
   }
 
@@ -50,5 +53,10 @@ export class StudentLayoutComponent implements OnInit {
     });
 
     this.imgUrl = this.studentProfil$.value.imgUrl;
+  }
+
+  showModalDeconnection(event: Event) {
+    event.stopPropagation();
+    this.modalVisible = true;
   }
 }

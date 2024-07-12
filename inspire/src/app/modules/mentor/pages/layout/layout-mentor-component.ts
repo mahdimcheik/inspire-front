@@ -38,7 +38,8 @@ export class LayoutMentor implements OnInit {
 
   listLink: DashboardLink[] = this.userStoreService.getDashboardLinks();
 
-  toggleVisibility() {
+  toggleVisibility(event: Event) {
+    event.stopPropagation();
     this.showNavbar = !this.showNavbar;
   }
 
@@ -56,5 +57,10 @@ export class LayoutMentor implements OnInit {
     });
 
     this.imgUrl = this.mentorProfil$.value.imgUrl;
+  }
+
+  showModalDeconnection(event: Event) {
+    event.stopPropagation();
+    this.modalVisible = true;
   }
 }
