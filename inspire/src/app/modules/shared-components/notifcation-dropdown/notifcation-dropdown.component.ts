@@ -10,12 +10,13 @@ import { UserStoreService } from '../../../shared/services/stores/user-store.ser
 })
 export class NotifcationDropdownComponent {
   items: MenuItem[] | undefined;
+  oldItems: MenuItem[] | undefined;
   notificationService = inject(NotificationService);
   user = inject(UserStoreService).getUserConnected$();
   total = '';
 
   ngOnInit() {
-    this.notificationService.notifcationsMentor$.subscribe((res) => {
+    this.notificationService.newNotifcations$.subscribe((res) => {
       this.total = res.length ? '' + res.length : '';
 
       const notifs = res.map((ele) => {
@@ -36,6 +37,29 @@ export class NotifcationDropdownComponent {
       this.items = [
         {
           label: 'Notifications',
+          items: notifs,
+        },
+      ];
+    });
+    this.notificationService.oldNotifcations$.subscribe((res) => {
+      const notifs = res.map((ele) => {
+        return {
+          label: ele.message,
+          icon: ele.message.includes('Annulation')
+            ? 'pi pi-times'
+            : 'pi pi-plus',
+          class: ele.message.includes('Annulation')
+            ? 'annulation'
+            : 'reservation',
+          route:
+            this.user.value.role === 'MENTOR'
+              ? '/mentor'
+              : '/student/reservations',
+        };
+      });
+      this.oldItems = [
+        {
+          label: 'Anciennes',
           items: notifs,
         },
       ];

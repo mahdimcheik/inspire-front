@@ -8,7 +8,8 @@ import { environment } from '../../../environments/environment.development';
   providedIn: 'root',
 })
 export class NotificationService {
-  notifcationsMentor$ = new BehaviorSubject<NotificationDTO[]>([]);
+  newNotifcations$ = new BehaviorSubject<NotificationDTO[]>([]);
+  oldNotifcations$ = new BehaviorSubject<NotificationDTO[]>([]);
   http = inject(HttpClient);
   constructor() {}
 
@@ -19,7 +20,19 @@ export class NotificationService {
       )
       .pipe(
         tap((res) => {
-          this.notifcationsMentor$.next(res);
+          this.newNotifcations$.next(res);
+        })
+      );
+  }
+
+  getOldNotifications(userId: number) {
+    return this.http
+      .get<NotificationDTO[]>(
+        environment.BASE_URL_API + '/notification/get/user/old/' + userId
+      )
+      .pipe(
+        tap((res) => {
+          this.oldNotifcations$.next(res);
         })
       );
   }
