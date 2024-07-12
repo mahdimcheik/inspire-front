@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserStoreService } from './stores/user-store.service';
-import { Observable, Subject, tap } from 'rxjs';
+import { first, Observable, Subject, tap } from 'rxjs';
 import { LoginDTO, UserDTO } from '../models/user';
 import { BroadcastMessage } from '../models/broadcastMessage';
 import { environment } from '../../../environments/environment.development';
@@ -71,13 +71,19 @@ export class LoginService {
 
   logout() {
     const user = this.userStore.getUserConnected$().value;
-
+    const token = this.userStore.token$.value;
     if (user && (user.email || user.token || user.id)) {
       localStorage.removeItem('token');
       this.userStore.setUserConnected({} as UserDTO);
       this.userStore.token$.next('');
       this.router.navigate(['']);
       this.publish({ type: 'logout' } as BroadcastMessage);
+      this.http
+        .get(
+          environment.BASE_URL_API + '/sse/unsubscribe/' + user.id + '/' + token
+        )
+        .pipe(first())
+        .subscribe();
     }
   }
 
