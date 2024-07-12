@@ -24,8 +24,6 @@ const routes: Routes = [
     path: '',
     component: LayoutMentor,
     resolve: {
-      // reservationsData: mentorReservationsResolver,
-      // reservationsHistoryData: mentorReservationsHistoryResolver,
       notifications: notificationResolver,
     },
     children: [

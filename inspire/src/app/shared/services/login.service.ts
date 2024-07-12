@@ -36,11 +36,11 @@ export class LoginService {
       .post<UserDTO>(`${this.BASE_URL_API}/api/v1/auth/authenticate `, user)
       .pipe(
         tap((users) => {
-          this.sseService.subscribe(users.id);
           if (users) {
             const user = users;
             this.userStore.setUserConnected(user);
             this.userStore.token$.next(user.token);
+            this.sseService.subscribe(users.id);
             window.localStorage.setItem('token', user.token);
             this.publish({
               type: 'login',

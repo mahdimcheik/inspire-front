@@ -12,7 +12,7 @@ import { MentorService } from './mentor.service';
   providedIn: 'root',
 })
 export class SseService {
-  private sseEndpoint = environment.BASE_URL_API + '/sse/subscribe/';
+  private sseEndpoint = environment.BASE_URL_API + '/sse/subscribe';
   private eventSource!: EventSource;
   private notificationService = inject(NotificationService);
   private messageService = inject(MessageService);
@@ -24,7 +24,9 @@ export class SseService {
   constructor() {}
 
   public subscribe(id: number) {
-    this.eventSource = new EventSource(this.sseEndpoint + id);
+    this.eventSource = new EventSource(
+      this.sseEndpoint + '/' + id + '/' + this.userStore.token$.value
+    );
 
     this.eventSource.onopen = (ev) => {
       console.log('first ', ev);
@@ -36,8 +38,14 @@ export class SseService {
     // this.eventSource.onmessage = (ev) => this.onMessageRecieved(ev);
 
     this.eventSource.addEventListener('message', (ev) => {
-      console.log('recievegin message');
-      this.onMessageRecieved(ev, id);
+      console.log('token recieved', JSON.parse(ev.data).token);
+      console.log('token stored  ', this.userStore.token$.value);
+      const token = JSON.parse(ev.data).token;
+      if (token == this.userStore.token$.value) {
+        this.onMessageRecieved(ev, id);
+      } else {
+        console.log('not allowed');
+      }
     });
   }
 
