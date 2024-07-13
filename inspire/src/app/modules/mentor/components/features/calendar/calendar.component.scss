@@ -199,6 +199,15 @@ select {
   color: black;
 }
 
+.control {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: auto;
+  margin: 10px 0;
+  gap: 10px;
+}
+
 .control-calendar {
   display: flex;
   flex-direction: row;
