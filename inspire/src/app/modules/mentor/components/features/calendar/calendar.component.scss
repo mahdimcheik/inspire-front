@@ -199,11 +199,12 @@ select {
   color: black;
 }
 
-.control {
+.control-calendar {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   height: auto;
+  margin: 10px 0;
 
   .mode,
   .navigation {
@@ -213,7 +214,20 @@ select {
 
   button {
     height: 35px;
-    min-width: 50px;
+    min-width: 30px;
     padding: 0 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: $primary-color;
+    color: $anti-primary-color;
+    img {
+    }
   }
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
 }

@@ -4,7 +4,7 @@
       La période de <span>{{ period }}</span>
     </h3>
   </ng-container>
-  <div class="control">
+  <div class="control-calendar">
     <div class="mode">
       <button (click)="dayView()">Jour</button>
       <button (click)="weekView()">Semaine</button>
@@ -13,10 +13,22 @@
     <div class="navigation">
       <button (click)="getToday()">Aujourd'hui</button>
       <button (click)="prev()">
-        <img src="assets/svgs/left.svg" alt="" width="35" height="35" />
+        <img
+          src="assets/svgs/left.svg"
+          alt=""
+          width="35"
+          height="35"
+          class="center"
+        />
       </button>
       <button (click)="next()">
-        <img src="assets/svgs/right.svg" alt="" width="35" height="35" />
+        <img
+          src="assets/svgs/right.svg"
+          alt=""
+          width="35"
+          height="35"
+          class="center"
+        />
       </button>
     </div>
   </div>
