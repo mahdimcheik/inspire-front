@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { UserDTO } from '../../models/user';
-import { DashboardLink } from '../../models/dashboardLink';
 
 @Injectable({
   providedIn: 'root',
@@ -23,36 +22,6 @@ export class UserStoreService {
   getUserId(): number {
     return this.userConnected$.value?.id ?? null;
   }
-  private listLink: DashboardLink[] = [
-    {
-      title: 'Mon profil',
-      logoUrl: 'assets/svgs/profile.svg',
-      logoUrlActive: 'assets/svgs/profile-blanc.svg',
-      path: 'student',
-      active: true,
-    },
-    {
-      title: 'Trouver un mentor',
-      logoUrl: 'assets/svgs/find.svg',
-      logoUrlActive: 'assets/svgs/find-blanc.svg',
-      path: 'student/list-mentors',
-      active: false,
-    },
-    {
-      title: 'Mes réservations',
-      logoUrl: 'assets/svgs/agenda.svg',
-      logoUrlActive: 'assets/svgs/agenda-blanc.svg',
-      path: 'student/reservations',
-      active: false,
-    },
-    {
-      title: 'Mes favoris',
-      logoUrl: 'assets/svgs/coeur.svg',
-      logoUrlActive: 'assets/svgs/coeur-blanc.svg',
-      path: 'student/list-favorites',
-      active: false,
-    },
-  ];
 
   getDashboardLinks() {
     if (this.userConnected$.value.role === 'STUDENT')
