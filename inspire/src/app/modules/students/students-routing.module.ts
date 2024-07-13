@@ -18,14 +18,18 @@ import {
   studentReservationsResolver,
 } from '../../shared/resolvers/reservations.resolver';
 import { MentorReservationPageByStudentComponent } from './pages/mentor-reservation-page-by-student/mentor-reservation-page-by-student.component';
-import { notificationResolver } from '../../shared/resolvers/notification.resolver';
+import {
+  allNotificationResolver,
+  notificationResolver,
+  oldNotificationResolver,
+} from '../../shared/resolvers/notification.resolver';
 
 const routes: Routes = [
   {
     path: '',
     component: StudentLayoutComponent,
     resolve: {
-      notifications: notificationResolver,
+      notifications: allNotificationResolver,
     },
     children: [
       { path: 'list-mentors', component: ListMentorsComponent },

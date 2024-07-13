@@ -16,10 +16,10 @@ export class NotifcationDropdownComponent {
   total = '';
 
   ngOnInit() {
-    this.notificationService.newNotifcations$.subscribe((res) => {
-      this.total = res.length ? '' + res.length : '';
+    this.notificationService.allNotifcations$.subscribe((res) => {
+      this.total = res.news.length ? '' + res.news.length : '';
 
-      const notifs = res.map((ele) => {
+      const notifs = res.news.map((ele) => {
         return {
           label: ele.message,
           icon: ele.message.includes('Annulation')
@@ -28,6 +28,21 @@ export class NotifcationDropdownComponent {
           class: ele.message.includes('Annulation')
             ? 'annulation'
             : 'reservation',
+          route:
+            this.user.value.role === 'MENTOR'
+              ? '/mentor'
+              : '/student/reservations',
+        };
+      });
+      const oldNotifs = res.olds.map((ele) => {
+        return {
+          label: ele.message,
+          icon: ele.message.includes('Annulation')
+            ? 'pi pi-times'
+            : 'pi pi-plus',
+          class: ele.message.includes('Annulation')
+            ? 'annulation-old'
+            : 'reservation-old',
           route:
             this.user.value.role === 'MENTOR'
               ? '/mentor'
@@ -37,30 +52,7 @@ export class NotifcationDropdownComponent {
       this.items = [
         {
           label: 'Notifications',
-          items: notifs,
-        },
-      ];
-    });
-    this.notificationService.oldNotifcations$.subscribe((res) => {
-      const notifs = res.map((ele) => {
-        return {
-          label: ele.message,
-          icon: ele.message.includes('Annulation')
-            ? 'pi pi-times'
-            : 'pi pi-plus',
-          class: ele.message.includes('Annulation')
-            ? 'annulation'
-            : 'reservation',
-          route:
-            this.user.value.role === 'MENTOR'
-              ? '/mentor'
-              : '/student/reservations',
-        };
-      });
-      this.oldItems = [
-        {
-          label: 'Anciennes',
-          items: notifs,
+          items: [...notifs, ...oldNotifs],
         },
       ];
     });

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, tap } from 'rxjs';
+import { BehaviorSubject, forkJoin, tap } from 'rxjs';
 import { NotificationDTO } from '../models/notification-dto';
 import { environment } from '../../../environments/environment.development';
 
@@ -10,6 +10,10 @@ import { environment } from '../../../environments/environment.development';
 export class NotificationService {
   newNotifcations$ = new BehaviorSubject<NotificationDTO[]>([]);
   oldNotifcations$ = new BehaviorSubject<NotificationDTO[]>([]);
+  allNotifcations$ = new BehaviorSubject<{
+    news: NotificationDTO[];
+    olds: NotificationDTO[];
+  }>({ news: [], olds: [] });
   http = inject(HttpClient);
   constructor() {}
 
@@ -21,6 +25,7 @@ export class NotificationService {
       .pipe(
         tap((res) => {
           this.newNotifcations$.next(res);
+          console.log('nouvelles ', res);
         })
       );
   }
@@ -35,6 +40,13 @@ export class NotificationService {
           this.oldNotifcations$.next(res);
         })
       );
+  }
+
+  getAllNotifications(userId: number) {
+    return forkJoin({
+      news: this.getNotifications(userId),
+      olds: this.getOldNotifications(userId),
+    }).pipe(tap((res) => this.allNotifcations$.next(res)));
   }
 
   resetNotifications(userId: number) {

@@ -17,7 +17,11 @@ import {
   studentProfilByIdResolver,
   studentSkillsByIdResolver,
 } from '../../shared/resolvers/student.resolver';
-import { notificationResolver } from '../../shared/resolvers/notification.resolver';
+import {
+  allNotificationResolver,
+  notificationResolver,
+  oldNotificationResolver,
+} from '../../shared/resolvers/notification.resolver';
 
 const routes: Routes = [
   {
@@ -25,6 +29,8 @@ const routes: Routes = [
     component: LayoutMentor,
     resolve: {
       notifications: notificationResolver,
+      allNotifications: allNotificationResolver,
+      //oldNotifications: oldNotificationResolver,
     },
     children: [
       {

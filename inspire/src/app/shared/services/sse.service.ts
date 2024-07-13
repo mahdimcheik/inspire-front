@@ -51,7 +51,7 @@ export class SseService {
 
   public onMessageRecieved(ev: MessageEvent<any>, id: number) {
     console.log('message re ' + ev.data);
-    this.notificationService.getNotifications(id).subscribe(() => {
+    this.notificationService.getAllNotifications(id).subscribe(() => {
       if (!ev.data.includes('connexion')) {
         this.messageService.add({
           severity: 'success',

@@ -11,4 +11,24 @@ export const notificationResolver: ResolveFn<NotificationDTO[]> = (
   const userId = inject(UserStoreService).getUserConnected$().value.id;
 
   return inject(NotificationService).getNotifications(userId);
+  //return inject(NotificationService).getAllNotifications(userId);
+};
+
+export const oldNotificationResolver: ResolveFn<NotificationDTO[]> = (
+  route,
+  state
+) => {
+  const userId = inject(UserStoreService).getUserConnected$().value.id;
+
+  return inject(NotificationService).getOldNotifications(userId);
+};
+
+// allNotificationsResolver
+export const allNotificationResolver: ResolveFn<{
+  news: NotificationDTO[];
+  olds: NotificationDTO[];
+}> = (route, state) => {
+  const userId = inject(UserStoreService).getUserConnected$().value.id;
+
+  return inject(NotificationService).getAllNotifications(userId);
 };
