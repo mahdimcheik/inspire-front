@@ -301,7 +301,7 @@ export class ReservationService {
       )
       .pipe(
         switchMap(() => {
-          if (total % 5 === 1 && total > 5) {
+          if (total % 5 === 1 && total > 5 && first > 5) {
             this.pagination.offsetReservationStudent.next(
               this.pagination.offsetReservationStudent.value - 1
             );

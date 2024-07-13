@@ -39,6 +39,8 @@ export class DashboardComponent implements OnInit {
     first?: number | undefined;
     rows?: number | undefined;
   }) {
+    console.log('on page changing details ', event);
+
     this.paginationService.offsetReservationMentor.next(event.first || 0);
 
     this.reservationService
