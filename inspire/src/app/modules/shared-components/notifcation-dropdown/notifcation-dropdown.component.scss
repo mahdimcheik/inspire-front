@@ -41,3 +41,8 @@
   padding: 10px;
   border-radius: 6px;
 }
+
+.menu {
+  max-height: max(50vh, 400px);
+  overflow: scroll;
+}

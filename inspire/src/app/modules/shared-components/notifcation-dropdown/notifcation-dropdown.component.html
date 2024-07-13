@@ -1,8 +1,19 @@
 <div
-  class="notif-card flex justify-content-center"
+  class="notif-card flex justify-content-center scrollbar-off"
   (click)="menu.toggle($event); resetNotification()"
 >
-  <p-menu #menu [model]="items" [popup]="true">
+  <p-menu
+    #menu
+    [model]="items"
+    [popup]="true"
+    showTransitionOptions=".12s cubic-bezier(0, 0, 0.2, 1)"
+    hideTransitionOptions=".12s cubic-bezier(0, 0, 0.2, 1)"
+    [style]="{
+      'max-height': ' max(50vh, 400px)',
+      overflow: 'auto',
+      'scrollbar-width': 'none'
+    }"
+  >
     <ng-template let-item pTemplate="item">
       <a [routerLink]="item.route" class="p-menuitem-link">
         <span [class]="item.icon"></span>
