@@ -78,6 +78,13 @@ export class UserStoreService {
           path: 'mentor/agenda',
           active: false,
         },
+        {
+          title: 'mail',
+          logoUrl: 'assets/svgs/agenda.svg',
+          logoUrlActive: 'assets/svgs/agenda-blanc.svg',
+          path: 'mentor/mailbox',
+          active: false,
+        },
       ];
     return [];
   }

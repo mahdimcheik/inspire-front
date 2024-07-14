@@ -39,6 +39,9 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { SkeletonReservationComponent } from './ui/skeleton-reservation/skeleton-reservation.component';
 import { NotifcationDropdownComponent } from './notifcation-dropdown/notifcation-dropdown.component';
 import { MenuModule } from 'primeng/menu';
+import { ListMailComponent } from './mail/components/features/list-mail/list-mail.component';
+import { MailDetailsComponent } from './mail/components/features/mail-details/mail-details.component';
+import { SingleMailLineComponent } from './mail/components/ui/single-mail-line/single-mail-line.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +71,9 @@ import { MenuModule } from 'primeng/menu';
     SkeletonFormationComponent,
     SkeletonReservationComponent,
     NotifcationDropdownComponent,
+    ListMailComponent,
+    MailDetailsComponent,
+    SingleMailLineComponent,
   ],
   imports: [
     CommonModule,
@@ -109,6 +115,7 @@ import { MenuModule } from 'primeng/menu';
     SkeletonFormationComponent,
     SkeletonReservationComponent,
     NotifcationDropdownComponent,
+    SingleMailLineComponent,
   ],
   providers: [MessageService],
 })

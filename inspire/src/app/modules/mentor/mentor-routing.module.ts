@@ -22,6 +22,7 @@ import {
   notificationResolver,
   oldNotificationResolver,
 } from '../../shared/resolvers/notification.resolver';
+import { MailBoxComponent } from './pages/mail-box/mail-box.component';
 
 const routes: Routes = [
   {
@@ -59,6 +60,10 @@ const routes: Routes = [
           formations: studentFormationsByIdResolver,
           experiences: studentExperiencesByIdResolver,
         },
+      },
+      {
+        path: 'mailbox',
+        component: MailBoxComponent,
       },
     ],
   },

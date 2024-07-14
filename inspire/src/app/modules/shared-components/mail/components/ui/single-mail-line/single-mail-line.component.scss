@@ -1,0 +1,70 @@
+@import "variables.scss";
+.main {
+  display: grid;
+  align-items: center;
+  position: relative;
+  grid-template-columns: 1fr 4fr 16fr;
+  height: 40px;
+  padding: 0 10px;
+  border-radius: 10px;
+
+  .select-mark {
+    display: flex;
+    align-items: center;
+    input {
+      height: 28px;
+      width: 20px;
+    }
+  }
+  .spoil-date {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 10px;
+  }
+
+  .buttons {
+    display: none;
+    position: absolute;
+    cursor: pointer;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: white;
+    box-shadow: 2px 4px 8px $anti-primary-color;
+
+    .buttons {
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      right: 10px;
+      width: 100px;
+      background: linear-gradient(
+        to left,
+        $anti-primary-color,
+        rgba(0, 0, 0, 0)
+      );
+      border-radius: 10px;
+
+      button {
+        border: none;
+        outline: none;
+        background-color: transparent;
+        cursor: pointer;
+        img {
+          height: 25px;
+          width: 25px;
+          margin-left: auto;
+          margin-right: auto;
+          width: 75%;
+        }
+      }
+    }
+
+    .spoil-date {
+      .time {
+        display: none;
+      }
+    }
+  }
+}
