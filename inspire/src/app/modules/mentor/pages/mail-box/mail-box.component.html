@@ -1,1 +1,6 @@
-<app-single-mail-line [mail]="mail"></app-single-mail-line>
+<div class="mail-list" *ngIf="mails$ | async as mails">
+  <app-single-mail-line
+    *ngFor="let mail of mails"
+    [mail]="mail"
+  ></app-single-mail-line>
+</div>

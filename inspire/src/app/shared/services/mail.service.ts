@@ -8,7 +8,7 @@ import { environment } from '../../../environments/environment.development';
   providedIn: 'root',
 })
 export class MailService {
-  mails = new BehaviorSubject<Mail[]>([]);
+  mails$ = new BehaviorSubject<Mail[]>([]);
   http = inject(HttpClient);
   constructor() {}
 
@@ -18,7 +18,7 @@ export class MailService {
       .pipe(
         tap((mails) => {
           console.log('mails ', mails);
-          this.mails.next(mails);
+          this.mails$.next(mails);
         })
       );
   }
