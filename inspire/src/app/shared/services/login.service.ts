@@ -25,7 +25,6 @@ export class LoginService {
       tap((user) => {
         this.sseService.subscribe(user.id);
         this.userStore.setUserConnected(user);
-        this.sseService.subscribe(user.id);
       })
     );
   }

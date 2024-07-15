@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, first, take } from 'rxjs';
+import { first, take } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 import { NotificationService } from './notification.service';
 import { MessageService } from 'primeng/api';
-import { ActivatedRoute, Router, RouteReuseStrategy } from '@angular/router';
+import { Router } from '@angular/router';
 import { UserStoreService } from './stores/user-store.service';
 import { ReservationService } from './reservation.service';
 import { MentorService } from './mentor.service';
