@@ -20,10 +20,10 @@ import {
 import {
   allNotificationResolver,
   notificationResolver,
-  oldNotificationResolver,
 } from '../../shared/resolvers/notification.resolver';
 import { MailBoxComponent } from './pages/mail-box/mail-box.component';
-import { MailReceivedComponent } from './pages/mail-received/mail-received.component';
+import { MailSentComponent } from './pages/mail-sent/mail-sent.component';
+import { SendMailComponent } from './pages/send-mail/send-mail.component';
 
 const routes: Routes = [
   {
@@ -63,12 +63,16 @@ const routes: Routes = [
         },
       },
       {
-        path: 'mailbox',
+        path: 'mailbox/received',
         component: MailBoxComponent,
       },
       {
-        path: 'mailbox/received',
-        component: MailReceivedComponent,
+        path: 'mailbox/sent',
+        component: MailSentComponent,
+      },
+      {
+        path: 'mailbox/send',
+        component: SendMailComponent,
       },
     ],
   },

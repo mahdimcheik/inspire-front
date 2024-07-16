@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MailReceivedComponent } from './mail-received.component';
+import { FormSendMailComponent } from './form-send-mail.component';
 
-describe('MailReceivedComponent', () => {
-  let component: MailReceivedComponent;
-  let fixture: ComponentFixture<MailReceivedComponent>;
+describe('FormSendMailComponent', () => {
+  let component: FormSendMailComponent;
+  let fixture: ComponentFixture<FormSendMailComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MailReceivedComponent]
+      declarations: [FormSendMailComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(MailReceivedComponent);
+    fixture = TestBed.createComponent(FormSendMailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

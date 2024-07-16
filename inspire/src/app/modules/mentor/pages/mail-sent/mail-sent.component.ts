@@ -4,11 +4,11 @@ import { UserStoreService } from '../../../../shared/services/stores/user-store.
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'app-mail-received',
-  templateUrl: './mail-received.component.html',
-  styleUrl: './mail-received.component.scss',
+  selector: 'app-mail-sent',
+  templateUrl: './mail-sent.component.html',
+  styleUrl: './mail-sent.component.scss',
 })
-export class MailReceivedComponent implements OnInit {
+export class MailSentComponent implements OnInit {
   mailService = inject(MailService);
   userService = inject(UserStoreService);
   destroyRef = inject(DestroyRef);

@@ -14,6 +14,6 @@ export type Mail = {
 
 export type MailSend = {
   title: string;
-  sentDate: Date;
+  receiverId: number;
   body: string;
 };

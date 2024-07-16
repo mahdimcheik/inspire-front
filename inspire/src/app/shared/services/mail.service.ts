@@ -36,12 +36,9 @@ export class MailService {
       );
   }
 
-  sendMail(destinationId: number, mail: MailSend) {
+  sendMail(receiverId: number, mail: MailSend) {
     return this.http
-      .post<Mail>(
-        environment.BASE_URL_API + '/mails/send/' + destinationId,
-        mail
-      )
+      .post<Mail>(environment.BASE_URL_API + '/mails/send/' + receiverId, mail)
       .pipe(
         tap((res) => {
           console.log('mails ', res);

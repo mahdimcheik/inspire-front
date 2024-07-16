@@ -1,0 +1,29 @@
+<form
+  class="card flex justify-content-center"
+  [formGroup]="userForm"
+  (ngSubmit)="onSubmit()"
+>
+  <label for="receiver">Destinataire</label>
+  <input id="receiver" formControlName="receiverId" type="number" />
+  <label for="title">Sujet</label>
+  <input id="title" formControlName="title" />
+  <label for="body">Message</label>
+  <textarea id="body" formControlName="body"></textarea>
+  <div
+    *ngIf="
+      userForm.controls['body'].errors && !userForm.controls['body'].pristine
+    "
+    class="error-msg"
+  >
+    <div [hidden]="!userForm.controls['body'].errors['required']">
+      le message est obligatoire
+    </div>
+    <div [hidden]="!userForm.controls['body'].invalid">min length</div>
+  </div>
+  <button
+    type="submit"
+    [disabled]="!userForm.valid || userForm.controls['body'].errors"
+  >
+    submit
+  </button>
+</form>

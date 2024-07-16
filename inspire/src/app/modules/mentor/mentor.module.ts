@@ -30,7 +30,10 @@ import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { MailBoxComponent } from './pages/mail-box/mail-box.component';
-import { MailReceivedComponent } from './pages/mail-received/mail-received.component';
+import { MailSentComponent } from './pages/mail-sent/mail-sent.component';
+import { SendMailComponent } from './pages/send-mail/send-mail.component';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { FormSendMailComponent } from './components/features/form-send-mail/form-send-mail.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +51,9 @@ import { MailReceivedComponent } from './pages/mail-received/mail-received.compo
     ModalCancelReservationComponent,
     StudentProfilByMentorComponent,
     MailBoxComponent,
-    MailReceivedComponent,
+    MailSentComponent,
+    SendMailComponent,
+    FormSendMailComponent,
   ],
   imports: [
     CommonModule,
@@ -68,6 +73,7 @@ import { MailReceivedComponent } from './pages/mail-received/mail-received.compo
     ToastModule,
     ButtonModule,
     MenuModule,
+    FloatLabelModule,
   ],
   exports: [
     RowReservationComponent,
