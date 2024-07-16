@@ -88,7 +88,7 @@ export class LoginService {
 
   // Tabs communication
 
-  onMessage = new Subject();
+  // onMessage = new Subject();
   broadcastChannel = new BroadcastChannel('logout');
 
   constructor() {

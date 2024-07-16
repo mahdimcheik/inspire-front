@@ -1,0 +1,26 @@
+@import "variables.scss";
+.main {
+  header {
+    width: 100%;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    background-color: $primary-color;
+    border-radius: 20px 20px 0 0;
+  }
+  .mails {
+    .mail {
+      background-color: white;
+      border-radius: 10px;
+      .center {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+}
+
+.even {
+  background-color: $background-light-list;
+}

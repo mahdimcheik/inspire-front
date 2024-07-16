@@ -2,9 +2,16 @@
   <div class="select-mark">
     <input type="checkbox" [(ngModel)]="selected" />
   </div>
-  <p class="title">{{ mail.title }}</p>
+
+  <div class="image-name">
+    <img [src]="mail.imgUrl" alt="" width="24" height="24" />
+    <p class="sender">{{ mail.senderFirstname }} {{ mail.senderLastname }}</p>
+  </div>
   <div class="spoil-date">
-    <p>{{ mail.body }}</p>
+    <p>
+      <span class="title">{{ mail.title }}</span>
+      <span class="body">{{ " - " }}{{ mail.body }}</span>
+    </p>
     <p class="time">{{ mail.sentDate | date : "short" }}</p>
   </div>
   <div class="buttons">

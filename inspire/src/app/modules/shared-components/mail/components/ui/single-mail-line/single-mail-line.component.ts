@@ -9,6 +9,7 @@ import { Mail } from '../../../../../../shared/models/Mail';
 export class SingleMailLineComponent implements OnInit {
   selected = false;
   @Input() mail!: Mail;
+  @Input() order!: string;
 
   ngOnInit(): void {}
 }

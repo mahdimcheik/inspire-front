@@ -42,6 +42,7 @@ import { MenuModule } from 'primeng/menu';
 import { ListMailComponent } from './mail/components/features/list-mail/list-mail.component';
 import { MailDetailsComponent } from './mail/components/features/mail-details/mail-details.component';
 import { SingleMailLineComponent } from './mail/components/ui/single-mail-line/single-mail-line.component';
+import { AccordionModule } from 'primeng/accordion';
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import { SingleMailLineComponent } from './mail/components/ui/single-mail-line/s
     RouterLink,
     SkeletonModule,
     MenuModule,
+    AccordionModule,
   ],
   exports: [
     ButtonComponent,
@@ -116,6 +118,7 @@ import { SingleMailLineComponent } from './mail/components/ui/single-mail-line/s
     SkeletonReservationComponent,
     NotifcationDropdownComponent,
     SingleMailLineComponent,
+    ListMailComponent,
   ],
   providers: [MessageService],
 })

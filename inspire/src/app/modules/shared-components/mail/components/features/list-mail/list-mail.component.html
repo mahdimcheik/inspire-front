@@ -1,1 +1,18 @@
-<p>list-mail works!</p>
+<div class="main">
+  <header>
+    <p>Mes Mails</p>
+  </header>
+  <ul class="mails">
+    <li class="mail" *ngIf="mails$ | async as mails">
+      <div
+        class="center"
+        *ngFor="let mail of mails; let i = index"
+        [ngClass]="i % 2 == 1 ? 'even' : 'odd'"
+      >
+        <app-single-mail-line [mail]="mail"></app-single-mail-line>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<!--  -->

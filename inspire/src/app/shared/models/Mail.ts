@@ -7,6 +7,7 @@ export type Mail = {
   receiverId: number;
   senderFirstname: string;
   senderLastname: string;
+  imgUrl: string;
   senderRole: string;
   opened: boolean;
 };
