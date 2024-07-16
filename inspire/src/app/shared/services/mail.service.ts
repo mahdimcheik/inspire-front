@@ -9,12 +9,25 @@ import { environment } from '../../../environments/environment.development';
 })
 export class MailService {
   mails$ = new BehaviorSubject<Mail[]>([]);
+  setMails$ = new BehaviorSubject<Mail[]>([]);
+
   http = inject(HttpClient);
   constructor() {}
 
   getMails(userId: number) {
     return this.http
       .get<Mail[]>(environment.BASE_URL_API + '/mails/receiver/' + userId)
+      .pipe(
+        tap((mails) => {
+          console.log('mails ', mails);
+          this.setMails$.next(mails);
+        })
+      );
+  }
+
+  getSentMails(userId: number) {
+    return this.http
+      .get<Mail[]>(environment.BASE_URL_API + '/mails/sender/' + userId)
       .pipe(
         tap((mails) => {
           console.log('mails ', mails);

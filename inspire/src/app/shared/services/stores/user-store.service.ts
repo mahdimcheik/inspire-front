@@ -85,6 +85,13 @@ export class UserStoreService {
           path: 'mentor/mailbox',
           active: false,
         },
+        {
+          title: 'Envoyés',
+          logoUrl: 'assets/svgs/agenda.svg',
+          logoUrlActive: 'assets/svgs/agenda-blanc.svg',
+          path: 'mentor/mailbox/received',
+          active: false,
+        },
       ];
     return [];
   }

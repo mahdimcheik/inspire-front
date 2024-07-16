@@ -30,6 +30,7 @@ import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { MailBoxComponent } from './pages/mail-box/mail-box.component';
+import { MailReceivedComponent } from './pages/mail-received/mail-received.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { MailBoxComponent } from './pages/mail-box/mail-box.component';
     ModalCancelReservationComponent,
     StudentProfilByMentorComponent,
     MailBoxComponent,
+    MailReceivedComponent,
   ],
   imports: [
     CommonModule,
