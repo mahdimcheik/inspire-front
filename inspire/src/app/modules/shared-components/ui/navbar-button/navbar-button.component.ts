@@ -22,7 +22,8 @@ export class NavbarButtonComponent {
 
   @Output() stateEmitter = new EventEmitter<boolean>();
   router = inject(Router);
-  changeState() {
+  changeState(event: Event) {
+    event.stopPropagation();
     this.active = true;
     this.stateEmitter.emit(this.active);
     this.router.navigateByUrl(this.path);

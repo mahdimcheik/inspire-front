@@ -6,12 +6,14 @@ import {
   reservationForMentorDTO,
   Slot,
   SlotDTO,
+  SlotFormated,
 } from '../models/reservation';
-import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, switchMap, tap } from 'rxjs';
 import { ReservationForStudentDTO } from '../models/reservation';
 import { MentorService } from './mentor.service';
 import { StudentService } from './student.service';
 import { PaginationService } from './pagination.service';
+import { EventInput } from '@fullcalendar/core';
 
 @Injectable({
   providedIn: 'root',
@@ -52,6 +54,12 @@ export class ReservationService {
     total: 0,
   });
 
+  activeMentorSlots = new BehaviorSubject<EventInput[]>([]);
+  activeStudentSlots = new BehaviorSubject<EventInput[]>([]);
+
+  MentorViewDateStart = new BehaviorSubject<Date>(new Date());
+  MentorViewDateEnd = new BehaviorSubject<Date>(new Date());
+
   mentorService = inject(MentorService);
   studentService = inject(StudentService);
 
@@ -84,13 +92,19 @@ export class ReservationService {
     dateBegin: Date,
     dateEnd: Date
   ): Observable<SlotDTO[]> {
-    return this.httpClient.post<SlotDTO[]>(
-      `${environment.BASE_URL_API}/user/slot/get/${mentorId}`,
-      {
-        start: dateBegin,
-        end: dateEnd,
-      }
-    );
+    return this.httpClient
+      .post<SlotDTO[]>(
+        `${environment.BASE_URL_API}/user/slot/get/${mentorId}`,
+        {
+          start: dateBegin,
+          end: dateEnd,
+        }
+      )
+      .pipe(
+        tap((res) => {
+          this.activeMentorSlots.next(this.formatSlotsToEvents(res));
+        })
+      );
   }
 
   getSlotsforStudentByMentorId(
@@ -99,33 +113,76 @@ export class ReservationService {
     dateEnd: Date
   ): Observable<SlotDTO[]> {
     const studentId = this.studentService.activeStudentProfil$.value.id;
-    // let end = new Date();
-    // end.setDate(end.getDate() + 50);
-    return this.httpClient.post<SlotDTO[]>(
-      `${environment.BASE_URL_API}/user/slot/slots/${mentorId}/${studentId}`,
-      { start: dateBegin, end: dateEnd }
-    );
+    return this.httpClient
+      .post<SlotDTO[]>(
+        `${environment.BASE_URL_API}/user/slot/slots/${mentorId}/${studentId}`,
+        { start: dateBegin, end: dateEnd }
+      )
+      .pipe(
+        tap((res) => {
+          this.activeStudentSlots.next(this.formatStudentSlotsToEvents(res));
+          console.log('slots for student ', res);
+          console.log(
+            'slots for student formatted ',
+            this.formatStudentSlotsToEvents(res)
+          );
+        })
+      );
   }
 
-  deleteSlot(id: number): Observable<any> {
-    return this.httpClient.delete(
+  deleteSlot(id: number): Observable<void> {
+    return this.httpClient.delete<void>(
       `${environment.BASE_URL_API}/user/slot/delete/${id}`
     );
   }
 
-  // deleteReservationAndSlot(id: number): Observable<any> {
-  //   return this.httpClient.delete(
-  //     `${environment.BASE_URL_API}/reservation/delete/mentor/${id}`
-  //   );
-  // }
-
-  deleteReservationOnly(id: number): Observable<any> {
-    return this.httpClient.delete(
-      `${environment.BASE_URL_API}/reservation/delete/mentor/reservation/${id}`
-    );
+  formatSlotsToEvents(slots: SlotDTO[]): EventInput[] {
+    return slots.map((slot) => ({
+      id: '' + slot.id,
+      title: slot.visio ? 'Visio' : 'Présentiel',
+      start: slot.dateBegin,
+      end: slot.dateEnd,
+      color:
+        slot.reservationId !== null
+          ? '#447597'
+          : slot.visio
+          ? '#FCBE77'
+          : '#F8156B',
+      extendedProps: {
+        visio: slot.visio,
+        booked: !!slot.reservationId,
+        imgUrl: slot.imgUrl,
+        firstname: slot.firstname,
+        subject: slot.subject,
+      },
+    }));
   }
 
-  updateSlot(id: number, slotInfo: any): Observable<any> {
+  formatStudentSlotsToEvents(slots: SlotDTO[]): EventInput[] {
+    return slots.map((slot) => ({
+      id: '' + slot.id,
+      title: slot.visio ? 'Visio' : 'Présentiel',
+      start: slot.dateBegin,
+      end: slot.dateEnd,
+
+      color:
+        slot.reservationId !== null
+          ? '#447597'
+          : slot.visio
+          ? '#FCBE77'
+          : '#F8156B',
+      className: slot.booked ? 'booked' : 'not-booked',
+
+      extendedProps: {
+        slotId: slot.id,
+        mentorId: slot.mentorId,
+        reservationId: slot.reservationId,
+        isBooked: !!slot.reservationId,
+      },
+    }));
+  }
+
+  updateSlot(id: number, slotInfo: SlotFormated): Observable<SlotDTO> {
     const updatedSlotInfo = {
       id: id,
       dateBegin: slotInfo.dateBegin,
@@ -134,13 +191,13 @@ export class ReservationService {
       mentorId: slotInfo.mentorId,
     };
 
-    return this.httpClient.put(
+    return this.httpClient.put<SlotDTO>(
       `${environment.BASE_URL_API}/user/slot/update`,
       updatedSlotInfo
     );
   }
 
-  getMentorReservationList(userId: number, perPage: number, offset: number) {
+  getMentorReservationList(perPage: number, offset: number) {
     const mentorId = this.mentorService.activeMentorProfil$.value.id;
     return this.httpClient
       .get<{
@@ -152,16 +209,14 @@ export class ReservationService {
       )
       .pipe(
         tap((res) => {
+          console.log('reservations list ', res);
+
           this.activeMentorReservations$.next(res);
         })
       );
   }
 
-  getMentorReservationHistoryList(
-    userId: number,
-    perPage: number,
-    offset: number
-  ) {
+  getMentorReservationHistoryList(perPage: number, offset: number) {
     const mentorId = this.mentorService.activeMentorProfil$.value.id;
     return this.httpClient
       .get<{ reservations: reservationForMentorDTO[]; total: number }>(
@@ -197,7 +252,7 @@ export class ReservationService {
       );
   }
 
-  getStudentReservationList(userId: number, perPage: number, offset: number) {
+  getStudentReservationList(perPage: number, offset: number) {
     const studentId = this.studentService.activeStudentProfil$.value.id;
     return this.httpClient
       .get<{
@@ -214,11 +269,7 @@ export class ReservationService {
       );
   }
 
-  getStudentReservationHistoryList(
-    userId: number,
-    perPage: number,
-    offset: number
-  ) {
+  getStudentReservationHistoryList(perPage: number, offset: number) {
     const studentId = this.studentService.activeStudentProfil$.value.id;
 
     return this.httpClient
@@ -250,13 +301,13 @@ export class ReservationService {
       )
       .pipe(
         switchMap(() => {
-          if (total % 5 === 1 && total > 5) {
+          if (total % 5 === 1 && total > 5 && first > 5) {
             this.pagination.offsetReservationStudent.next(
               this.pagination.offsetReservationStudent.value - 1
             );
-            return this.getMentorReservationList(mentorId, 5, first - 5);
+            return this.getMentorReservationList(5, first - 5);
           }
-          return this.getMentorReservationList(mentorId, 5, first);
+          return this.getMentorReservationList(5, first);
         })
       );
   }
@@ -282,9 +333,9 @@ export class ReservationService {
             this.pagination.offsetReservationStudent.next(
               this.pagination.offsetReservationStudent.value - 1
             );
-            return this.getStudentReservationList(studentId, 5, first - 5);
+            return this.getStudentReservationList(5, first - 5);
           }
-          return this.getStudentReservationList(studentId, 5, first);
+          return this.getStudentReservationList(5, first);
         })
       );
   }

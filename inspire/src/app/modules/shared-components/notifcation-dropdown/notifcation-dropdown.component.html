@@ -1,0 +1,35 @@
+<div
+  class="notif-card flex justify-content-center scrollbar-off"
+  (click)="menu.toggle($event); resetNotification()"
+>
+  <p-menu
+    #menu
+    [model]="items"
+    [popup]="true"
+    showTransitionOptions=".12s cubic-bezier(0, 0, 0.2, 1)"
+    hideTransitionOptions=".12s cubic-bezier(0, 0, 0.2, 1)"
+    [style]="{
+      'max-height': ' max(50vh, 400px)',
+      overflow: 'auto',
+      'scrollbar-width': 'none'
+    }"
+  >
+    <ng-template let-item pTemplate="item">
+      <a [routerLink]="item.route" class="p-menuitem-link">
+        <span [class]="item.icon"></span>
+        <span [class]="'ml-2 notif ' + item.class">{{ item.label }}</span>
+      </a>
+    </ng-template>
+  </p-menu>
+
+  <div class="icon-wrapper">
+    <img
+      class="img-fluid"
+      src="/assets/svgs/bell.svg"
+      alt="notifications"
+      width="25"
+      height="25"
+    />
+    <span class="badge" *ngIf="total">{{ +total <= 9 ? total : "9+" }}</span>
+  </div>
+</div>

@@ -1,8 +1,9 @@
 .container {
-  margin: 10px 0;
   .main {
     display: flex;
     align-items: center;
     gap: 20px;
+    padding: 10px 20px;
+    border-radius: 10px;
   }
 }

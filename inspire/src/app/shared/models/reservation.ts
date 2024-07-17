@@ -6,6 +6,14 @@ export type Slot = {
   visio: boolean;
 };
 
+export type SlotFormated = {
+  id?: number;
+  dateBegin: string;
+  dateEnd: string;
+  mentorId?: number;
+  visio: boolean;
+};
+
 export type SlotDTO = {
   id: number;
   mentorId: number;

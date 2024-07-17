@@ -1,6 +1,6 @@
 <div class="border-round border-1 surface-border p-4 surface-card container">
-  <div class="flex main">
-    <p-skeleton shape="circle" size="4rem" styleClass="mr-2" />
+  <div class="flex main" [ngStyle]="{ 'background-color': bgColor }">
+    <p-skeleton shape="circle" size="3rem" styleClass="mr-2" />
     <div style="flex: 1">
       <p-skeleton width="100%" styleClass="mb-2" />
       <p-skeleton width="75%" />

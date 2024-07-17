@@ -20,15 +20,10 @@ export class DashboardLinksComponent implements OnInit {
 
   ngOnInit(): void {
     const fragments = this.router.url;
-    this.mentor
-      ? this.listLink.forEach((link, i) => {
-          link.active =
-            fragments.split('/').join('') === link.path.split('/').join('');
-        })
-      : this.listLink.forEach((link, i) => {
-          link.active =
-            fragments.split('/').join('') === link.path.split('/').join('');
-        });
+    this.listLink.forEach((link, i) => {
+      link.active =
+        fragments.split('/').join('') === link.path.split('/').join('');
+    });
 
     this.router.events.subscribe((res) => {
       if (res instanceof NavigationStart) {
@@ -40,12 +35,8 @@ export class DashboardLinksComponent implements OnInit {
   }
 
   handleLinkChange(event: boolean, index: number) {
-    this.mentor
-      ? this.listLink.forEach((link, i) => {
-          index === i ? (link.active = event) : (link.active = !event);
-        })
-      : this.listLink.forEach((link, i) => {
-          index === i ? (link.active = event) : (link.active = !event);
-        });
+    this.listLink.forEach((link, i) => {
+      index === i ? (link.active = event) : (link.active = !event);
+    });
   }
 }

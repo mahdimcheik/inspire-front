@@ -9,6 +9,7 @@ import { StudentService } from '../../../../shared/services/student.service';
 import { DashboardLink } from '../../../../shared/models/dashboardLink';
 import { UserService } from '../../../../shared/services/user.service';
 import { LoginService } from '../../../../shared/services/login.service';
+import { SseService } from '../../../../shared/services/sse.service';
 
 @Component({
   selector: 'app-side-nav',
@@ -28,43 +29,19 @@ export class LayoutMentor implements OnInit {
     inject(MentorService).activeMentorProfil$;
   studentProfil: BehaviorSubject<StudentDTO> =
     inject(StudentService).activeStudentProfil$;
+  sseService = inject(SseService);
   name!: string;
   intro!: string;
   imgUrl!: string;
 
   displayMobileNav = false;
 
-  listLink: DashboardLink[] = [
-    {
-      title: 'dashboard',
-      logoUrl: 'assets/svgs/tdb.svg',
-      logoUrlActive: 'assets/svgs/dash-blanc.svg',
-      path: 'mentor',
-      active: true,
-    },
-    {
-      title: 'mon profil',
-      logoUrl: 'assets/svgs/profile.svg',
-      logoUrlActive: 'assets/svgs/profile-blanc.svg',
-      path: 'mentor/profil',
-      active: false,
-    },
-    {
-      title: 'agenda',
-      logoUrl: 'assets/svgs/agenda.svg',
-      logoUrlActive: 'assets/svgs/agenda-blanc.svg',
-      path: 'mentor/agenda',
-      active: false,
-    },
-  ];
+  listLink: DashboardLink[] = this.userStoreService.getDashboardLinks();
 
-  toggleVisibility() {
+  toggleVisibility(event: Event) {
+    event.stopPropagation();
     this.showNavbar = !this.showNavbar;
   }
-
-  // goToProfile() {
-  //   this.router.navigate(['mentor/profil']);
-  // }
 
   logout() {
     this.loginService.logout();
@@ -80,5 +57,10 @@ export class LayoutMentor implements OnInit {
     });
 
     this.imgUrl = this.mentorProfil$.value.imgUrl;
+  }
+
+  showModalDeconnection(event: Event) {
+    event.stopPropagation();
+    this.modalVisible = true;
   }
 }

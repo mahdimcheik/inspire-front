@@ -64,7 +64,7 @@
     </div>
     <div class="exit">
       <app-button
-        [text]="'Annuler'"
+        [text]="'Quitter'"
         [variant]="'black'"
         (onSubmit)="exit()"
       ></app-button>
@@ -81,7 +81,7 @@
   </div>
   <div class="control" *ngIf="editMessage">
     <app-button
-      [text]="'Annuler'"
+      [text]="'Quitter'"
       [type]="'button'"
       [variant]="'black'"
       (onSubmit)="editMessage = false"

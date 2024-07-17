@@ -1,3 +1,4 @@
+@import "variables.scss";
 .icon-wrapper {
   position: relative;
   display: inline-block;
@@ -26,9 +27,22 @@
 .reservation {
   background-color: rgb(154, 218, 154);
 }
+.annulation-old {
+  background-color: $anti-primary-color;
+  color: black;
+}
+.reservation-old {
+  background-color: $anti-primary-color;
+  color: black;
+}
 
 .notif {
   margin: 8px 5px;
   padding: 10px;
   border-radius: 6px;
+}
+
+.menu {
+  max-height: max(50vh, 400px);
+  overflow: scroll;
 }

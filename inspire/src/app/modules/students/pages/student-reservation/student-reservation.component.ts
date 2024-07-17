@@ -41,11 +41,7 @@ export class StudentReservationComponent implements OnInit {
     this.paginationService.offsetReservationStudent.next(event.first || 0);
 
     this.reservationService
-      .getStudentReservationList(
-        this.activeMentor$.value.userId,
-        5,
-        event.first || 0
-      )
+      .getStudentReservationList(5, event.first || 0)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe();
   }
@@ -62,11 +58,7 @@ export class StudentReservationComponent implements OnInit {
     );
 
     this.reservationService
-      .getStudentReservationHistoryList(
-        this.activeMentor$.value.userId,
-        5,
-        event.first || 0
-      )
+      .getStudentReservationHistoryList(5, event.first || 0)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe();
   }

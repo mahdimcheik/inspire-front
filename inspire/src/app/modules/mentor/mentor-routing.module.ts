@@ -17,16 +17,20 @@ import {
   studentProfilByIdResolver,
   studentSkillsByIdResolver,
 } from '../../shared/resolvers/student.resolver';
-import { notificationResolver } from '../../shared/resolvers/notification.resolver';
+import {
+  allNotificationResolver,
+  notificationResolver,
+  oldNotificationResolver,
+} from '../../shared/resolvers/notification.resolver';
 
 const routes: Routes = [
   {
     path: '',
     component: LayoutMentor,
     resolve: {
-      // reservationsData: mentorReservationsResolver,
-      // reservationsHistoryData: mentorReservationsHistoryResolver,
       notifications: notificationResolver,
+      allNotifications: allNotificationResolver,
+      //oldNotifications: oldNotificationResolver,
     },
     children: [
       {
