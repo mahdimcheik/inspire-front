@@ -25,7 +25,6 @@ export class LoginService {
       tap((user) => {
         this.sseService.subscribe(user.id);
         this.userStore.setUserConnected(user);
-        this.sseService.subscribe(user.id);
       })
     );
   }
@@ -89,7 +88,7 @@ export class LoginService {
 
   // Tabs communication
 
-  onMessage = new Subject();
+  // onMessage = new Subject();
   broadcastChannel = new BroadcastChannel('logout');
 
   constructor() {

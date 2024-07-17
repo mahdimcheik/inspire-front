@@ -9,7 +9,6 @@ import { StudentService } from '../../../../shared/services/student.service';
 import { DashboardLink } from '../../../../shared/models/dashboardLink';
 import { UserService } from '../../../../shared/services/user.service';
 import { LoginService } from '../../../../shared/services/login.service';
-import { SseService } from '../../../../shared/services/sse.service';
 
 @Component({
   selector: 'app-side-nav',
@@ -29,7 +28,6 @@ export class LayoutMentor implements OnInit {
     inject(MentorService).activeMentorProfil$;
   studentProfil: BehaviorSubject<StudentDTO> =
     inject(StudentService).activeStudentProfil$;
-  sseService = inject(SseService);
   name!: string;
   intro!: string;
   imgUrl!: string;

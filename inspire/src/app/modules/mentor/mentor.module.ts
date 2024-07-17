@@ -29,6 +29,11 @@ import { StudentProfilByMentorComponent } from './pages/student-profil-by-mentor
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
+import { MailBoxComponent } from './pages/mail-box/mail-box.component';
+import { MailSentComponent } from './pages/mail-sent/mail-sent.component';
+import { SendMailComponent } from './pages/send-mail/send-mail.component';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { FormSendMailComponent } from './components/features/form-send-mail/form-send-mail.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +50,10 @@ import { MenuModule } from 'primeng/menu';
     ModalAddNoteComponent,
     ModalCancelReservationComponent,
     StudentProfilByMentorComponent,
+    MailBoxComponent,
+    MailSentComponent,
+    SendMailComponent,
+    FormSendMailComponent,
   ],
   imports: [
     CommonModule,
@@ -64,6 +73,7 @@ import { MenuModule } from 'primeng/menu';
     ToastModule,
     ButtonModule,
     MenuModule,
+    FloatLabelModule,
   ],
   exports: [
     RowReservationComponent,

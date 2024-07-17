@@ -78,6 +78,27 @@ export class UserStoreService {
           path: 'mentor/agenda',
           active: false,
         },
+        {
+          title: 'mail',
+          logoUrl: 'assets/svgs/agenda.svg',
+          logoUrlActive: 'assets/svgs/agenda-blanc.svg',
+          path: 'mentor/mailbox/received',
+          active: false,
+        },
+        {
+          title: 'Envoyés',
+          logoUrl: 'assets/svgs/agenda.svg',
+          logoUrlActive: 'assets/svgs/agenda-blanc.svg',
+          path: 'mentor/mailbox/sent',
+          active: false,
+        },
+        {
+          title: 'Envoi',
+          logoUrl: 'assets/svgs/agenda.svg',
+          logoUrlActive: 'assets/svgs/agenda-blanc.svg',
+          path: 'mentor/mailbox/send',
+          active: false,
+        },
       ];
     return [];
   }
