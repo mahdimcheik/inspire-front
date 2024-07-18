@@ -1,11 +1,6 @@
 <ng-container *ngIf="mentorList$ | async as listMentors">
   <div class="card">
-    <p-table
-      [value]="mentors"
-      dataKey="userId"
-      editMode="row"
-      [tableStyle]="{ 'min-width': '60rem' }"
-    >
+    <p-table [value]="mentors" dataKey="userId" editMode="row">
       <ng-template pTemplate="header">
         <tr>
           <th pSortableColumn="userId" class="column-width">
@@ -69,7 +64,7 @@
             </p-cellEditor>
           </td>
           <td>
-            {{ mentor.createdAt }}
+            {{ mentor.createdAt | date : "dd MMMM yyyy" }}
           </td>
           <td>
             <p-cellEditor>
@@ -125,3 +120,4 @@
     </p-table>
   </div>
 </ng-container>
+<p-toast></p-toast>

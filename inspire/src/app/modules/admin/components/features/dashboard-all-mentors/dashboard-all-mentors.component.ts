@@ -39,13 +39,12 @@ export class DashboardAllMentorsComponent implements OnInit {
   }
 
   onRowEditSave(mentor: MentorListAdminDTO) {
-    // Ajoutez votre propre logique de validation ici
     if (mentor.role) {
       delete this.clonedMentors[mentor.userId as any];
       this.messageService.add({
         severity: 'success',
         summary: 'Success',
-        detail: 'Mentor is updated',
+        detail: 'Cet utilisateur a été mis à jour',
       });
     } else {
       this.messageService.add({
@@ -57,7 +56,7 @@ export class DashboardAllMentorsComponent implements OnInit {
   }
 
   onRowEditCancel(mentor: MentorListAdminDTO, index: number) {
-    this.mentors[index] = this.clonedMentors[mentor.userId as any];
-    delete this.clonedMentors[mentor.userId as any];
+    this.mentors[index] = this.clonedMentors[mentor.userId as number];
+    delete this.clonedMentors[mentor.userId as number];
   }
 }
