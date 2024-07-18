@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MentorService } from '../../../../../shared/services/mentor.service';
-import { Mentor, MentorListAdminDTO } from '../../../../../shared/models/user';
+import {
+  Mentor,
+  MentorListAdminDTO as AdminMentorDTO,
+} from '../../../../../shared/models/user';
 import { Observable } from 'rxjs';
 import { AdminService } from '../../../../../shared/services/admin.service';
 import { MessageService, SelectItem } from 'primeng/api';
@@ -11,7 +14,7 @@ import { MessageService, SelectItem } from 'primeng/api';
   styleUrl: './dashboard-all-mentors.component.scss',
 })
 export class DashboardAllMentorsComponent implements OnInit {
-  mentorList$!: Observable<MentorListAdminDTO[]>;
+  mentorList$!: Observable<AdminMentorDTO[]>;
   statuses: SelectItem[] = [
     { label: 'Admin', value: 'ADMIN' },
     { label: 'Mentor', value: 'MENTOR' },
@@ -27,8 +30,8 @@ export class DashboardAllMentorsComponent implements OnInit {
     this.mentorList$ = this.adminService.getMentorListByAdmin();
   }
 
-  updateMentor(mentor: MentorListAdminDTO) {
-    this.adminService.editMentor(mentor as MentorListAdminDTO).subscribe(() => {
+  updateMentor(mentor: AdminMentorDTO) {
+    this.adminService.editMentor(mentor as AdminMentorDTO).subscribe(() => {
       this.mentorList$ = this.adminService.getMentorListByAdmin();
       this.messageService.add({
         severity: 'success',
@@ -42,17 +45,15 @@ export class DashboardAllMentorsComponent implements OnInit {
     this.mentorList$ = this.adminService.getMentorListByAdmin();
   }
 
-  deleteMentorRow(mentor: MentorListAdminDTO) {
-    this.adminService
-      .deleteMentor(mentor as MentorListAdminDTO)
-      .subscribe(() => {
-        this.mentorList$ = this.adminService.getMentorListByAdmin();
+  deleteMentorRow(mentor: AdminMentorDTO) {
+    this.adminService.deleteMentor(mentor as AdminMentorDTO).subscribe(() => {
+      this.mentorList$ = this.adminService.getMentorListByAdmin();
 
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Cet utilisateur a été supprimé',
-        });
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Cet utilisateur a été supprimé',
       });
+    });
   }
 }
