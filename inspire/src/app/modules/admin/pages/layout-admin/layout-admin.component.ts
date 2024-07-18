@@ -32,8 +32,6 @@ export class LayoutAdminComponent {
   router = inject(Router);
   mentorProfil$: BehaviorSubject<MentorDTO> =
     inject(MentorService).activeMentorProfil$;
-  adminProfil$: BehaviorSubject<AdminDTO> =
-    inject(AdminService).activeAdminProfil$;
 
   studentProfil: BehaviorSubject<StudentDTO> =
     inject(StudentService).activeStudentProfil$;
@@ -59,8 +57,6 @@ export class LayoutAdminComponent {
   ngOnInit(): void {
     this.windowWatcher.windowSizeChanged.subscribe((option) => {
       this.showNavbar = option;
-      this.name = this.adminProfil$.value.firstname;
-      console.log(this.adminProfil$.value);
 
       this.intro = 'Votre espace Administrateur';
     });
