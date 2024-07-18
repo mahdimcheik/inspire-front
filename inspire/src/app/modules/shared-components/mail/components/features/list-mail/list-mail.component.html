@@ -3,7 +3,7 @@
     <p>Mes Mails</p>
   </header>
   <ul class="mails">
-    <li class="mail" *ngIf="mails$ | async as mails">
+    <li class="mail" *ngIf="receivedMails$ | async as mails">
       <div
         class="center"
         *ngFor="let mail of mails; let i = index"
@@ -14,5 +14,3 @@
     </li>
   </ul>
 </div>
-
-<!--  -->

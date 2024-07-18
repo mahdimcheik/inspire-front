@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Mail } from '../../../../../../shared/models/Mail';
+import { ReceivedMail, SentMail } from '../../../../../../shared/models/Mail';
 
 @Component({
   selector: 'app-single-mail-line',
@@ -8,7 +8,7 @@ import { Mail } from '../../../../../../shared/models/Mail';
 })
 export class SingleMailLineComponent implements OnInit {
   selected = false;
-  @Input() mail!: Mail;
+  @Input() mail!: ReceivedMail;
   @Input() order!: string;
 
   ngOnInit(): void {}

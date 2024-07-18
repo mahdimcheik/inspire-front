@@ -30,7 +30,6 @@ import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { MailBoxComponent } from './pages/mail-box/mail-box.component';
-import { MailSentComponent } from './pages/mail-sent/mail-sent.component';
 import { SendMailComponent } from './pages/send-mail/send-mail.component';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { FormSendMailComponent } from './components/features/form-send-mail/form-send-mail.component';
@@ -51,7 +50,6 @@ import { FormSendMailComponent } from './components/features/form-send-mail/form
     ModalCancelReservationComponent,
     StudentProfilByMentorComponent,
     MailBoxComponent,
-    MailSentComponent,
     SendMailComponent,
     FormSendMailComponent,
   ],
