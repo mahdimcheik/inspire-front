@@ -1,13 +1,8 @@
 import { Component, DestroyRef, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MailService } from '../../../../../shared/services/mail.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Mail } from '../../../../../shared/models/Mail';
+import { ReceivedMail } from '../../../../../shared/models/Mail';
 
 @Component({
   selector: 'app-form-send-mail',
@@ -31,7 +26,7 @@ export class FormSendMailComponent {
     this.mailService
       .sendMail(
         this.userForm.value.receiverId || 0,
-        this.userForm.value as Mail
+        this.userForm.value as ReceivedMail
       )
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe();

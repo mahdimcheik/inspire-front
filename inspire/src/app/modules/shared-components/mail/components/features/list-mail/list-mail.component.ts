@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Mail } from '../../../../../../shared/models/Mail';
+import { ReceivedMail } from '../../../../../../shared/models/Mail';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -8,5 +8,5 @@ import { BehaviorSubject } from 'rxjs';
   styleUrl: './list-mail.component.scss',
 })
 export class ListMailComponent {
-  @Input() mails$!: BehaviorSubject<Mail[]>;
+  @Input() receivedMails$!: BehaviorSubject<ReceivedMail[]>;
 }
