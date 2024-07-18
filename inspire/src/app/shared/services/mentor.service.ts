@@ -119,14 +119,6 @@ export class MentorService {
     );
   }
 
-  getMentorReservationsList() {
-    return this.httpClient.get<reservationForMentorDTO[]>(
-      environment.BASE_URL +
-        '/reservation/reservations/mentor' +
-        this.userConnected.value?.id
-    );
-  }
-
   updateMentorImage(file: File) {
     if (file) {
       const formData = new FormData();

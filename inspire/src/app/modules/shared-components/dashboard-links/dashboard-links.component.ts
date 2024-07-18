@@ -1,6 +1,5 @@
 import { Component, DestroyRef, Input, OnInit, inject } from '@angular/core';
-import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
-import { fromEvent } from 'rxjs';
+import { NavigationStart, Router } from '@angular/router';
 import { UserStoreService } from '../../../shared/services/stores/user-store.service';
 import { DashboardLink } from '../../../shared/models/dashboardLink';
 @Component({

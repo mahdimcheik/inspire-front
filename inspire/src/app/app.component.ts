@@ -1,17 +1,10 @@
-import {
-  Component,
-  DestroyRef,
-  OnDestroy,
-  OnInit,
-  inject,
-} from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { User } from './shared/models/user';
-import { Subscription } from 'rxjs';
 import { LoginService } from './shared/services/login.service';
-import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UserService } from './shared/services/user.service';
 import { UserStoreService } from './shared/services/stores/user-store.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -29,11 +22,15 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     const token = localStorage.getItem('token');
+    console.log('route url ', this.router.url);
+
     if (token) {
       this.loginService
         .getUserByToken(token)
         .pipe(takeUntilDestroyed(this.destropyRef))
         .subscribe((res) => {
+          console.log('active url ', this.router.url);
+
           if (res.role) {
             this.userStoreService.setUserConnected(res);
 

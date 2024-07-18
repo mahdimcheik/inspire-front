@@ -1,0 +1,20 @@
+<div class="main">
+  <div class="select-mark">
+    <input type="checkbox" [(ngModel)]="selected" />
+  </div>
+
+  <div class="image-name">
+    <img [src]="mail.imgUrl" alt="" width="24" height="24" />
+    <p class="sender">{{ mail.senderFirstname }} {{ mail.senderLastname }}</p>
+  </div>
+  <div class="spoil-date">
+    <p>
+      <span class="title">{{ mail.title }}</span>
+      <span class="body">{{ " - " }}{{ mail.body }}</span>
+    </p>
+    <p class="time">{{ mail.sentDate | date : "short" }}</p>
+  </div>
+  <div class="buttons">
+    <button><img src="assets/svgs/delete.svg" alt="delete button" /></button>
+  </div>
+</div>

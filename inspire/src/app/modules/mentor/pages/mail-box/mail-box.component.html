@@ -1,0 +1,3 @@
+<ng-container *ngIf="receivedMails$ | async as mails">
+  <app-list-mail [receivedMails$]="receivedMails$"></app-list-mail>
+</ng-container>

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LayoutMentor } from './modules/mentor/pages/layout/layout-mentor-component';
 import {
   isConnected,
   isMentor,
@@ -58,7 +57,6 @@ export const routes: Routes = [
       profil: mentorProfilResolver,
     },
   },
-
   {
     path: 'register',
     loadChildren: () =>
