@@ -1,6 +1,6 @@
 <ng-container *ngIf="mentorList$ | async as listMentors">
   <div class="card">
-    <p-table [value]="mentors" dataKey="userId" editMode="row">
+    <p-table [value]="listMentors" dataKey="userId" editMode="row">
       <ng-template pTemplate="header">
         <tr>
           <th pSortableColumn="userId" class="column-width">
@@ -90,7 +90,6 @@
                 type="button"
                 pInitEditableRow
                 icon="pi pi-pencil"
-                (click)="onRowEditInit(mentor)"
                 class="p-button-rounded p-button-text p-button-primary"
               ></button>
               <button
@@ -98,7 +97,7 @@
                 pButton
                 pRipple
                 type="button"
-                (click)="onRowDelete(mentor)"
+                (click)="deleteMentorRow(mentor)"
                 class="p-button-rounded p-button-text p-button-primary"
               >
                 Supprimer
@@ -111,7 +110,7 @@
                 type="button"
                 pSaveEditableRow
                 icon="pi pi-check"
-                (click)="onRowEditSave(mentor)"
+                (click)="updateMentor(mentor)"
                 class="p-button-rounded p-button-text p-button-success mr-2"
               ></button>
               <button
@@ -121,7 +120,7 @@
                 type="button"
                 pCancelEditableRow
                 icon="pi pi-times"
-                (click)="onRowEditCancel(mentor, ri)"
+                (click)="resetMentorRowEdit()"
                 class="p-button-rounded p-button-text p-button-danger"
               ></button>
             </div>

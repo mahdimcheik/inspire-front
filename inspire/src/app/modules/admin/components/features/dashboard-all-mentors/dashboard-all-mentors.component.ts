@@ -12,9 +12,11 @@ import { MessageService, SelectItem } from 'primeng/api';
 })
 export class DashboardAllMentorsComponent implements OnInit {
   mentorList$!: Observable<MentorListAdminDTO[]>;
-  mentors: MentorListAdminDTO[] = [];
-  statuses!: SelectItem[];
-  clonedMentors: { [s: string]: MentorListAdminDTO } = {};
+  statuses: SelectItem[] = [
+    { label: 'Admin', value: 'ADMIN' },
+    { label: 'Mentor', value: 'MENTOR' },
+    { label: 'Student', value: 'STUDENT' },
+  ];
 
   constructor(
     private adminService: AdminService,
@@ -23,51 +25,29 @@ export class DashboardAllMentorsComponent implements OnInit {
 
   ngOnInit(): void {
     this.mentorList$ = this.adminService.getMentorListByAdmin();
-    this.mentorList$.subscribe((data) => {
-      this.mentors = data;
-    });
-
-    this.statuses = [
-      { label: 'Admin', value: 'ADMIN' },
-      { label: 'Mentor', value: 'MENTOR' },
-      { label: 'Student', value: 'STUDENT' },
-    ];
   }
 
-  onRowEditInit(mentor: MentorListAdminDTO) {
-    this.clonedMentors[mentor.userId as number] = { ...mentor };
-  }
-
-  onRowEditSave(mentor: MentorListAdminDTO) {
-    if (mentor.role) {
-      delete this.clonedMentors[mentor.userId as any];
+  updateMentor(mentor: MentorListAdminDTO) {
+    this.adminService.editMentor(mentor as MentorListAdminDTO).subscribe(() => {
+      this.mentorList$ = this.adminService.getMentorListByAdmin();
       this.messageService.add({
         severity: 'success',
         summary: 'Success',
         detail: 'Cet utilisateur a été mis à jour',
       });
-    } else {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Invalid Role',
-      });
-    }
+    });
   }
 
-  onRowEditCancel(mentor: MentorListAdminDTO, index: number) {
-    this.mentors[index] = this.clonedMentors[mentor.userId as number];
-    delete this.clonedMentors[mentor.userId as number];
+  resetMentorRowEdit() {
+    this.mentorList$ = this.adminService.getMentorListByAdmin();
   }
 
-  onRowDelete(mentor: MentorListAdminDTO) {
+  deleteMentorRow(mentor: MentorListAdminDTO) {
     this.adminService
       .deleteMentor(mentor as MentorListAdminDTO)
       .subscribe(() => {
         this.mentorList$ = this.adminService.getMentorListByAdmin();
-        this.mentorList$.subscribe((data) => {
-          this.mentors = data;
-        });
+
         this.messageService.add({
           severity: 'success',
           summary: 'Success',

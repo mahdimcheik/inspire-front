@@ -25,4 +25,11 @@ export class AdminService {
       environment.BASE_URL_API + '/admin/delete/mentor/' + mentor.userId
     );
   }
+
+  editMentor(mentor: MentorListAdminDTO): Observable<MentorListAdminDTO> {
+    return this.httpClient.put<MentorListAdminDTO>(
+      environment.BASE_URL_API + '/admin/edit/mentor',
+      mentor
+    );
+  }
 }
