@@ -98,6 +98,11 @@ export class Student {
   }
 }
 
+export type AdminDTO = {
+  firstname: string;
+  lastname: string;
+  userId: number;
+};
 export type StudentDTO = {
   id: number;
   firstname: string;

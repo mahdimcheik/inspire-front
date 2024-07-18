@@ -66,6 +66,11 @@ export const routes: Routes = [
         (m) => m.RegisterModule
       ),
   },
+  {
+    path: 'admin',
+    loadChildren: () =>
+      import('./modules/admin/admin.module').then((m) => m.AdminModule),
+  },
 ];
 
 @NgModule({

@@ -1,0 +1,34 @@
+<ng-container *ngIf="mentorList$ | async as listMentors">
+  <div class="card">
+    <p-table [value]="listMentors" [tableStyle]="{ 'min-width': '60rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="id" class="column-width">
+            ID <p-sortIcon field="id"></p-sortIcon>
+          </th>
+          <th pSortableColumn="firstname" class="column-width">
+            Identité <p-sortIcon field="firstname"></p-sortIcon>
+          </th>
+          <th pSortableColumn="email" class="column-width">
+            Email <p-sortIcon field="email"></p-sortIcon>
+          </th>
+          <th pSortableColumn="date" class="column-width">
+            Date inscription <p-sortIcon field="date"></p-sortIcon>
+          </th>
+          <th pSortableColumn="role" class="column-width">
+            Rôle <p-sortIcon field="role"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-mentor>
+        <tr>
+          <td>{{ mentor.id }}</td>
+          <td>{{ mentor.firstname }} {{ mentor.lastname }}</td>
+          <td>{{ mentor.email }}</td>
+          <td>{{ mentor.date }}</td>
+          <td>{{ mentor.role }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</ng-container>
