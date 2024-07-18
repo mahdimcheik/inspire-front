@@ -100,6 +100,16 @@ export class UserStoreService {
           active: false,
         },
       ];
+    if (this.userConnected$.value.role === 'ADMIN')
+      return [
+        {
+          title: 'liste des mentors',
+          logoUrl: 'assets/svgs/profile.svg',
+          logoUrlActive: 'assets/svgs/profile-blanc.svg',
+          path: 'admin/mentors',
+          active: true,
+        },
+      ];
     return [];
   }
 }

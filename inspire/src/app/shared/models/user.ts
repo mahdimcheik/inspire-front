@@ -66,6 +66,16 @@ export type MentorDTO = {
   userId: number;
 };
 
+export type MentorListAdminDTO = {
+  mentorId: number;
+  userId: number;
+  firstname: string;
+  lastname: string;
+  createdAt: string;
+  role: string;
+  email: string;
+};
+
 export class Student {
   firstname: string;
   lastname: string;
@@ -98,6 +108,11 @@ export class Student {
   }
 }
 
+export type AdminDTO = {
+  firstname: string;
+  lastname: string;
+  userId: number;
+};
 export type StudentDTO = {
   id: number;
   firstname: string;

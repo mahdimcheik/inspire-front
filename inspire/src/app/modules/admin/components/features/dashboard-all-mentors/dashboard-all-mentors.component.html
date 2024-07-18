@@ -1,0 +1,133 @@
+<ng-container *ngIf="mentorList$ | async as listMentors">
+  <div class="card">
+    <p-table [value]="listMentors" dataKey="userId" editMode="row">
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="userId" class="column-width">
+            ID <p-sortIcon field="userId"></p-sortIcon>
+          </th>
+          <th pSortableColumn="firstname" class="column-width">
+            Prénom <p-sortIcon field="firstname"></p-sortIcon>
+          </th>
+          <th pSortableColumn="lastname" class="column-width">
+            Nom de famille <p-sortIcon field="lastname"></p-sortIcon>
+          </th>
+          <th pSortableColumn="email" class="column-width">
+            Email <p-sortIcon field="email"></p-sortIcon>
+          </th>
+          <th pSortableColumn="createdAt" class="column-width">
+            Date inscription <p-sortIcon field="createdAt"></p-sortIcon>
+          </th>
+          <th pSortableColumn="role" class="column-width">
+            Rôle <p-sortIcon field="role"></p-sortIcon>
+          </th>
+          <th class="column-width">Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template
+        pTemplate="body"
+        let-mentor
+        let-editing="editing"
+        let-ri="rowIndex"
+      >
+        <tr [pEditableRow]="mentor">
+          <td>{{ mentor.userId }}</td>
+
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText type="text" [(ngModel)]="mentor.firstname" />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ mentor.firstname }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText type="text" [(ngModel)]="mentor.lastname" />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ mentor.lastname }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText type="text" [(ngModel)]="mentor.email" />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ mentor.email }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            {{ mentor.createdAt | date : "dd MMMM yyyy" }}
+          </td>
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <p-dropdown
+                  [options]="statuses"
+                  appendTo="body"
+                  [(ngModel)]="mentor.role"
+                  [style]="{ width: '100%' }"
+                ></p-dropdown>
+              </ng-template>
+              <ng-template pTemplate="output">
+                <p-tag [value]="mentor.role"></p-tag>
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <div class="flex align-items-center justify-content-center gap-2">
+              <button
+                *ngIf="!editing"
+                pButton
+                pRipple
+                type="button"
+                pInitEditableRow
+                icon="pi pi-pencil"
+                class="p-button-rounded p-button-text p-button-primary"
+              ></button>
+              <button
+                *ngIf="!editing"
+                pButton
+                pRipple
+                type="button"
+                (click)="deleteMentorRow(mentor)"
+                class="p-button-rounded p-button-text p-button-primary"
+              >
+                Supprimer
+              </button>
+
+              <button
+                *ngIf="editing"
+                pButton
+                pRipple
+                type="button"
+                pSaveEditableRow
+                icon="pi pi-check"
+                (click)="updateMentor(mentor)"
+                class="p-button-rounded p-button-text p-button-success mr-2"
+              ></button>
+              <button
+                *ngIf="editing"
+                pButton
+                pRipple
+                type="button"
+                pCancelEditableRow
+                icon="pi pi-times"
+                (click)="resetMentorRowEdit()"
+                class="p-button-rounded p-button-text p-button-danger"
+              ></button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</ng-container>
+<p-toast></p-toast>
