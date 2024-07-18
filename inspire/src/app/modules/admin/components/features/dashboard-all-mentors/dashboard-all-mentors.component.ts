@@ -35,7 +35,7 @@ export class DashboardAllMentorsComponent implements OnInit {
   }
 
   onRowEditInit(mentor: MentorListAdminDTO) {
-    this.clonedMentors[mentor.userId as any] = { ...mentor };
+    this.clonedMentors[mentor.userId as number] = { ...mentor };
   }
 
   onRowEditSave(mentor: MentorListAdminDTO) {
@@ -58,5 +58,21 @@ export class DashboardAllMentorsComponent implements OnInit {
   onRowEditCancel(mentor: MentorListAdminDTO, index: number) {
     this.mentors[index] = this.clonedMentors[mentor.userId as number];
     delete this.clonedMentors[mentor.userId as number];
+  }
+
+  onRowDelete(mentor: MentorListAdminDTO) {
+    this.adminService
+      .deleteMentor(mentor as MentorListAdminDTO)
+      .subscribe(() => {
+        this.mentorList$ = this.adminService.getMentorListByAdmin();
+        this.mentorList$.subscribe((data) => {
+          this.mentors = data;
+        });
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Cet utilisateur a été supprimé',
+        });
+      });
   }
 }

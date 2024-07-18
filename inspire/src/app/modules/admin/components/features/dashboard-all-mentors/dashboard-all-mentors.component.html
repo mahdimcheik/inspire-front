@@ -94,6 +94,17 @@
                 class="p-button-rounded p-button-text p-button-primary"
               ></button>
               <button
+                *ngIf="!editing"
+                pButton
+                pRipple
+                type="button"
+                (click)="onRowDelete(mentor)"
+                class="p-button-rounded p-button-text p-button-primary"
+              >
+                Supprimer
+              </button>
+
+              <button
                 *ngIf="editing"
                 pButton
                 pRipple
