@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MentorService } from '../../../../../shared/services/mentor.service';
 import {
   Mentor,
@@ -7,6 +7,7 @@ import {
 import { Observable } from 'rxjs';
 import { AdminService } from '../../../../../shared/services/admin.service';
 import { MessageService, SelectItem } from 'primeng/api';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-dashboard-all-mentors',
@@ -14,6 +15,7 @@ import { MessageService, SelectItem } from 'primeng/api';
   styleUrl: './dashboard-all-mentors.component.scss',
 })
 export class DashboardAllMentorsComponent implements OnInit {
+  @ViewChild('mentorTable') mentorTable!: Table;
   mentorList$!: Observable<AdminMentorDTO[]>;
   statuses: SelectItem[] = [
     { label: 'Admin', value: 'ADMIN' },
@@ -55,5 +57,10 @@ export class DashboardAllMentorsComponent implements OnInit {
         detail: 'Cet utilisateur a été supprimé',
       });
     });
+  }
+
+  applyFilterGlobal(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    this.mentorTable.filterGlobal(inputElement.value, 'startsWith');
   }
 }
