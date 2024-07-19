@@ -1,6 +1,29 @@
 <ng-container *ngIf="mentorList$ | async as listMentors">
   <div class="card">
-    <p-table [value]="listMentors" dataKey="userId" editMode="row">
+    <p-table
+      #mentorTable
+      [value]="listMentors"
+      dataKey="userId"
+      editMode="row"
+      [paginator]="true"
+      [rows]="10"
+      [globalFilterFields]="['firstname', 'lastname', 'email']"
+    >
+      <ng-template pTemplate="caption">
+        <div class="flex">
+          <p-iconField iconPosition="left" class="ml-auto">
+            <p-inputIcon>
+              <i class="pi pi-search"></i>
+            </p-inputIcon>
+            <input
+              pInputText
+              type="text"
+              placeholder="Trouver un mentor..."
+              (input)="applyFilterGlobal($event)"
+            />
+          </p-iconField>
+        </div>
+      </ng-template>
       <ng-template pTemplate="header">
         <tr>
           <th pSortableColumn="userId" class="column-width">

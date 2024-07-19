@@ -16,6 +16,8 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 
 @NgModule({
   declarations: [DashboardAllMentorsComponent, LayoutAdminComponent],
@@ -35,6 +37,8 @@ import { ToastModule } from 'primeng/toast';
     TableModule,
     RippleModule,
     ToastModule,
+    IconFieldModule,
+    InputIconModule,
   ],
 })
 export class AdminModule {}
