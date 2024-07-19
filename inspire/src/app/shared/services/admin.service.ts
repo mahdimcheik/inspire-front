@@ -28,7 +28,7 @@ export class AdminService {
 
   editMentor(mentor: MentorListAdminDTO): Observable<MentorListAdminDTO> {
     return this.httpClient.put<MentorListAdminDTO>(
-      environment.BASE_URL_API + '/admin/edit/mentor',
+      environment.BASE_URL_API + '/admin/update/' + mentor.userId,
       mentor
     );
   }
