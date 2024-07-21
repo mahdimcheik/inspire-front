@@ -6,15 +6,13 @@
 @import "../node_modules/quill/dist/quill.core.css";
 @import "../node_modules/quill/dist/quill.snow.css";
 @import "primeicons/primeicons.css";
+@import "./variables.scss";
 
 * {
   font-family: "Poppins";
   list-style: none;
   text-decoration: none;
   box-sizing: border-box;
-}
-.fc .fc-toolbar.fc-header-toolbar {
-  margin-bottom: 0;
 }
 
 .img-fluid {
@@ -26,7 +24,7 @@
   padding: 50px 40px;
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: $small) {
   .p-sidebar {
     width: 100%;
     padding: 20px 20px;
@@ -42,15 +40,6 @@ a {
   stroke: white;
   color: white;
   fill: wheat;
-}
-
-.languages .p-multiselect-label {
-  padding: 10px 20px;
-
-  width: 350px;
-}
-.languages .p-multiselect-items span {
-  padding-left: 20px;
 }
 
 p-multiselect {
@@ -76,57 +65,22 @@ p-multiselect {
   color: black;
 }
 .languages .p-checkbox .p-checkbox-box.p-highlight {
-  border-color: #f8156b;
-  background-color: #f8156b;
+  border-color: $primary-color;
+  background-color: $primary-color;
 }
 
 .filter .p-multiselect {
   border-color: black;
 }
 
-.filter .p-multiselect-label {
-  padding-left: 10px;
-}
-
-.filter .p-multiselect-filter-icon {
-  margin-top: -8px;
-}
-
-.filter .p-multiselect-filter-container {
-  padding-left: 20px;
-}
-
-.filter .p-multiselect-items span {
-  padding-left: 10px;
-}
-
-.filter .p-multiselect-item {
-  padding: 15px 0;
-}
-
-.filter .p-multiselect-label {
-  padding: 10px 10px;
-  max-width: 220px;
-  z-index: 1000;
-}
-
 .filter .p-checkbox .p-checkbox-box.p-highlight {
-  background-color: #f8156b;
-  border-color: #f8156b;
+  background-color: $primary-color;
+  border-color: $primary-color;
 }
 
 .filter .p-multiselect-token {
-  background-color: #f8156b;
+  background-color: $primary-color;
   color: white;
-  border-radius: 10px;
-  padding: 2px 5px;
-  margin: 1px 2px;
-  z-index: 1000;
-}
-
-.filter .p-multiselect-token-icon {
-  padding-left: 2px;
-  margin-left: 5px;
 }
 
 .filter .p-multiselect-clear-icon {
@@ -138,17 +92,17 @@ p-multiselect {
 }
 
 .fc .fc-button-primary {
-  background-color: #fedae3;
-  color: #f8156b;
-  border: solid 2px #fedae3;
+  background-color: $anti-primary-color;
+  color: $primary-color;
+  border: solid 2px $anti-primary-color;
   border-radius: 7px;
 }
 
 .fc .fc-button-primary:not(:disabled).fc-button-active,
 .fc .fc-button-primary:not(:disabled):active {
-  background-color: #f8156b;
+  background-color: $primary-color;
   color: white;
-  border: solid 2px #f8156b;
+  border: solid 2px $primary-color;
 }
 
 .fc .fc-col-header-cell-cushion {
@@ -166,7 +120,7 @@ p-multiselect {
 
 .fc th {
   border: none;
-  background-color: #fedae3;
+  background-color: $anti-primary-color;
 }
 .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
   background-color: #f8156c91;
@@ -227,7 +181,7 @@ p-multiselect {
 }
 /* Changer la couleur de fond du jour actuel dans FullCalendar */
 .fc .fc-timegrid-now-indicator-line {
-  border-color: #f8156b;
+  border-color: $primary-color;
   border-width: 3px;
   border-radius: 3px;
 }
@@ -290,7 +244,7 @@ p-multiselect {
     padding-left: 10px;
   }
   .annulation {
-    background-color: red;
+    background-color: $error-color;
     color: white;
   }
 
