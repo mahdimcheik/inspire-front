@@ -1,5 +1,8 @@
+<div>
+  <h2>Tableau des mentors</h2>
+</div>
 <ng-container *ngIf="mentorList$ | async as listMentors">
-  <div class="card">
+  <div class="dashboard-container">
     <p-table
       #mentorTable
       [value]="listMentors"
@@ -9,9 +12,12 @@
       [rows]="10"
       [globalFilterFields]="['firstname', 'lastname', 'email']"
     >
+      <div>
+        <h2>Tableau des mentors</h2>
+      </div>
       <ng-template pTemplate="caption">
-        <div class="flex">
-          <p-iconField iconPosition="left" class="ml-auto">
+        <div class="search-bar">
+          <p-iconField>
             <p-inputIcon>
               <i class="pi pi-search"></i>
             </p-inputIcon>

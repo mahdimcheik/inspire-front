@@ -9,8 +9,8 @@
 
 * {
   font-family: "Poppins";
-  margin: 0;
-  padding: 0;
+  // margin: 0;
+  // padding: 0;
   list-style: none;
   text-decoration: none;
   box-sizing: border-box;
@@ -340,4 +340,11 @@ p-multiselect {
   &::-webkit-scrollbar {
     display: none;
   }
+}
+.p-datatable .p-datatable-header {
+  background-color: transparent;
+  border: none;
+}
+.dashboard-container .p-icon-field-left > .p-inputtext {
+  padding: 10px 20px;
 }
