@@ -29,7 +29,7 @@ textarea {
   border-radius: 5px;
   margin-top: 6px;
   &::placeholder {
-    color: rgb(151, 150, 150);
+    color: $placeholder-color;
     font-style: italic;
     font-weight: 500;
   }
@@ -42,11 +42,11 @@ textarea {
 }
 
 .form-inscription.ng-submitted input.ng-invalid {
-  border-color: red;
+  border-color: $error-color;
 }
 .error {
   font-size: 14px;
-  color: red;
+  color: $error-color;
   margin-top: 5px;
   font-style: italic;
 }
@@ -73,7 +73,7 @@ textarea {
   justify-content: flex-end;
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: $small) {
   .infos {
     flex-direction: column;
   }
