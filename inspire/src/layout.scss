@@ -1,7 +1,7 @@
 @import "./variables.scss";
 
 .container-general-layout {
-  background-color: #fcf6f8;
+  background-color: $background-layout;
 }
 .header-layout {
   display: flex;
@@ -53,21 +53,26 @@
   padding: 0 20px;
   min-height: 100vh;
   max-width: 1700px;
-  background-color: #fcf6f8;
+  background-color: $background-layout;
 
   .header-container {
-    background-color: #f8156b;
-    width: 60%;
-    height: 100px;
+    background-color: $primary-color;
+    width: 65%;
     margin: 0 auto;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
     color: white;
-    padding: 0 20px;
-
+    padding: 10px 20px 20px 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+  h2 {
+    padding-top: 15px;
+    margin: 0;
+  }
+  p {
+    margin: 0;
   }
 }
 
