@@ -91,7 +91,7 @@
   padding: 30px;
   background: rgba(255, 255, 255, 0.53);
   border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: $background-box-shadow;
   backdrop-filter: blur(8.8px);
   -webkit-backdrop-filter: blur(8.8px);
 }
@@ -110,7 +110,7 @@
 }
 
 .modify {
-  background-color: #fcbe77;
+  background-color: $secondary-color;
   color: white;
   cursor: pointer;
 }
