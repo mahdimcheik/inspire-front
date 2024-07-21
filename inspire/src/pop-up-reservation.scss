@@ -1,0 +1,151 @@
+@import "./variables.scss";
+
+.modal {
+  display: flex;
+  flex-direction: column;
+
+  h1 {
+    margin-top: 30px;
+    font-size: 20px;
+    line-height: 20px;
+    text-align: center;
+    color: black;
+  }
+
+  .content p {
+    font-size: 12px;
+    font-weight: 400;
+    color: black;
+    text-align: center;
+  }
+}
+
+.container-img-forgot {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.pop-up-date.strike {
+  text-decoration: line-through;
+}
+
+.forgot-img {
+  width: 200px;
+}
+
+.pop-up-date {
+  display: flex;
+  flex-direction: row;
+}
+.pop-up-date img {
+  width: 15px;
+  color: red;
+  margin-right: 5px;
+}
+
+.pop-up-date h3 {
+  font-size: 14px;
+  font-weight: 400;
+  color: black;
+  margin: 7px;
+}
+
+.pop-up-date p {
+  font-size: 12px;
+  font-weight: 400;
+  color: black;
+}
+
+.content-resume {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  color: black;
+}
+
+.content-resume h2 {
+  margin-top: 50px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.control {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: auto;
+  margin: 20px 0;
+  gap: 10px;
+}
+
+.old-slot.is-editing {
+  color: grey;
+  text-decoration: line-through;
+  font-style: italic;
+  font-size: 10px;
+}
+
+.old-slot.is-editing span {
+  color: grey;
+  text-decoration: line-through;
+  font-style: italic;
+}
+.new-slot {
+  width: 100%;
+  margin-top: -10px;
+}
+
+.new-slot h2 {
+  color: $primary-color;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.modify {
+  background-color: $secondary-color;
+  color: white;
+  cursor: pointer;
+}
+
+.title-resume-slot h2 {
+  margin-top: 70px;
+}
+
+.form-update {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.form-update label {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.form-update label {
+  margin-bottom: 2px;
+}
+
+select {
+  padding: 4px;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+}
+
+#text-update h2 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: black;
+}
+
+@media screen and (max-width: $small) {
+  .modal {
+    .control {
+      flex-direction: column;
+    }
+  }
+}

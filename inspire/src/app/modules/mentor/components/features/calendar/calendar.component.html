@@ -62,65 +62,59 @@
         mentorat.
       </p>
 
-      <div class="form-mentorat">
-        <h2>Choisisez le mode de mentorat</h2>
+      <div>
         <form [formGroup]="formulaire">
-          <select formControlName="mode" (change)="updateMode()">
-            <option value="presentiel">Présentiel</option>
-            <option value="visio">Visio</option>
-          </select>
+          <div class="form-update">
+            <label for="mode">Choisisez le mode de mentorat</label>
+            <select formControlName="mode" (change)="updateMode()">
+              <option value="presentiel">Présentiel</option>
+              <option value="visio">Visio</option>
+            </select>
+          </div>
         </form>
       </div>
-
+      <!-- on commence ici -->
       <div class="content-resume">
-        <h2>Résumé de votre créneau</h2>
-        <div class="pop-up-date">
-          <img
-            class="img-fluid forgot-img"
-            src="/assets/svgs/date-slot.svg"
-            alt=""
-          />
+        <h2 class="title-resume-slot">Résumé de votre créneau</h2>
+      </div>
+      <div class="pop-up-date">
+        <img
+          class="img-fluid forgot-img"
+          src="/assets/svgs/date-slot.svg"
+          alt=""
+        />
 
-          <h3>
-            Date :
-            <span>{{
-              formattedSlotInfo?.dateBegin | date : "dd MMMM yyyy" : "" : "fr"
-            }}</span>
-          </h3>
-        </div>
-        <div class="pop-up-date">
-          <img
-            class="img-fluid forgot-img"
-            src="/assets/svgs/duration.svg"
-            alt=""
-          />
+        <h3>
+          Date :
+          <span>{{
+            formattedSlotInfo?.dateBegin | date : "dd MMMM yyyy" : "" : "fr"
+          }}</span>
+        </h3>
+      </div>
+      <div class="pop-up-date">
+        <img
+          class="img-fluid forgot-img"
+          src="/assets/svgs/duration.svg"
+          alt=""
+        />
 
-          <h3>
-            De
-            <span>
-              {{ formattedSlotInfo?.dateBegin | date : "HH:mm" : "" : "fr" }} à
-              {{ formattedSlotInfo?.dateEnd | date : "HH:mm" : "" : "fr" }}
-              ({{ formattedSlotInfo?.formattedDuration }})</span
-            >
-          </h3>
-        </div>
-
-        <div class="pop-up-date">
-          <img
-            class="img-fluid forgot-img"
-            src="/assets/svgs/visio.svg"
-            alt=""
-          />
-
-          <h3>
-            Le créneau selectionné est
-            <span>
-              {{
-                formattedSlotInfo?.visio ? " en Visio" : "en Présentiel"
-              }}</span
-            >
-          </h3>
-        </div>
+        <h3>
+          De
+          <span>
+            {{ formattedSlotInfo?.dateBegin | date : "HH:mm" : "" : "fr" }} à
+            {{ formattedSlotInfo?.dateEnd | date : "HH:mm" : "" : "fr" }}
+            ({{ formattedSlotInfo?.formattedDuration }})
+          </span>
+        </h3>
+      </div>
+      <div class="pop-up-date">
+        <img class="img-fluid forgot-img" src="/assets/svgs/visio.svg" alt="" />
+        <h3>
+          Le créneau selectionné est
+          <span>
+            {{ formattedSlotInfo?.visio ? " en Visio" : "en Présentiel" }}
+          </span>
+        </h3>
       </div>
     </div>
 
@@ -148,9 +142,8 @@
         alt=""
       />
     </div>
-
+    <h1>Information sur votre créneau</h1>
     <div class="content">
-      <h1>Information sur votre créneau</h1>
       <p>
         Un créneau de mentorat est disponible dans notre agenda ! Vous avez la
         possibilité de le conserver pour accueillir de nouveaux étudiants ou de
@@ -160,46 +153,43 @@
         class="content-resume old-slot"
         [ngClass]="isModfify ? 'is-editing' : ''"
       >
-        <div class="content-resume">
-          <h2>Résumé de votre créneau</h2>
-        </div>
-
-        <div class="pop-up-date">
-          <img
-            class="img-fluid forgot-img"
-            src="/assets/svgs/information.svg"
-            alt=""
-          />
-          <h3>
-            Début du créneau le
-            <span>{{ eventDetails.dateBegin | date }}</span> à
-            <span>{{ eventDetails.dateBegin | date : "HH:mm" }}</span>
-          </h3>
-        </div>
-        <div class="pop-up-date">
-          <img
-            class="img-fluid forgot-img"
-            src="/assets/svgs/information.svg"
-            alt=""
-          />
-          <h3>
-            Fin du créneau le <span>{{ eventDetails.dateEnd | date }}</span> à
-            <span>{{ eventDetails.dateEnd | date : "HH:mm" }}</span>
-          </h3>
-        </div>
-        <div class="pop-up-date">
-          <img
-            class="img-fluid forgot-img"
-            src="/assets/svgs/information.svg"
-            alt=""
-          />
-          <h3>
-            Le créneau est
-            <span>
-              {{ eventDetails.visio ? " en Visio" : "en Présentiel" }}</span
-            >
-          </h3>
-        </div>
+        <h2 class="title-resume-slot">Résumé de votre créneau</h2>
+      </div>
+      <div class="pop-up-date" [ngClass]="isModfify ? 'strike' : ''">
+        <img
+          class="img-fluid forgot-img"
+          src="/assets/svgs/information.svg"
+          alt=""
+        />
+        <h3>
+          Début du créneau le
+          <span>{{ eventDetails.dateBegin | date }}</span> à
+          <span>{{ eventDetails.dateBegin | date : "HH:mm" }}</span>
+        </h3>
+      </div>
+      <div class="pop-up-date" [ngClass]="isModfify ? 'strike' : ''">
+        <img
+          class="img-fluid forgot-img"
+          src="/assets/svgs/information.svg"
+          alt=""
+        />
+        <h3>
+          Fin du créneau le <span>{{ eventDetails.dateEnd | date }}</span> à
+          <span>{{ eventDetails.dateEnd | date : "HH:mm" }}</span>
+        </h3>
+      </div>
+      <div class="pop-up-date" [ngClass]="isModfify ? 'strike' : ''">
+        <img
+          class="img-fluid forgot-img"
+          src="/assets/svgs/information.svg"
+          alt=""
+        />
+        <h3>
+          Le créneau est
+          <span>
+            {{ eventDetails.visio ? " en Visio" : "en Présentiel" }}
+          </span>
+        </h3>
       </div>
     </div>
 
@@ -263,6 +253,7 @@
         </form>
       </div>
     </div>
+
     <div class="control">
       <button class="btn-general black" (click)="closeModal()">Annuler</button>
 

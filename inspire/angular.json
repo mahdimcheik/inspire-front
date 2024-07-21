@@ -37,6 +37,7 @@
               "src/formulaire.scss",
               "src/home.scss",
               "src/form-course-experience.scss",
+              "src/pop-up-reservation.scss",
               "src/layout.scss",
               "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
               "node_modules/primeng/resources/primeng.min.css"
