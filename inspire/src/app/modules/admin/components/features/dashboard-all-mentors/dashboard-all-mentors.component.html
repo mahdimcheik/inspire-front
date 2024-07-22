@@ -23,6 +23,7 @@
             </p-inputIcon>
             <input
               pInputText
+              class="search-admin"
               type="text"
               placeholder="Trouver un mentor..."
               (input)="applyFilterGlobal($event)"
@@ -159,4 +160,30 @@
     </p-table>
   </div>
 </ng-container>
+
+<p-dialog [(visible)]="deleteUser" [modal]="true">
+  <div class="modal">
+    <div class="container-img-forgot">
+      <img
+        class="img-fluid forgot-img"
+        src="/assets/svgs/question.svg"
+        alt=""
+      />
+    </div>
+
+    <h1>
+      Vous souhaitez supprimer {{ selectedMentor?.firstname }}
+      {{ selectedMentor?.lastname }}
+    </h1>
+
+    <div class="control">
+      <button class="black" (click)="deleteUser = false">Annuler</button>
+
+      <button class="pink" (click)="confirmDeleteMentor()">
+        Confirmer la suppression
+      </button>
+    </div>
+  </div>
+</p-dialog>
+
 <p-toast></p-toast>

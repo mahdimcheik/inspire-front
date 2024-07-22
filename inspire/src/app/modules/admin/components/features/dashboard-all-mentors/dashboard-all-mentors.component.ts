@@ -17,6 +17,8 @@ import { Table } from 'primeng/table';
 export class DashboardAllMentorsComponent implements OnInit {
   @ViewChild('mentorTable') mentorTable!: Table;
   mentorList$!: Observable<AdminMentorDTO[]>;
+  deleteUser: boolean = false;
+  selectedMentor?: AdminMentorDTO;
   statuses: SelectItem[] = [
     { label: 'Admin', value: 'ADMIN' },
     { label: 'Mentor', value: 'MENTOR' },
@@ -48,15 +50,23 @@ export class DashboardAllMentorsComponent implements OnInit {
   }
 
   deleteMentorRow(mentor: AdminMentorDTO) {
-    this.adminService.deleteMentor(mentor as AdminMentorDTO).subscribe(() => {
-      this.mentorList$ = this.adminService.getMentorListByAdmin();
+    this.selectedMentor = mentor;
+    this.deleteUser = true;
+  }
 
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'Cet utilisateur a été supprimé',
+  confirmDeleteMentor() {
+    if (this.selectedMentor) {
+      this.adminService.deleteMentor(this.selectedMentor).subscribe(() => {
+        this.mentorList$ = this.adminService.getMentorListByAdmin();
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Cet utilisateur a été supprimé',
+        });
+        this.deleteUser = false;
+        this.selectedMentor = undefined;
       });
-    });
+    }
   }
 
   applyFilterGlobal(event: Event) {
