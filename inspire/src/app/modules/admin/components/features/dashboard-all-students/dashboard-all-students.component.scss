@@ -1,3 +1,5 @@
+@import "variables.scss";
+
 .dashboard-container {
   padding: 20px;
 }
@@ -11,4 +13,40 @@
 }
 .search-admin {
   padding: 10px 40px;
+}
+.control button {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+
+  &.day {
+    background-color: black;
+  }
+
+  &.nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: $primary-color;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    padding: 0;
+  }
+}
+.pink {
+  background-color: $primary-color;
+  color: white;
+  cursor: pointer;
+}
+
+.black {
+  background-color: black;
+  color: white;
+  cursor: pointer;
 }
