@@ -5,11 +5,11 @@ import { DashboardAllMentorsComponent } from './components/features/dashboard-al
 
 const routes: Routes = [
   {
-    path: 'dashboard',
+    path: '',
     component: LayoutAdminComponent,
     children: [
       {
-        path: '',
+        path: 'mentors',
         component: DashboardAllMentorsComponent,
       },
     ],

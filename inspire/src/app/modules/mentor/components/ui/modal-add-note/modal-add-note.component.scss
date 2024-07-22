@@ -71,6 +71,7 @@
 .mentorat-header h1 {
   font-size: 24px;
   margin-top: 30px;
+  margin-bottom: -15px;
   color: black;
 }
 .mentorat-header h3 {
@@ -130,6 +131,7 @@
 .exit {
   margin-top: 20px;
   display: flex;
+
   gap: 20px;
 }
 
@@ -140,4 +142,8 @@ span {
 
 h4 {
   color: black;
+}
+
+.info-session {
+  display: flex;
 }

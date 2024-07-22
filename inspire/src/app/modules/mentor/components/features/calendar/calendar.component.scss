@@ -1,72 +1,4 @@
 @import "variables.scss";
-.modal {
-  padding: 20px 40px;
-  display: flex;
-  flex-direction: column;
-
-  h1 {
-    margin-top: 30px;
-    font-size: 20px;
-    line-height: 20px;
-    text-align: center;
-    color: black;
-  }
-
-  .content {
-    margin-top: 20px;
-    text-align: center;
-  }
-  .content p {
-    font-size: 12px;
-    font-weight: 400;
-    color: black;
-  }
-}
-
-.forgot-img {
-  width: 200px;
-}
-
-.container-img-forgot {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-}
-
-.pop-up-date {
-  display: flex;
-  flex-direction: row;
-}
-.pop-up-date img {
-  width: 15px;
-  color: red;
-  margin-right: 5px;
-}
-
-.pop-up-date h3 {
-  font-size: 14px;
-  font-weight: 400;
-  color: black;
-}
-
-.pop-up-date p {
-  font-size: 12px;
-  font-weight: 400;
-  color: black;
-}
-
-.content-resume {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  text-align: left;
-  color: black;
-}
-.content-resume h2 {
-  font-size: 14px;
-  font-weight: 600;
-}
 
 .text-update {
   font-size: 14px;
@@ -74,43 +6,17 @@
   color: black;
 }
 
-.form-mentorat {
-  margin-top: 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  text-align: left;
-}
-
-.form-mentorat h2 {
-  font-size: 14px;
-  font-weight: 600;
-}
-
 .calendar-background {
   padding: 30px;
   background: rgba(255, 255, 255, 0.53);
   border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: $background-box-shadow;
   backdrop-filter: blur(8.8px);
   -webkit-backdrop-filter: blur(8.8px);
-}
-@media screen and (max-width: $small) {
-  .modal {
-    .control {
-      flex-direction: column;
-    }
-  }
 }
 
 .pink {
   background-color: $primary-color;
-  color: white;
-  cursor: pointer;
-}
-
-.modify {
-  background-color: #fcbe77;
   color: white;
   cursor: pointer;
 }
@@ -120,6 +26,7 @@
   color: azure;
   cursor: pointer;
 }
+
 .btn-general {
   width: 100%;
   font-size: 16px;
@@ -130,6 +37,7 @@
   transition: transform 0.4s ease;
   cursor: pointer;
 }
+
 .btn-general:hover {
   transform: scale(0.95);
   cursor: pointer;
@@ -147,73 +55,12 @@ h3 {
   }
 }
 
-.old-slot.is-editing {
-  color: grey;
-  text-decoration: line-through;
-  font-style: italic;
-  font-size: 10px;
-}
-
-.old-slot.is-editing span {
-  color: grey;
-  text-decoration: line-through;
-  font-style: italic;
-}
-.new-slot {
-  width: 100%;
-  margin-top: -10px;
-}
-
-.new-slot h2 {
-  color: $primary-color;
-  font-size: 20px;
-  margin-bottom: 20px;
-}
-.form-update {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  margin-bottom: 10px;
-}
-
-.form-update label {
-  font-size: 14px;
-  font-weight: 400;
-}
-
-.form-update label {
-  margin-bottom: 2px;
-}
-
-select {
-  padding: 4px;
-  border-radius: 6px;
-  border: 1px solid #e0e0e0;
-}
-
-#text-update h2 {
-  margin-top: 20px;
-  margin-bottom: 10px;
-  font-size: 14px;
-  font-weight: 600;
-  color: black;
-}
-
-.control {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  height: auto;
-  margin: 10px 0;
-  gap: 10px;
-}
-
 .control-calendar {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   height: auto;
-  margin: 10px 0;
+  margin: 0px 0 30px 0;
 
   .mode,
   .navigation {
@@ -222,21 +69,28 @@ select {
   }
 
   button {
-    height: 35px;
-    min-width: 30px;
-    padding: 0 10px;
+    padding: 8px 20px;
     border: none;
-    border-radius: 10px;
-    background-color: $primary-color;
-    color: $anti-primary-color;
-    img {
+    border-radius: 5px;
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+
+    &.day {
+      background-color: black;
+    }
+
+    &.nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background-color: $primary-color;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      padding: 0;
     }
   }
-}
-
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 75%;
 }
