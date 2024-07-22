@@ -8,46 +8,52 @@
   </div>
 
   <div class="content-resume">
-    <div class="image-container">
-      <img
-        [src]="reservation.imgUrl"
-        alt="Mentor Image"
-        class="rounded-square"
-      />
-    </div>
-
-    <div class="info-slot">
-      <div class="pop-up-date">
+    <div class="info-session">
+      <div class="image-container">
         <img
-          class="img-fluid forgot-img"
-          src="/assets/svgs/date-slot.svg"
-          alt=""
+          [src]="reservation.imgUrl"
+          alt="Mentor Image"
+          class="rounded-square"
         />
-
-        <h3>
-          Date :
-          <span>{{ reservation.dateBegin | date : "dd MMMM yyyy" }}</span>
-        </h3>
-      </div>
-      <div class="pop-up-date">
-        <img class="img-fluid forgot-img" src="/assets/svgs/visio.svg" alt="" />
-
-        <h3>
-          Sujet du mentorat : <span>{{ reservation.subject }}</span>
-        </h3>
       </div>
 
-      <div class="pop-up-date">
-        <img
-          class="img-fluid forgot-img"
-          src="/assets/svgs/information.svg"
-          alt=""
-        />
+      <div class="info-slot">
+        <div class="pop-up-date">
+          <img
+            class="img-fluid forgot-img"
+            src="/assets/svgs/date-slot.svg"
+            alt=""
+          />
 
-        <h3>
-          Le mentorat était
-          <span>{{ reservation.visio ? "en Visio" : "en Présentiel" }}</span>
-        </h3>
+          <h3>
+            Date :
+            <span>{{ reservation.dateBegin | date : "dd MMMM yyyy" }}</span>
+          </h3>
+        </div>
+        <div class="pop-up-date">
+          <img
+            class="img-fluid forgot-img"
+            src="/assets/svgs/visio.svg"
+            alt=""
+          />
+
+          <h3>
+            Sujet du mentorat : <span>{{ reservation.subject }}</span>
+          </h3>
+        </div>
+
+        <div class="pop-up-date">
+          <img
+            class="img-fluid forgot-img"
+            src="/assets/svgs/information.svg"
+            alt=""
+          />
+
+          <h3>
+            Le mentorat était
+            <span>{{ reservation.visio ? "en Visio" : "en Présentiel" }}</span>
+          </h3>
+        </div>
       </div>
     </div>
   </div>
