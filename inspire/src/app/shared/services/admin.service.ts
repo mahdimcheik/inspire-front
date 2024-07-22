@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { UserStoreService } from './stores/user-store.service';
-import { AdminDTO, MentorListAdminDTO } from '../models/user';
+import { AdminDTO, MentorListAdminDTO, StudentAdminDTO } from '../models/user';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 
@@ -20,9 +20,21 @@ export class AdminService {
     );
   }
 
+  getStudentListByAdmin() {
+    return this.httpClient.get<StudentAdminDTO[]>(
+      environment.BASE_URL_API + '/admin/get/students'
+    );
+  }
+
   deleteMentor(mentor: MentorListAdminDTO): Observable<MentorListAdminDTO> {
     return this.httpClient.delete<MentorListAdminDTO>(
       environment.BASE_URL_API + '/admin/delete/mentor/' + mentor.userId
+    );
+  }
+
+  deleteStudent(student: AdminDTO): Observable<StudentAdminDTO> {
+    return this.httpClient.delete<StudentAdminDTO>(
+      environment.BASE_URL_API + '/admin/delete/student/' + student.userId
     );
   }
 
@@ -30,6 +42,13 @@ export class AdminService {
     return this.httpClient.put<MentorListAdminDTO>(
       environment.BASE_URL_API + '/admin/update/' + mentor.userId,
       mentor
+    );
+  }
+
+  editStudent(student: StudentAdminDTO): Observable<StudentAdminDTO> {
+    return this.httpClient.put<StudentAdminDTO>(
+      environment.BASE_URL_API + '/admin/update/' + student.userId,
+      student
     );
   }
 }

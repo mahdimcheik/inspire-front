@@ -18,9 +18,10 @@ import { RippleModule } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { DashboardAllStudentsComponent } from './components/features/dashboard-all-students/dashboard-all-students.component';
 
 @NgModule({
-  declarations: [DashboardAllMentorsComponent, LayoutAdminComponent],
+  declarations: [DashboardAllMentorsComponent, LayoutAdminComponent, DashboardAllStudentsComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
