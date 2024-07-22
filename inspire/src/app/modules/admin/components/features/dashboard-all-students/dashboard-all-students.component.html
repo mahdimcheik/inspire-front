@@ -1,11 +1,11 @@
 <div>
-  <h2>Tableau des mentors</h2>
+  <h2>Tableau des étudiants</h2>
 </div>
-<ng-container *ngIf="mentorList$ | async as listMentors">
+<ng-container *ngIf="studentList$ | async as listStudents">
   <div class="dashboard-container">
     <p-table
-      #mentorTable
-      [value]="listMentors"
+      #studentTable
+      [value]="listStudents"
       dataKey="userId"
       editMode="row"
       [paginator]="true"
@@ -22,7 +22,7 @@
               pInputText
               class="search-admin"
               type="text"
-              placeholder="Trouver un mentor..."
+              placeholder="Trouver un étudiant..."
               (input)="applyFilterGlobal($event)"
             />
           </p-iconField>
@@ -53,45 +53,45 @@
       </ng-template>
       <ng-template
         pTemplate="body"
-        let-mentor
+        let-student
         let-editing="editing"
         let-ri="rowIndex"
       >
-        <tr [pEditableRow]="mentor">
-          <td>{{ mentor.userId }}</td>
+        <tr [pEditableRow]="student">
+          <td>{{ student.userId }}</td>
 
           <td>
             <p-cellEditor>
               <ng-template pTemplate="input">
-                <input pInputText type="text" [(ngModel)]="mentor.firstname" />
+                <input pInputText type="text" [(ngModel)]="student.firstname" />
               </ng-template>
               <ng-template pTemplate="output">
-                {{ mentor.firstname }}
+                {{ student.firstname }}
               </ng-template>
             </p-cellEditor>
           </td>
           <td>
             <p-cellEditor>
               <ng-template pTemplate="input">
-                <input pInputText type="text" [(ngModel)]="mentor.lastname" />
+                <input pInputText type="text" [(ngModel)]="student.lastname" />
               </ng-template>
               <ng-template pTemplate="output">
-                {{ mentor.lastname }}
+                {{ student.lastname }}
               </ng-template>
             </p-cellEditor>
           </td>
           <td>
             <p-cellEditor>
               <ng-template pTemplate="input">
-                <input pInputText type="text" [(ngModel)]="mentor.email" />
+                <input pInputText type="text" [(ngModel)]="student.email" />
               </ng-template>
               <ng-template pTemplate="output">
-                {{ mentor.email }}
+                {{ student.email }}
               </ng-template>
             </p-cellEditor>
           </td>
           <td>
-            {{ mentor.createdAt | date : "dd MMMM yyyy" }}
+            {{ student.createdAt | date : "dd MMMM yyyy" }}
           </td>
           <td>
             <p-cellEditor>
@@ -99,12 +99,12 @@
                 <p-dropdown
                   [options]="statuses"
                   appendTo="body"
-                  [(ngModel)]="mentor.role"
+                  [(ngModel)]="student.role"
                   [style]="{ width: '100%' }"
                 ></p-dropdown>
               </ng-template>
               <ng-template pTemplate="output">
-                <p-tag [value]="mentor.role"></p-tag>
+                <p-tag [value]="student.role"></p-tag>
               </ng-template>
             </p-cellEditor>
           </td>
@@ -125,7 +125,7 @@
                 pRipple
                 type="button"
                 icon="pi pi-trash"
-                (click)="deleteMentorRow(mentor)"
+                (click)="deleteStudentRow(student)"
                 class="p-button-rounded p-button-text p-button-primary"
               ></button>
 
@@ -136,7 +136,7 @@
                 type="button"
                 pSaveEditableRow
                 icon="pi pi-check"
-                (click)="updateMentor(mentor)"
+                (click)="updateStudent(student)"
                 class="p-button-rounded p-button-text p-button-success mr-2"
               ></button>
               <button
@@ -146,7 +146,7 @@
                 type="button"
                 pCancelEditableRow
                 icon="pi pi-times"
-                (click)="resetMentorRowEdit()"
+                (click)="resetStudentRowEdit()"
                 class="p-button-rounded p-button-text p-button-danger"
               ></button>
             </div>
@@ -168,14 +168,14 @@
     </div>
 
     <h1>
-      Vous souhaitez supprimer {{ selectedMentor?.firstname }}
-      {{ selectedMentor?.lastname }}
+      Vous souhaitez supprimer {{ selectedStudent?.firstname }}
+      {{ selectedStudent?.lastname }}
     </h1>
 
     <div class="control">
       <button class="black" (click)="deleteUser = false">Annuler</button>
 
-      <button class="pink" (click)="confirmDeleteMentor()">
+      <button class="pink" (click)="confirmDeleteStudent()">
         Confirmer la suppression
       </button>
     </div>

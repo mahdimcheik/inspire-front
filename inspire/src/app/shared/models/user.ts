@@ -76,6 +76,16 @@ export type MentorListAdminDTO = {
   email: string;
 };
 
+export type StudentAdminDTO = {
+  studentId: number;
+  userId: number;
+  firstname: string;
+  lastname: string;
+  createdAt: string;
+  role: string;
+  email: string;
+};
+
 export class Student {
   firstname: string;
   lastname: string;
