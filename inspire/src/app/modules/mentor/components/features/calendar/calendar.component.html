@@ -6,27 +6,27 @@
   </ng-container>
   <div class="control-calendar">
     <div class="mode">
-      <button (click)="dayView()">Jour</button>
-      <button (click)="weekView()">Semaine</button>
-      <button (click)="monthView()">Mois</button>
+      <button class="day" (click)="dayView()">Jour</button>
+      <button class="day" (click)="weekView()">Semaine</button>
+      <button class="day" (click)="monthView()">Mois</button>
     </div>
     <div class="navigation">
-      <button (click)="getToday()">Aujourd'hui</button>
-      <button (click)="prev()">
+      <button class="day" (click)="getToday()">Aujourd'hui</button>
+      <button class="nav" (click)="prev()">
         <img
           src="assets/svgs/left.svg"
           alt=""
-          width="35"
-          height="35"
+          width="25"
+          height="25"
           class="center"
         />
       </button>
-      <button (click)="next()">
+      <button class="nav" (click)="next()">
         <img
           src="assets/svgs/right.svg"
           alt=""
-          width="35"
-          height="35"
+          width="25"
+          height="25"
           class="center"
         />
       </button>
@@ -211,7 +211,7 @@
           </div>
 
           <div id="text-update">
-            <h2>Résumée de votre nouveau créneau</h2>
+            <h2>Résumé de votre nouveau créneau</h2>
           </div>
 
           <div class="pop-up-date">
@@ -222,7 +222,7 @@
             />
             <h3>
               Début du créneau le
-              <span>{{ eventDetailsEdit.start }} </span> à
+              <span>{{ eventDetailsEdit.start | date }} </span> à
               <span>{{ eventDetailsEdit.start | date : "HH:mm" }} </span>
             </h3>
           </div>
