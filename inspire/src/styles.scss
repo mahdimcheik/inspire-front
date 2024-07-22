@@ -285,7 +285,22 @@ p-multiselect {
 .p-datatable .p-datatable-header {
   background-color: transparent;
   border: none;
+  margin-top: -50px;
 }
-.dashboard-container .p-icon-field-left > .p-inputtext {
-  padding: 10px 20px;
+
+.p-tag {
+  background-color: $secondary-color;
+  padding: 5px 20px;
+}
+.p-datatable .p-sortable-column.p-highlight {
+  background-color: $primary-color;
+  color: white;
+}
+
+.p-datatable .p-sortable-column.p-highlight .p-sortable-column-icon {
+  color: white;
+}
+
+.p-button.p-button-text {
+  color: $primary-color;
 }
