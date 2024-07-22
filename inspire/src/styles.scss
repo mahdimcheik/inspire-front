@@ -287,3 +287,20 @@ p-multiselect {
   border: none;
   margin-top: -50px;
 }
+
+.p-tag {
+  background-color: $secondary-color;
+  padding: 5px 20px;
+}
+.p-datatable .p-sortable-column.p-highlight {
+  background-color: $primary-color;
+  color: white;
+}
+
+.p-datatable .p-sortable-column.p-highlight .p-sortable-column-icon {
+  color: white;
+}
+
+.p-button.p-button-text {
+  color: $primary-color;
+}
