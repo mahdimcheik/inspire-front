@@ -38,7 +38,8 @@ export class LayoutAdminComponent {
   sseService = inject(SseService);
   name!: string;
   intro!: string;
-  imgUrl!: string;
+
+  adminProfil = inject(AdminService).adminProfil$;
 
   displayMobileNav = false;
 
@@ -60,8 +61,6 @@ export class LayoutAdminComponent {
 
       this.intro = 'Votre espace Administrateur';
     });
-
-    // this.imgUrl = this.mentorProfil$.value.imgUrl;
   }
 
   showModalDeconnection(event: Event) {

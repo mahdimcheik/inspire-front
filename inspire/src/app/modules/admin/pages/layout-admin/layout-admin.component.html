@@ -1,4 +1,7 @@
-<div class="container-general-layout scrollbar-off">
+<div
+  class="container-general-layout scrollbar-off"
+  *ngIf="{ profil: adminProfil | async } as admin"
+>
   <div class="container-layout">
     <div class="header-layout">
       <div>
@@ -46,7 +49,10 @@
         </p-sidebar>
       </div>
       <div class="header-container">
-        <h2 class="title">Bonjour {{ name | json }}</h2>
+        <h2 class="title">
+          Bonjour
+          {{ admin.profil?.firstname | titlecase }}
+        </h2>
         <p>{{ intro }}</p>
       </div>
 
@@ -54,12 +60,9 @@
         <app-notifcation-dropdown></app-notifcation-dropdown>
 
         <div class="icon-wrapper">
-          <a
-            [routerLink]="['/mentor/profil']"
-            *ngIf="mentorProfil$ | async as mentor"
-          >
+          <a [routerLink]="['/mentor/profil']">
             <img
-              [src]="mentor.imgUrl"
+              [src]="admin.profil?.imgUrl"
               alt="Student Image"
               width="50"
               height="50"
