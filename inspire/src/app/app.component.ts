@@ -47,6 +47,10 @@ export class AppComponent implements OnInit {
                 this.router.navigateByUrl('/admin');
                 break;
               }
+              case 'SUPER_ADMIN': {
+                this.router.navigateByUrl('/admin');
+                break;
+              }
             }
             // res.role === 'MENTOR'
             //   ? this.router.navigateByUrl('/mentor')
