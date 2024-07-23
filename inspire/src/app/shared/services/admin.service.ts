@@ -1,7 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { UserStoreService } from './stores/user-store.service';
-import { AdminDTO, MentorListAdminDTO, StudentAdminDTO } from '../models/user';
+import {
+  AdminDTO,
+  MentorDTO,
+  MentorListAdminDTO,
+  StudentAdminDTO,
+} from '../models/user';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 
@@ -13,6 +18,18 @@ export class AdminService {
 
   httpClient = inject(HttpClient);
   userConnected = inject(UserStoreService).getUserConnected$();
+  adminProfil$ = new BehaviorSubject<AdminDTO>({} as AdminDTO);
+
+  getAdminProfile(userId: number) {
+    return this.httpClient
+      .get<AdminDTO>(environment.BASE_URL_API + '/admin/get/profile/' + userId)
+      .pipe(
+        tap((res) => {
+          this.adminProfil$.next(res);
+          console.log('admin profil ', res);
+        })
+      );
+  }
 
   getMentorListByAdmin() {
     return this.httpClient.get<MentorListAdminDTO[]>(
@@ -32,7 +49,7 @@ export class AdminService {
     );
   }
 
-  deleteStudent(student: AdminDTO): Observable<StudentAdminDTO> {
+  deleteStudent(student: StudentAdminDTO): Observable<StudentAdminDTO> {
     return this.httpClient.delete<StudentAdminDTO>(
       environment.BASE_URL_API + '/admin/delete/student/' + student.userId
     );

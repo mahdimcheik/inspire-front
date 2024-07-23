@@ -52,6 +52,9 @@ export class LoginService {
             if (user.role === 'STUDENT') {
               this.router.navigate(['/student']);
             }
+            if (user.role === 'ADMIN') {
+              this.router.navigate(['/admin']);
+            }
           } else {
             alert('Identifiants incorrects');
           }
@@ -65,6 +68,7 @@ export class LoginService {
       if (message.payload.role === 'MENTOR') this.router.navigate(['/mentor']);
       if (message.payload.role === 'STUDENT')
         this.router.navigate(['/student']);
+      if (message.payload.role === 'ADMIN') this.router.navigate(['/admin']);
     }
   }
 

@@ -122,6 +122,7 @@ export type AdminDTO = {
   firstname: string;
   lastname: string;
   userId: number;
+  imgUrl: string;
 };
 export type StudentDTO = {
   id: number;
