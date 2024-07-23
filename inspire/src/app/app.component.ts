@@ -34,9 +34,23 @@ export class AppComponent implements OnInit {
           if (res.role) {
             this.userStoreService.setUserConnected(res);
 
-            res.role === 'MENTOR'
-              ? this.router.navigateByUrl('/mentor')
-              : this.router.navigateByUrl('/student');
+            switch (res.role) {
+              case 'MENTOR': {
+                this.router.navigateByUrl('/mentor');
+                break;
+              }
+              case 'STUDENT': {
+                this.router.navigateByUrl('/student');
+                break;
+              }
+              case 'ADMIN': {
+                this.router.navigateByUrl('/admin');
+                break;
+              }
+            }
+            // res.role === 'MENTOR'
+            //   ? this.router.navigateByUrl('/mentor')
+            //   : this.router.navigateByUrl('/student');
           }
         });
     }
