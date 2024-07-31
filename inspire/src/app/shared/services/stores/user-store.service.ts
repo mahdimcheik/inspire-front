@@ -109,6 +109,13 @@ export class UserStoreService {
           path: 'admin/mentors',
           active: true,
         },
+        {
+          title: 'liste des étudiants',
+          logoUrl: 'assets/svgs/profile.svg',
+          logoUrlActive: 'assets/svgs/profile-blanc.svg',
+          path: 'admin/students',
+          active: true,
+        },
       ];
     return [];
   }
