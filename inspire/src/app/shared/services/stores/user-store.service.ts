@@ -110,6 +110,16 @@ export class UserStoreService {
           active: true,
         },
       ];
+    if (this.userConnected$.value.role === 'SUPER_ADMIN')
+      return [
+        {
+          title: 'liste des mentors',
+          logoUrl: 'assets/svgs/profile.svg',
+          logoUrlActive: 'assets/svgs/profile-blanc.svg',
+          path: 'admin/mentors',
+          active: true,
+        },
+      ];
     return [];
   }
 }

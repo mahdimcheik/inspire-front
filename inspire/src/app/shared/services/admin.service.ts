@@ -21,14 +21,29 @@ export class AdminService {
   adminProfil$ = new BehaviorSubject<AdminDTO>({} as AdminDTO);
 
   getAdminProfile(userId: number) {
-    return this.httpClient
-      .get<AdminDTO>(environment.BASE_URL_API + '/admin/get/profile/' + userId)
-      .pipe(
-        tap((res) => {
-          this.adminProfil$.next(res);
-          console.log('admin profil ', res);
-        })
-      );
+    if (this.userConnected.value.role === 'ADMIN')
+      return this.httpClient
+        .get<AdminDTO>(
+          environment.BASE_URL_API + '/admin/get/profile/' + userId
+        )
+        .pipe(
+          tap((res) => {
+            this.adminProfil$.next(res);
+            console.log('admin profil ', res);
+          })
+        );
+    if (this.userConnected.value.role === 'SUPER_ADMIN')
+      return this.httpClient
+        .get<AdminDTO>(
+          environment.BASE_URL_API + '/superadmin/get/profile/' + userId
+        )
+        .pipe(
+          tap((res) => {
+            this.adminProfil$.next(res);
+            console.log('admin profil ', res);
+          })
+        );
+    return null;
   }
 
   getMentorListByAdmin() {

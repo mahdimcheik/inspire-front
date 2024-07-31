@@ -5,10 +5,11 @@ import { UserStoreService } from '../services/stores/user-store.service';
 import { AdminDTO, MentorDTO } from '../models/user';
 import { Observable } from 'rxjs';
 
-export const adminResolver: ResolveFn<Observable<AdminDTO>> = (
+export const adminResolver: ResolveFn<Observable<AdminDTO> | null> = (
   route,
   state
 ) => {
   const userId: number = inject(UserStoreService).getUserConnected$().value.id;
+
   return inject(AdminService).getAdminProfile(userId);
 };
